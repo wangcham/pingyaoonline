@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#242920"><title>平遥online</title>
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}</script>
+</head><body>
+<main>
+<div id="world" aria-label="平遥县城三维体验地图"></div>
+<header><div class="brand"><span class="seal">平<br>遥</span><span>平遥online<small>PINGYAO · STREET EXPERIENCE</small></span></div><nav><button id="night" aria-pressed="false">☾ 夜景</button><button id="overview">俯瞰县城</button><select id="gate" aria-label="选择城门体验位置" disabled><option value="">前往城门</option></select><button id="street-open" disabled>搜索街景</button><button id="school-open" disabled>平遥中学</button><button id="landmark-open" disabled>城市地标</button><button id="sources">资料与模型</button><button id="capture-retry" hidden>重试锁定鼠标</button></nav></header>
+<section id="intro">
+<p class="eyebrow">山西 · 晋中</p><h1>平遥online</h1>
+<p class="lead">从平遥二中门前出发，<br>沿街探索，自由切换高度与视角。</p>
+<button id="start" class="primary" disabled>正在载入场景…</button>
+<button id="street-intro" disabled>去城西看街景</button>
+<button id="shuncheng-intro" disabled>顺城路各路口</button>
+<button id="school-intro" disabled>去平遥中学</button>
+<p id="error" role="status"></p>
+</section>
+<div id="street-location" hidden><strong id="street-name"></strong><small id="street-note"></small></div>
+<aside id="instruments" hidden><span id="compass">北</span><b id="altitude">—</b><small>离地高度 · 米</small><canvas id="minimap" width="160" height="160" aria-label="当前位置示意图"></canvas></aside>
+<div id="touch" hidden aria-label="移动方向"><button data-key="KeyW" aria-label="前进">↑</button><button data-key="KeyA" aria-label="左移">←</button><button data-key="KeyS" aria-label="后退">↓</button><button data-key="KeyD" aria-label="右移">→</button><button data-key="Space" aria-label="上升">＋</button><button data-key="KeyQ" aria-label="下降">－</button></div>
+<footer><div id="help"><kbd>W A S D</kbd> 移动 <kbd>空格 / Q</kbd> 升降 <kbd>Shift</kbd> 加速 <kbd>Esc</kbd> 暂停</div><span><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a></span></footer>
+<dialog id="street-dialog">
+<form method="dialog"><button aria-label="关闭街景搜索">×</button></form>
+<h2>街景与校园</h2>
+<form id="street-search"><label for="street-query">搜学校、路名或店铺</label><div class="search-row"><input id="street-query" type="search" placeholder="例如 平遥中学" autocomplete="off"><button type="submit">搜索</button></div></form>
+<p class="map-lookup"><a id="amap-lookup" href="https://www.amap.com/ssr/embed/search?keyword=%E6%99%AF%E6%9E%97%E6%B1%9F%E7%B1%B3%E6%B2%B9%E7%B3%95&amp;city=140728" target="_blank" rel="noopener">在高德核对</a> <button id="shuncheng-guide" type="button">顺城路各路口</button></p>
+<div id="street-results"></div>
+</dialog>
+<dialog id="landmark-dialog">
+<form method="dialog"><button aria-label="关闭地标介绍">×</button></form>
+<p class="eyebrow">平遥 · 城市地标</p><h2 id="landmark-title">城市地标</h2>
+<p>选择地标名称查看介绍，或靠近后将视线朝向建筑再单击。点击场景进入鼠标控制，按 Esc 释放鼠标。</p>
+<label class="landmark-option"><input id="landmark-label-toggle" type="checkbox" checked> 显示地标名称</label>
+<div id="landmark-list"></div>
+<section id="landmark-card" hidden><p id="landmark-description"></p><p id="landmark-accuracy"></p><small id="landmark-coordinate"></small><p id="landmark-sources"></p><button id="landmark-visit" class="primary">前往这里</button></section>
+</dialog>
+<dialog id="details"><form method="dialog"><button aria-label="关闭">×</button></form><h2>资料与实景模型</h2><p>城墙、城门点位和道路来自 OpenStreetMap。地图中缺失的建筑使用程序生成的示意模型。下西关街使用高程数据估算纵坡；路拱、路缘、排水设施和铺装为建模细节。其他地段仍为简化地形。城门楼和街道宽度经过简化。</p>
+<p><a href="https://whc.unesco.org/en/list/812/maps/" target="_blank" rel="noopener">UNESCO 世界遗产中心 · 平遥古城地图</a></p>
+<p lang="en">Produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.</p>
+<h3>平遥中学</h3><p>古城东侧的山西省平遥中学，与城西平遥二中分开建模。校园边界采用 <a href="https://www.openstreetmap.org/way/401952981" target="_blank" rel="noopener">OSM 401952981</a>；楼群、运动场、球场、校内道路及绿地分区参考 <a href="https://www.amap.com/place/B016200A69" target="_blank" rel="noopener">高德卫星图与公开相册</a>（2026-11-25 核对，影像拍摄日期未知）。红白楼体、白色弧角校名墙、校史墙、红色雕塑及屋顶球体参考用户照片。地图相册存在不同版本的校门景墙，本版采用用户照片版本。按补充的卫星截图收窄并退让南部两排楼，校名墙移至东南门对外前区，入口通道与庭园分开；校史景墙按实景改为两排错列的低墙与黑白石座，未辨清年份留空；入口改用银灰矮护栏与蓝白板面，前庭外缘保持敞开。尺寸和门线细部仍为近似。</p><p>内部建筑轮廓为影像人工判读，楼高、部分楼层及功能为估算；广场采用卫星图可见的浅灰色分区，单块砖尺寸、砖缝、树种、设施及入口细部位置近似，并非逐砖或测绘级复原。所有校园建筑可在建筑数据中查看来源与置信度。近处点击校园可查看介绍。</p><h3>古城铺装与院落</h3><p>古城街道按提供的照片改为灰色长方石板，保留磨损与接缝。街区内部新增连续院落及窄巷，避让地图道路、地标、已有建筑和公园。缺少测绘的住宅院落、宇峰写字楼后巷及北侧街坊均为示意布局，不代表真实门牌或店铺顺序。</p>
+<h3>下西关街与路口商铺</h3><p>沿街店面按高德卫星影像显示的连续铺房关系调整，共墙排列，校门与道路通道留空。路口西南角的平遥黄金珠宝城、东南角的周大生已核对公开门店地址和照片，并接入楼体底层。屋面高度、店铺分界及门脸尺寸仍为近似。希岸酒店附近的示意支路止于顺城路车道边缘，以贴地坡面连接。</p>
+<h3>街区内部与二中周边</h3><p>下西关街两侧向后方延伸多排现代楼房、经营用房和连接巷道，以平屋顶、女儿墙和日常门窗表达城外街坊；补充二中操场及东侧附属楼。又见平遥西侧原先扩大绘制的草坪已改为建筑街坊，保留地图确认的绿地。街坊分界、支巷及楼层根据卫星影像的总体形态近似表达，未逐户测绘；学校、主路、剧场及既有建筑占地保持避让。</p>
+<h3>建筑数据</h3><p id="building-data-summary"></p><button id="building-data-export" type="button">导出建筑数据</button><h3>建筑高度参考</h3><p>城西普通建筑按位置参考 <a href="https://doi.org/10.14459/2025mp1782307" target="_blank" rel="noopener">GlobalBuildingAtlas / GBA.Height</a>（Zhu 等，2025；<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>）。本地裁剪、重采样及量化；原始影像主要为 2019 年，所得高度是遥感估算。已建模的较高楼体保留独立高度，不被旧数据压低。新建高楼的逐栋位置、层数仍待核实；此版本未完成当前全部高低楼复原。</p>
+<h3>下西关街夜间与设施</h3><p>沿本段道路补充路灯、非机动车泊位与车架，避让已建模的路口、校门和支巷入口；设施位置为近似。夜景点亮部分橱窗、商铺招牌及路灯，灯光地面跟随路面坡度。建筑分界、门脸、层数和道路宽度仍有估算，不代表逐栋实测。</p><h3>下西关街绿化</h3><p>从下西门外沿下西关街至景林江米油糕附近，补充树池、行道树和低矮灌木，保留校门、店门及路口通道。道路和剧场公园边界已用最新 OSM 数据核对。树木使用分枝、几何叶片与不规则透光树冠；虽已查看高德卫星影像，但未逐株测绘，树位、树种及花池仍为近似示意。</p>
+<h3>城西街景资料</h3>
+<p>可查证的路名和地名用于标牌。油糕店、烘焙店及商场的立面是手工示意，学校教学楼参考公开照片，下西关街已核对部分商户名，模型按所在路段近似摆放；同一入口无法分清的店铺未做独立门面，未知招牌留空。城西重点建模范围从平遥二中到下西门，另沿西城墙补到又见平遥和上西门。</p>
+<p><a href="https://www.trip.com/restaurant/china/pingyao-county/detail/restaurant-78632570/" target="_blank" rel="noopener">景林江米油糕店址</a> · <a href="https://www.sohu.com/a/704906549_121123761" target="_blank" rel="noopener">平遥二中公开照片</a> · <a href="https://www.openstreetmap.org/way/421602220" target="_blank" rel="noopener">转盘路口地图</a></p>
+<p><a href="https://www.sohu.com/a/681908732_142447" target="_blank" rel="noopener">又见平遥剧场参考照片</a> · <a href="https://www.openstreetmap.org/way/1313449886" target="_blank" rel="noopener">剧场轮廓</a>。入口广场和建筑外观经过简化。</p>
+<p>下西关街与顺城路口的商业楼参考<a href="https://www.amap.com/place/B0FFG6RE2A" target="_blank" rel="noopener">陶源丰新天地</a>和<a href="https://www.amap.com/place/B0FFH6N4AV" target="_blank" rel="noopener">宇峰购物广场</a>地名与地址，楼体高度、外立面和商场入口为近似。剧场草地是场景示意，<a href="https://www.openstreetmap.org/way/1313450267" target="_blank" rel="noopener">永定公园</a>边界参考地图。</p>
+<h3>西南角楼航拍扫描</h3><p>Lionel / Sketchfab · CC Attribution。该实景模型可在下方独立旋转查看。</p>
+<button id="scan">加载实景模型</button><div id="scan-view"></div>
+<p><a href="https://sketchfab.com/3d-models/pingyao-city-walls-china-8e09151d99a148159599fbb37589d05b" target="_blank" rel="noopener">前往 Sketchfab 查看原作与许可</a></p></dialog>
+</main>
+<script type="module" src="./sources.js"></script>
+<script type="module">
+import('./city.js').catch(error => {
+  console.error(error);
+  document.querySelector('#error').textContent = '无法加载三维场景。请确认网络可访问 jsDelivr，且浏览器支持 WebGL 2。';
+  document.querySelector('#start').textContent = '场景加载失败';
+});
+</script>
+</body></html>

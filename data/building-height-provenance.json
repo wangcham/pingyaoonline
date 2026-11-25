@@ -1,0 +1,25 @@
+{
+  "dataset": "GlobalBuildingAtlas GBA.Height",
+  "authors": "Zhu, Chen, Zhang, Shi and Wang (2025)",
+  "source": "https://doi.org/10.14459/2025mp1782307",
+  "license": "CC BY-NC 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+  "imageryYears": [
+    2018,
+    2019
+  ],
+  "retrieved": "2026-11-25",
+  "tile": "Height/asiaeast/e110_n40_e115_n35/112.0_37.2_112.2_37.0_sr_ss.tif",
+  "note": "Used the valid UTM raster overlap north of nominal tile edge; heights are remote-sensing estimates, not surveyed floors. Local grid nearest samples at 3 m, quantized to 0.1 m; -1 means no data.",
+  "cropSha256": "ae596bfd4e0e2166b167585b12aaf245d69c44d96b992e5684b16c7a40dddd35",
+  "originWgs84": [
+    112.1815,
+    37.204
+  ],
+  "x": -2110,
+  "z": -260,
+  "step": 3,
+  "cols": 351,
+  "rows": 371,
+  "maxMeters": 16.5
+}

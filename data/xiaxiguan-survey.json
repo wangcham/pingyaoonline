@@ -1,0 +1,51 @@
+{
+  "name": "下西关街及紧邻区域",
+  "crs": "WGS84",
+  "localOrigin": [
+    112.1815,
+    37.204
+  ],
+  "route": [
+    [
+      112.15816610578712,
+      37.20253754940712
+    ],
+    [
+      112.15837250061726,
+      37.20261929572404
+    ],
+    [
+      112.15863754315872,
+      37.202641753503414
+    ],
+    [
+      112.159398835565,
+      37.20270553359684
+    ],
+    [
+      112.16427223480585,
+      37.20312773984909
+    ],
+    [
+      112.1643647177352,
+      37.203136722960835
+    ],
+    [
+      112.1676151543499,
+      37.203458318361484
+    ],
+    [
+      112.16788921961617,
+      37.20341789435861
+    ]
+  ],
+  "lengthMeters": 870,
+  "geometrySource": "OSM ways 749951367 + 240524882",
+  "commercialReference": "AMap POI and satellite review; see README references",
+  "carriagewayMeters": 9.32,
+  "pavementOuterWidthMeters": 14.8,
+  "widthEstimated": true,
+  "buildingFootprints": "OSM where present; commercial and interior parcels remain estimates",
+  "furnitureEstimated": true,
+  "reviewed": "2026-11-25"
+}
