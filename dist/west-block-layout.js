@@ -3,9 +3,14 @@ import {makeGrid,pointInRing,segments,projectOnSegment,sample} from './geography
 import {commercialPlots} from './west-district.js';
 import {yufengBlockBoundary} from './yufeng-block.js';
 import {planWestFrontages} from './west-corridor.js';
-import {westBlockZones,westBlockAlleys} from './west-block-data.js';
+import {westBlockZones,westBlockAlleys,schoolImageryArea,gateImageryArea,schoolImageryRoofs,schoolImageryGround} from './west-block-data.js';
+import {surveyedWestPark} from './west-green-survey.js';
+import {stationStreetRings} from './shuncheng.js';
 
 const blockAngle=.108,blockCos=Math.cos(blockAngle),blockSin=Math.sin(blockAngle);
+const imageryAreas=[schoolImageryArea,gateImageryArea];
+const westStudyRings=[...westBlockZones.map(({ring})=>ring),...imageryAreas];
+const westBlockEdges=westStudyRings.map(ring=>segments([...ring,ring[0]]));
 export function westBlockWorld(x,z){return [x*blockCos+z*blockSin,-x*blockSin+z*blockCos];}
 export function westBlockLocal(x,z){return [x*blockCos-z*blockSin,x*blockSin+z*blockCos];}
 function blockSegmentHits(a,b,x,z,w,d){
@@ -20,13 +25,14 @@ function blockSegmentHits(a,b,x,z,w,d){
 }
 function blockRect(x,z,w,d){return [[x-w/2,z-d/2],[x+w/2,z-d/2],[x+w/2,z+d/2],[x-w/2,z+d/2]];}
 export function westBlockProtectedRings(){
-  return [mapData.campus,mapData.wall,yufengBlockBoundary,...mapData.areas.map(([,r])=>r),...mapData.buildings.map(([,,r])=>r),
+  return [mapData.campus,mapData.wall,yufengBlockBoundary,surveyedWestPark,...stationStreetRings,...mapData.areas.map(([,r])=>r),...mapData.buildings.map(([,,r])=>r),
     ...commercialPlots.map(p=>blockRect(p.x,p.z,p.w+5,p.d+6)),
     blockRect(-1452.5,93,110,46), // existing shopping-center forecourt
     blockRect(-1253,443.4,112,168),blockRect(-1253,545,110,56), // theater eaves/plaza
     ...planWestFrontages().units.map(p=>{
       const c=Math.cos(p.yaw),s=Math.sin(p.yaw);
-      return blockRect(0,0,p.width+.4,p.depth+2).map(([x,z])=>[p.x+x*c+z*s,p.z-x*s+z*c]);
+      const setback=p.x>=-1894?5:0;
+      return blockRect(0,-setback/2,p.width+.4,p.depth+2+setback).map(([x,z])=>[p.x+x*c+z*s,p.z-x*s+z*c]);
     })];
 }
 let westBlockLayoutCache;
@@ -41,22 +47,42 @@ export function createWestBlockLayout(){
   for(const ring of protectedRings){const polygon=ring.map(p=>westBlockLocal(...p));index({polygon},polygon);}
   const paths=[...mapData.roads.map(([,width,,points])=>({points,pad:width/2+2})),
     ...mapData.shunchengWays.map(points=>({points,pad:9})),...mapData.rail.map(points=>({points,pad:25})),
-    ...mapData.water.map(([width,points])=>({points,pad:width/2+2})),
-    ...westBlockAlleys.map(points=>({points,pad:3.1}))];
+    ...mapData.water.map(([width,points])=>({points,pad:width/2+2}))];
   for(const {points,pad} of paths)for(const e of segments(points)){
     const a=westBlockLocal(...e.start),b=westBlockLocal(...e.end);index({a,b,pad},[a,b],pad);
   }
+  function isBlocked(x,z,hw,hd,corners){
+    return obstacles.at(x,z).some(item=>{
+      if(item.a)return blockSegmentHits(item.a,item.b,x,z,hw+item.pad,hd+item.pad);
+      return corners.some(p=>pointInRing(...p,item.polygon))||pointInRing(x,z,item.polygon)||
+        segments([...item.polygon,item.polygon[0]]).some(e=>blockSegmentHits(e.start,e.end,x,z,hw,hd));
+    });
+  }
+  for(const {ring} of schoolImageryGround){
+    const polygon=ring.map(p=>westBlockLocal(...p));index({polygon},polygon);
+  }
+  for(const roof of schoolImageryRoofs){
+    const [x,z]=westBlockLocal(...roof.center),{w,d}=roof;
+    const corners=blockRect(x,z,w,d);
+    if(isBlocked(x,z,w/2,d/2,corners))continue;
+    plots.push({...roof,x,z,world:roof.center,angle:blockAngle,variant:plots.length%13,kind:'imagery'});
+    index({polygon:corners},corners);
+  }
+  for(const ring of imageryAreas){
+    const polygon=ring.map(p=>westBlockLocal(...p));index({polygon},polygon);
+  }
+  for(const path of westBlockAlleys)for(const edge of segments(path)){
+    const a=westBlockLocal(...edge.start),b=westBlockLocal(...edge.end);
+    index({a,b,pad:3.1},[a,b],3.1);
+  }
   for(const zone of zones){
     const xs=zone.local.map(p=>p[0]),zs=zone.local.map(p=>p[1]);
-    for(const [sx,sz,w,d] of [[32,36,29,32],[20,25,17,21],[16,21,13,17]]){
+    const sizes=[[32,36,29,32],[20,25,17,21],[16,21,13,17]];
+    for(const [sx,sz,w,d] of sizes){
       for(let z=Math.floor(Math.min(...zs)/sz)*sz;z<Math.max(...zs);z+=sz)for(let x=Math.floor(Math.min(...xs)/sx)*sx;x<Math.max(...xs);x+=sx){
         const hw=w/2+.65,hd=d/2+.65,corners=blockRect(x,z,hw*2,hd*2);
         if(!corners.every(p=>pointInRing(...p,zone.local)))continue;
-        if(obstacles.at(x,z).some(item=>{
-          if(item.a)return blockSegmentHits(item.a,item.b,x,z,hw+item.pad,hd+item.pad);
-          return corners.some(p=>pointInRing(...p,item.polygon))||pointInRing(x,z,item.polygon)||
-            segments([...item.polygon,item.polygon[0]]).some(e=>blockSegmentHits(e.start,e.end,x,z,hw,hd));
-        }))continue;
+        if(isBlocked(x,z,hw,hd,corners))continue;
         const hash=(Math.imul(x,73856093)^Math.imul(z,19349663))>>>0;
         plots.push({x,z,w,d,world:westBlockWorld(x,z),angle:blockAngle,zone:zone.id,variant:hash%13,kind:w>20&&hash%4===0?'residential':w>20&&hash%7===0?'workshop':'lowrise'});
         index({polygon:corners},corners);
@@ -73,12 +99,13 @@ export function createWestBlockLayout(){
     for(let i=0;i<count;i++){
       const a=sample(line,i/count),b=sample(line,(i+1)/count);
       const corners=[a,b].flatMap(([x,z])=>[-1,1].map(side=>[x+nx*side*2.35,z+nz*side*2.35]));
-      if(!corners.every(([x,z])=>westBlockZones.some(zone=>pointInRing(x,z,zone.ring))&&!laneBlocked.some(r=>pointInRing(x,z,r))&&!roads.some(({line,pad})=>projectOnSegment([x,z],line).distance<pad)))continue;
+      if(!corners.every(([x,z])=>westBlockZones.some(zone=>pointInRing(x,z,zone.ring))&&!imageryAreas.some(r=>pointInRing(x,z,r))&&!laneBlocked.some(r=>pointInRing(x,z,r))&&!roads.some(({line,pad})=>projectOnSegment([x,z],line).distance<pad)))continue;
       laneSegments.push({a,b,width:4.7});
     }
   }
   westBlockLayoutCache={plots,laneSegments,protectedRings};return westBlockLayoutCache;
 }
 export function isWestInteriorStudy(x,z,radius=0){
-  return westBlockZones.some(zone=>pointInRing(x,z,zone.ring)||segments([...zone.ring,zone.ring[0]]).some(e=>projectOnSegment([x,z],e).distance<radius));
+  return westStudyRings.some((ring,i)=>pointInRing(x,z,ring)||
+    (radius>0&&westBlockEdges[i].some(e=>projectOnSegment([x,z],e).distance<radius)));
 }

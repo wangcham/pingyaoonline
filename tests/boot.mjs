@@ -15,19 +15,31 @@ const doc=new Element();doc.body=new Element();doc.pointerLockElement=null;doc.g
 globalThis.document=doc;globalThis.window=new Element();window.devicePixelRatio=1;
 globalThis.Option=Element;globalThis.matchMedia=()=>({matches:false});globalThis.ResizeObserver=class{observe(){}};
 await import('../dist/city.js');
+const {planWestFrontages}=await import('../dist/west-corridor.js');
+const firstRow=planWestFrontages().units.filter(p=>p.x>=-1894);
+assert.ok(firstRow.length>60&&firstRow.every(p=>p.buildingRecord.floors===1));
 assert.equal(ids.get('start').disabled,false);assert.equal(ids.get('start').textContent,'开始体验');
 assert.match(ids.get('building-data-summary').textContent,/已记录 \d+/);
 ids.get('start').click();assert.equal(ids.get('intro').hidden,true,'unsupported capture must still enter the scene');assert.equal(ids.get('capture-retry').hidden,false);
 testRenderer.frame(performance.now()+16);
+for(const name of ['平遥站','家家利超市','万福隆超市总店']){
+  assert.ok(testRenderer.scene.getObjectByName(name)?.userData.buildingRecord,name);
+}
 const escape=new Event('keydown');Object.defineProperty(escape,'code',{value:'Escape'});window.dispatchEvent(escape);assert.equal(ids.get('intro').hidden,false);
 ids.get('night').click();testRenderer.frame(performance.now()+300);assert.match(ids.get('night').textContent,/日景/);
 ids.get('night').click();testRenderer.frame(performance.now()+600);assert.match(ids.get('night').textContent,/夜景/);
-ids.get('school-intro').click();testRenderer.frame(performance.now()+900);
-assert.equal(ids.get('intro').hidden,true,'school shortcut must enter the experience');
+for(const id of ['gate','school-intro','street-intro','shuncheng-intro','school-open','landmark-open'])assert.ok(!ids.has(id));
+ids.get('street-open').click();
+const streetQuery=ids.get('street-query');
+streetQuery.value='平遥中学';streetQuery.dispatchEvent(new Event('input'));
+const schoolResult=ids.get('street-results').children.find(choice=>choice.children[0].textContent==='平遥中学 · 校门广场');
+assert.ok(schoolResult,'school remains searchable');
+schoolResult.click();testRenderer.frame(performance.now()+900);
+assert.equal(ids.get('intro').hidden,true,'school search must enter the experience');
 const {isPingyaoSchoolParcel}=await import('../dist/pingyao-school-data.js');
-assert.ok(isPingyaoSchoolParcel(testRenderer.camera.position.x,testRenderer.camera.position.z),'school shortcut must reach the eastern campus');
+assert.ok(isPingyaoSchoolParcel(testRenderer.camera.position.x,testRenderer.camera.position.z),'school search must reach the eastern campus');
 assert.ok(testRenderer.scene.getObjectByName('山西省平遥中学'));
 assert.equal(ids.get('landmark-list').children.length,6,'school must appear alongside the five existing landmarks');
 ids.get('night').click();testRenderer.frame(performance.now()+1200);
 const campus=testRenderer.scene.getObjectByName('山西省平遥中学');assert.ok(campus.children.some(o=>o.isPointLight&&o.visible),'campus lamps must follow day/night state');
-console.log('Scene boot, entry without Pointer Lock, Escape, school shortcut/labels, day/night and frame update passed without opening a browser.');
+console.log('Scene boot, entry without Pointer Lock, Escape, school search/labels, day/night and frame update passed without opening a browser.');

@@ -94,8 +94,6 @@ export function attachLandmarkUI({manager,camera,canvas,world,pause,visit}) {
     label.setAttribute('aria-label',`查看${record.name}介绍`);label.addEventListener('click',()=>show(record));layer.append(label);labels.push({record,label});
     const button=document.createElement('button');button.textContent=record.name;button.addEventListener('click',()=>show(record));list.append(button);
   }
-  const open=document.getElementById('landmark-open');open.disabled=false;
-  open.addEventListener('click',()=>{pause();card.hidden=true;title.textContent='城市地标';if(!dialog.open)dialog.showModal();});
   document.getElementById('landmark-visit').addEventListener('click',()=>{if(selected){dialog.close();visit(selected);}});
   const toggle=document.getElementById('landmark-label-toggle');
   toggle.addEventListener('change',()=>{layer.hidden=!toggle.checked;});

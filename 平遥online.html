@@ -52,7 +52,6 @@ select{font:inherit;font-size:.88rem;color:inherit;border:1px solid #f3e7cc56;ba
 #street-location{position:absolute;z-index:1;top:88px;left:clamp(14px,4vw,64px);max-width:calc(100% - 28px);padding:10px 14px;background:#20291fe8;border:1px solid #ffffff35;border-radius:5px;pointer-events:none}
 #street-location small{display:block;color:#e1d8c6;margin-top:.25em}
 #street-location small:empty{display:none}
-#street-intro{margin-left:.5rem}
 #street-dialog{width:min(540px,calc(100% - 28px))}
 #street-dialog #street-search{float:none;margin:0 0 16px}
 .search-row{display:flex;gap:8px;margin-top:6px}
@@ -64,8 +63,6 @@ select{font:inherit;font-size:.88rem;color:inherit;border:1px solid #f3e7cc56;ba
 
 .map-lookup{font-size:.9rem;margin:0 0 14px}
 
-#shuncheng-intro{margin-left:.5rem;margin-top:.5rem}
-#school-intro{margin-left:.5rem;margin-top:.5rem}
 .map-lookup{display:flex;align-items:center;justify-content:space-between;gap:8px}
 
 /* Landmark labels are anchored to world coordinates and never capture look gestures. */
@@ -77,8 +74,8 @@ select{font:inherit;font-size:.88rem;color:inherit;border:1px solid #f3e7cc56;ba
 #landmark-accuracy{padding:10px 12px;background:#b7904722;border-left:3px solid #ad925d;font-size:13px}
 #landmark-coordinate{overflow-wrap:anywhere}#landmark-sources{display:flex;gap:15px;flex-wrap:wrap}
 .landmark-option{display:flex;align-items:center;gap:8px;font-size:13px}
-header{z-index:3}nav button,nav select{white-space:nowrap}
-@media(max-width:1100px){header{align-items:flex-start}nav{flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:73%}nav button,nav select{font-size:.78rem;padding:.5rem}.brand{flex-shrink:0;font-size:1rem}.brand small{display:none}}
+header{z-index:3}nav button{white-space:nowrap}
+@media(max-width:1100px){header{align-items:flex-start}nav{flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:73%}nav button{font-size:.78rem;padding:.5rem}.brand{flex-shrink:0;font-size:1rem}.brand small{display:none}}
 
 #flight-landmark-info{position:absolute;right:24px;top:90px;width:min(330px,70vw);padding:16px;background:#202927e8;color:#eee9dc;border:1px solid #a49c7e70;border-radius:8px;line-height:1.7;pointer-events:none;font-size:13px;z-index:8}
 </style>
@@ -86,14 +83,11 @@ header{z-index:3}nav button,nav select{white-space:nowrap}
 </head><body>
 <main>
 <div id="world" aria-label="平遥县城三维体验地图"></div>
-<header><div class="brand"><span class="seal">平<br>遥</span><span>平遥online<small>PINGYAO · STREET EXPERIENCE</small></span></div><nav><button id="night" aria-pressed="false">☾ 夜景</button><button id="overview">俯瞰县城</button><select id="gate" aria-label="选择城门体验位置" disabled><option value="">前往城门</option></select><button id="street-open" disabled>搜索街景</button><button id="school-open" disabled>平遥中学</button><button id="landmark-open" disabled>城市地标</button><button id="sources">资料与模型</button><button id="capture-retry" hidden>重试锁定鼠标</button></nav></header>
+<header><div class="brand"><span class="seal">平<br>遥</span><span>平遥online<small>PINGYAO · STREET EXPERIENCE</small></span></div><nav><button id="night" aria-pressed="false">☾ 夜景</button><button id="overview">俯瞰县城</button><button id="street-open" disabled>搜索街景</button><button id="sources">资料与模型</button><button id="capture-retry" hidden>重试锁定鼠标</button></nav></header>
 <section id="intro">
 <p class="eyebrow">山西 · 晋中</p><h1>平遥online</h1>
 <p class="lead">从平遥二中门前出发，<br>沿街探索，自由切换高度与视角。</p>
 <button id="start" class="primary" disabled>正在载入场景…</button>
-<button id="street-intro" disabled>去城西看街景</button>
-<button id="shuncheng-intro" disabled>顺城路各路口</button>
-<button id="school-intro" disabled>去平遥中学</button>
 <p id="error" role="status"></p>
 </section>
 <div id="street-location" hidden><strong id="street-name"></strong><small id="street-note"></small></div>
@@ -863,7 +857,7 @@ function resolveBuildingHeight(options){
   samples.sort((a,b)=>a-b);
   const estimate=samples.length>=Math.max(4,nx*nz*.25)?samples[Math.floor((samples.length-1)*.85)]:null;
   // GBA is an old image-derived estimate, NOT reliable DSM/LiDAR. Never flatten newer massing.
-  const useRaster=estimate!==null&&estimate>fallback;
+  const useRaster=estimate!==null&&(options.preferRasterHeight||estimate>fallback);
   return record(useRaster?estimate:fallback,useRaster?null:fallbackLevels,useRaster?'GBA.Height-2019':'existing-approximation',useRaster?.4:.3,true,
     {rasterHeight:estimate,dataYear:useRaster?2019:null});
 }
@@ -908,7 +902,75 @@ const westInteriorStops=[
   {name:'二中对面 · 后街楼房',keywords:'下西关街 二中 景林 油糕 街道里面 后巷 院落 低层楼房',address:'二中对面至后街内部 · 普通低层楼房和支巷近似',eye:[-1817,2.1,40],target:[-1820,3,-15]},
   {name:'二中东侧 · 住宅街坊',keywords:'二中 家属院 街坊 里面 住宅',address:'学校东侧与南侧 · 建筑尺寸及分界近似',eye:[-1609,2.1,270],target:[-1604,4,320]},
   {name:'下西关街南侧 · 楼后街巷',keywords:'下西关街 内部 街景 后面 街坊',address:'街南铺房后方 · 巷道与房屋近似',eye:[-1350,2.1,120],target:[-1344,3,174]},
+  {name:'光大商场与平遥二中 · 街区俯瞰',keywords:'光大商场 光大时尚 平遥二中 停车场 卫星',address:'下西关街与顺城北路附近 · 依据卫星影像描绘',eye:[-1770,155,410],target:[-1760,0,174]},
+  {name:'光大时尚 · 顺城路入口',keywords:'光大商场 光大时尚 平遥二中 商业楼 立面',address:'顺城路100号 · 高德地点与入口',eye:[-1503,4.5,330],target:[-1554,6.2,345]},
+  {name:'光大时尚西停车场',keywords:'光大商场 西停车场 停车',address:'顺城路100号 · 高德停车场点位',eye:[-1610,16,390],target:[-1606,0,381]},
+  {name:'平遥二中家属院',keywords:'平遥二中 家属院 住宅',address:'下西关街 · 高德住宅小区点位',eye:[-1650,22,242],target:[-1650,4,223]},
+  {name:'平遥二中教师宿舍',keywords:'平遥二中 教师宿舍',address:'顺城北路与下西关街交叉口西南 · 高德宿舍点位',eye:[-1635,18,402],target:[-1647,4,386]},
 ];
+
+// Visual traces on Esri World Imagery, WGS84 export (1560 × 1164).
+const westImagePoint=(u,v)=>[
+  (112.157+u/1560*.013-112.1815)*111320*Math.cos(37.204*Math.PI/180),
+  (37.204-(37.2046-v/1164*.0097))*111320,
+];
+const schoolImageryArea=[
+  [144,224],[192,134],[367,49],[492,23],[685,31],[798,149],
+  [873,207],[908,496],[836,530],[655,528],[493,524],[371,483],[186,475],
+].map(p=>westImagePoint(...p));
+const gateImageryArea=[
+  [929,20],[1283,14],[1308,115],[1288,126],[951,159],
+].map(p=>westImagePoint(...p));
+
+// Roof center and extent in image pixels. Adjacent roofs can form a single mass.
+const schoolImageryRoofs=[
+  [259,115,43,18,null,'#4d534b'],[313,93,49,16,null,'#5d5b4e'],[340,126,58,16,null,'#5f5f51'],[341,153,52,16,null,'#575a4f'],
+  [233,147,50,15,null,'#958971'],[276,175,36,22,null,'#74756d'],[329,182,38,25,null,'#1e2a26'],[373,115,21,65,null,'#7b7569'],
+  [438,76,43,15,null,'#c0b8a1'],[457,100,43,16,null,'#666558'],[453,129,48,16,null,'#496267'],[455,156,47,18,null,'#c4aa86'],
+  [473,190,68,15,null,'#fef8de'],[514,100,28,48,null,'#333937'],[524,153,32,29,null,'#beb59b'],[535,183,35,15,null,'#4f544e'],
+  [575,68,40,20,null,'#3f4847'],[577,103,47,22,null,'#948c75'],[580,139,47,19,null,'#707759'],[592,175,37,22,null,'#7c6b4f'],
+  [633,109,33,22,null,'#36413d'],[626,143,26,30,null,'#53594b'],[654,174,50,19,null,'#4f5956'],[683,128,48,37,null,'#b8b5a4'],
+  [707,169,51,16,null,'#8b8b81'],[742,126,23,34,null,'#bfb399'],
+  [184,309,28,18,null,'#928670'],[185,338,35,17,null,'#373c36'],[190,367,45,18,null,'#465155'],[195,396,52,21,null,'#768173'],
+  [201,425,54,17,null,'#816054'],[225,452,79,14,null,'#8e7d71'],[261,283,65,21,null,'#675c49'],[255,390,64,18,null,'#414d45'],
+  [268,427,68,22,null,'#343e3d'],[319,326,56,20,null,'#d1c4ae'],[328,354,58,17,null,'#676557'],[338,387,54,20,null,'#2c393b'],
+  [338,418,54,25,null,'#29342e'],[385,398,30,15,null,'#8c8974'],[427,391,40,17,null,'#696e63'],[413,420,52,21,null,'#87866c'],
+  [391,466,38,15,null,'#a7a892'],[397,493,34,19,null,'#989687'],[472,529,52,22,null,'#566052'],
+  [555,391,49,30,null,'#fcfdf8'],[635,381,49,20,null,'#4b76bb'],[573,423,73,16,null,'#917b67'],[561,450,66,16,null,'#6b6d61'],
+  [573,478,76,20,null,'#657269'],[579,508,85,20,null,'#c0c0ad'],[650,459,31,25,null,'#6e7166'],[667,492,49,18,null,'#515851'],
+  [698,259,45,20,null,'#d3cbb6'],[706,293,45,18,null,'#565f59'],[717,317,45,17,null,'#202d33'],[710,343,58,17,null,'#b19b82'],
+  [754,271,19,39,null,'#424a44'],[818,279,28,64,null,'#69685d'],[792,328,70,15,null,'#616b63'],
+  [800,352,68,16,null,'#687971'],[765,371,50,14,null,'#3f4c3e'],[742,416,47,29,null,'#4b524a'],[834,438,90,77,3,'#5a5f4f'],
+  [852,499,56,18,null,'#7fabb8'],[855,534,49,26,null,'#414d4c'],
+  // Inner block north of 下西关街 between 顺城北路 and 下西门.
+  [978,99,52,79,null,'#404746'],[1060,96,35,29,null,'#c1baac'],
+  [1127,33,42,12,null,'#626d65'],[1137,55,55,15,null,'#586463'],
+  [1141,81,59,16,null,'#72776e'],[1154,106,59,14,null,'#696b58'],
+  [1209,30,20,43,null,'#585747'],[1237,54,37,15,null,'#747e79'],
+  [1241,82,37,15,null,'#5e6763'],[1264,106,48,15,null,'#687a60'],
+].map(([u,v,w,d,floors,roofColor])=>({
+  center:westImagePoint(u,v),w:w*.738,d:d*.928,floors,roofColor,
+  name:floors?'光大时尚':undefined,
+  use: floors?'commercial':u>=695&&u<=755&&v>=255&&v<=350?'residential':undefined,
+  zone:u>=929?'gate-imagery':'school-imagery',
+}));
+
+const schoolImageryGround=[
+  {kind:'open',color:'#aa9980',pixels:[[218,320],[285,314],[293,367],[222,371]]},
+  {kind:'open',color:'#cfbea2',pixels:[[450,451],[511,444],[523,511],[461,517]]},
+  {kind:'parking',color:'#bcb5a5',pixels:[[767,256],[793,252],[803,313],[772,316]]},
+  {kind:'parking',name:'光大时尚西停车场',color:'#ac9f89',pixels:[[716,452],[776,448],[785,487],[824,487],[829,521],[719,528]]},
+  {kind:'parking',name:'光大时尚东停车场',color:'#939081',pixels:[[883,449],[893,448],[900,479],[890,482]]},
+].map(({pixels,...surface})=>({...surface,ring:pixels.map(p=>westImagePoint(...p))}));
+
+// Representative exposed ground samples. Radii feather the color into adjoining ground.
+const schoolGroundTints=[
+  [250,334,75,'#a69780'],[358,408,67,'#aba38f'],
+  [451,287,90,'#cec0a7'],[480,476,65,'#cbbc9f'],
+  [630,412,42,'#b0a48c'],[708,366,75,'#a9a18e'],
+  [779,292,39,'#bcb5a5'],[765,495,82,'#ac9f89'],
+  [882,489,42,'#929082'],
+].map(([u,v,radius,color])=>({center:westImagePoint(u,v),radius,color}));
 
 
 const westRoute = segments(mapData.lowerWestRoad);
@@ -1037,17 +1099,27 @@ function westRoadSurfaceHeight(x,z){
 }
 
 function addWestRoadSurface(scene) {
-  const ground=new T.PlaneGeometry(980,380,180,76);
+  const ground=new T.PlaneGeometry(980,550,180,110);
   ground.rotateX(-Math.PI/2);
-  ground.translate(-1670,0,95);
+  ground.translate(-1670,0,180);
   const terrain=ground.attributes.position, terrainUV=ground.attributes.uv;
+  const groundColors=new Float32Array(terrain.count*3),color=new T.Color();
+  const originalColor=new T.Color('#c3b692'),cityColor=new T.Color('#aaa388');
+  const tints=schoolGroundTints.map(tint=>({...tint,color:new T.Color(tint.color)}));
   for(let i=0;i<terrain.count;i++) {
     const x=terrain.getX(i),z=terrain.getZ(i);
     terrain.setY(i,westGroundHeight(x,z)-.075);
     terrainUV.setXY(i,x/4,z/4);
+    color.copy(originalColor).lerp(cityColor,smooth(242,285,z));
+    for(const {center:[cx,cz],radius,color:tint} of tints){
+      const distance=Math.hypot(x-cx,z-cz);
+      if(distance<radius)color.lerp(tint,1-smooth(radius*.24,radius,distance));
+    }
+    color.toArray(groundColors,i*3);
   }
+  ground.setAttribute('color',new T.BufferAttribute(groundColors,3));
   ground.computeVertexNormals();
-  const terrainMesh=new T.Mesh(ground,new T.MeshStandardMaterial({color:'#c3b692',roughness:1}));
+  const terrainMesh=new T.Mesh(ground,new T.MeshStandardMaterial({vertexColors:true,roughness:1}));
   terrainMesh.receiveShadow=true;
   scene.add(terrainMesh);
 
@@ -1869,8 +1941,8 @@ const commercialPlots = [
     name:'万人商厦',subtitle:'顺城路37号',groundShops:['汉庭优佳酒店'],face:Math.PI/2},
   {x:-1575,z:69,w:52,d:32,floors:6,facade:'#bdad95',trim:'#345052',glass:'#5d7a85',
     name:'希岸酒店',subtitle:'顺城路31号',groundShops:['希岸酒店'],face:0},
-  {x:-1503,z:56,w:39,d:28,floors:7,facade:'#b0a897',trim:'#654b73',glass:'#637d86',
-    name:'麗枫酒店',subtitle:'顺城路56号',groundShops:['麗枫酒店'],face:0},
+  {x:-1511,z:75,w:27,d:28,floors:4,facade:'#cfaa83',trim:'#665d5b',glass:'#687c7b',
+    name:'麗枫酒店',subtitle:'顺城路56号',groundShops:[],face:-Math.PI/2},
 ];
 
 const westDistrictStops = [
@@ -1923,10 +1995,12 @@ function addWestDistrict(scene,box,namedBoard) {
     const sideways=Math.abs(Math.sin(face))>.5;
     const width=sideways?d:w, depth=sideways?w:d;
     const podium = width>80;
+    const lavande=name==='麗枫酒店';
     const height=5.2+(floors-1)*(podium?4:3.35);
     group.userData.buildingRecord={id:`commercial-${name}`,name,x,z,w,d,angle:face,
       ...resolveBuildingHeight({x,z,w,d,buildingType:name.includes('酒店')?'hotel':name.includes('写字楼')?'office':'commercial',fallbackFloors:floors,estimatedHeight:height}),
-      height,levels:floors,floors,heightSource:'existing-approximation',source:'existing-approximation',confidence:.3,estimated:true,approximate:true,footprintSource:'AMap-POI-and-image-estimate',footprintEstimated:true};
+      height,levels:floors,floors,heightSource:lavande?'facade-photo-levels':'existing-approximation',
+      source:lavande?'facade-photo-levels':'existing-approximation',confidence:lavande?.6:.3,estimated:true,approximate:true,footprintSource:'AMap-POI-and-image-estimate',footprintEstimated:true};
     const front=depth/2;
     box(group,'#a8a195',0,-.55,0,width+1,1.1,depth+1);
     box(group,facade,0,height/2,0,width,height,depth);
@@ -1934,6 +2008,16 @@ function addWestDistrict(scene,box,namedBoard) {
     box(group,facade,width*.22,height+1.45,-depth*.2,width*.25,2.6,depth*.32);
     box(group,'#b4ada0',0,.12,front+2.3,width+.4,.24,4.8);
     box(group,trim,0,4.45,front+.7,width+.35,.55,1.65);
+    if(lavande){
+      for(const y of [5.18,8.45,11.85])box(group,'#69655e',0,y,0,width+.35,.35,depth+.35);
+      for(let i=0;i<3;i++)box(group,'#77746a',0,.07+i*.125,front+1.6-i*.33,width*.42,.14,2-i*.50);
+      for(let j=0;j<6;j++){
+        const xx=(j-2.5)*width/6;
+        box(group,'#4f6269',xx,1.68,front+.16,width/6-.34,2.72,.16);
+        box(group,'#ac9278',xx,1.7,front+.27,.08,2.75,.08);
+      }
+      namedBoard(group,'LAVANDE 麗枫酒店',0,3.9,front+1.58,width*.82,1.05,0,'#3a414b');
+    }
     for(const side of [-1,1]) {
       const windows=Math.floor(width/(podium?5.45:4.55));
       for(let floor=1;floor<floors;floor++) {
@@ -1957,7 +2041,7 @@ function addWestDistrict(scene,box,namedBoard) {
     }
     const topSignY=podium?height-2.3:height-1.5;
     box(group,trim,0,topSignY,front+.3,Math.min(width*.72,38),2.65,.24);
-    namedBoard(group,name,0,topSignY,front+.43,Math.min(width*.68,36),2.4,0,trim);
+    namedBoard(group,lavande?'LAVANDE 麗枫酒店':name,0,topSignY,front+.43,Math.min(width*.68,36),2.4,0,lavande?'#76629d':trim);
     const tenantWidth=Math.min(14,(width-entryWidth)/4.15);
     groundShops.forEach((shop,i)=>{
       const side=i%2===0?-1:1;
@@ -2076,6 +2160,35 @@ function addWestDistrict(scene,box,namedBoard) {
 }
 
 
+// Roofs traced from the WGS84 station-area imagery export; dimensions are local meters.
+const stationImagePoint=(u,v)=>[
+  (112.158+u/1320*.0088-112.1815)*111320*Math.cos(37.204*Math.PI/180),
+  (37.204-(37.2076-v/810*.0054))*111320,
+];
+const stationStreetPlots=[
+  [875,392,48,29,-Math.PI/2,1,'#8b907f','#a9ada7','家家利超市','顺城路25号'],
+  [726,462,20,15,2.23,1,'#605d4b','#c4bbaa','万福隆超市总店','顺城路9号'],
+  [584,357,26,11,2.23,1,'#96a79d','#bcb5a3'],
+  [649,418,22,10,2.23,2,'#726f63','#afa795'],
+  [679,437,12,8,2.23,1,'#646454','#c1b39d'],
+  [751,496,20,10,2.23,1,'#69695d','#b5a48f'],
+  [776,532,26,12,2.23,2,'#777971','#bbb2a4'],
+  [807,573,22,11,2.23,1,'#646b63','#b5ab9e'],
+  [834,611,18,9,2.23,1,'#696e63','#c4baa7'],
+  [728,317,19,10,-.91,1,'#4d544e','#9e9d8d'],
+  [758,346,24,11,-.91,2,'#7d8175','#c2b7a3'],
+  [853,458,20,10,-.91,1,'#777b6a','#ada591'],
+  [943,549,23,12,-.91,2,'#69796c','#a5aa9b'],
+  [963,598,17,10,-.91,1,'#646658','#b7ac99'],
+].map(([u,v,w,d,yaw,floors,roof,wall,name,address])=>{
+  const [x,z]=stationImagePoint(u,v);return {x,z,w,d,yaw,floors,roof,wall,name,address};
+});
+const stationStreetRings=stationStreetPlots.map(({x,z,w,d,yaw})=>{
+  const c=Math.cos(yaw),s=Math.sin(yaw);
+  return [[-w/2,-d/2],[w/2,-d/2],[w/2,d/2],[-w/2,d/2]]
+    .map(([u,v])=>[x+u*c+v*s,z-u*s+v*c]);
+});
+
 const junctions = [
   {name:'中都街 × 顺城北路',x:-1721,z:-195,bearing:-.66,type:'station',width:19,
     note:'站前斜接路口 · 平遥站和站前广场',look:[-1757,3,-250]},
@@ -2120,8 +2233,17 @@ const shunchengStops = junctions.map(junction=>{
   return {name,keywords:'顺城路全线 顺城路路口',address:note+' · 街景细节示意',
     eye:eye??[laneX,6.8*scale,eyeZ],target:look??[x+2,1.4,z+(type==='end'?0:-8)]};
 });
+shunchengStops.push(
+  {name:'平遥站 · 进站口',keywords:'平遥火车站 火车站 中都街 台阶',address:'中都路14号 · 站房南侧',
+    eye:[-1721,3.8,-222],target:[-1736,4.4,-268]},
+  ...stationStreetPlots.filter(p=>p.name).map(({x,z,d,yaw,name,address})=>({
+    name,keywords:'顺城北路 家家利 万福隆 超市',address,
+    eye:name==='家家利超市'?[-1595,2.5,-128]:[x+Math.sin(yaw)*(d/2+9),2.3,z+Math.cos(yaw)*(d/2+9)],
+    target:name==='家家利超市'?[-1581,2.8,-126]:[x,2.8,z],
+  })),
+);
 const footprints = [
-  {x:-1773,z:-247,w:73,d:27,h:11,base:'#bfb9a3',accent:'#7d6757',name:'平遥站',kind:'station'},
+  {x:-1754,z:-284,w:81,d:23,h:10.5,base:'#b9b9b1',accent:'#72766f',name:'平遥站',kind:'station'},
   {x:-1399,z:1708,w:42,d:37,h:25,base:'#c5b49c',accent:'#5c594d',name:'全季酒店',kind:'hotel'},
   {x:-1270,z:1804,w:46,d:32,h:14,base:'#bbbbad',accent:'#355777',name:'南城派出所',kind:'hotel'},
 ];
@@ -2133,7 +2255,60 @@ const landscapeParcels=[
 
 function isShunchengParcel(x,z,radius) {
   return [...footprints,...landscapeParcels].some(p=>
-    Math.abs(p.x-x)<p.w/2+radius+3&&Math.abs(p.z-z)<p.d/2+radius+3);
+    Math.abs(p.x-x)<p.w/2+radius+3&&Math.abs(p.z-z)<p.d/2+radius+3)||
+    stationStreetPlots.some(p=>{
+      const dx=x-p.x,dz=z-p.z,c=Math.cos(p.yaw),s=Math.sin(p.yaw);
+      return Math.abs(dx*c-dz*s)<p.w/2+radius&&Math.abs(dx*s+dz*c)<p.d/2+radius;
+    });
+}
+
+function addStationStreetFronts(scene,box,namedBoard){
+  for(const p of stationStreetPlots){
+    const {x,z,w,d,yaw,roof,wall,name,floors}=p;
+    const isJiajiali=name==='家家利超市', isWanfulong=name==='万福隆超市总店';
+    const record=resolveBuildingHeight({x,z,w,d,angle:yaw,buildingType:'commercial',
+      fallbackFloors:floors,levels:name?1:undefined,storeyHeight:isJiajiali?5.4:isWanfulong?4.8:3.28,
+      source:name?'storefront-photo-visible-level':'',preferRasterHeight:!name});
+    const h=record.height, front=d/2;
+    const root=new T.Group();root.name=name??'顺城北路沿街铺面';
+    root.position.set(x,westGroundHeight(x,z),z);root.rotation.y=yaw;scene.add(root);
+    root.userData.buildingRecord={...record,id:`station-street-${x.toFixed(1)}`,name,x,z,w,d,angle:yaw,
+      footprintSource:'Esri imagery trace',footprintEstimated:true};
+    box(root,wall,0,h/2,0,w,h,d);
+    box(root,roof,0,h+.12,0,w+.34,.24,d+.34);
+    box(root,'#9e978a',0,.11,front+.95,w,.22,1.8);
+    const count=Math.max(2,Math.round(w/(name?5.0:4.1))),bay=w/count;
+    for(let i=0;i<count;i++){
+      const u=(i+.5-count/2)*bay;
+      const entry=i===Math.floor(count/2),doorWidth=bay*(entry?.85:.76);
+      const shopGlass=isWanfulong?'#333c3e':'#516870';
+      box(root,'#666760',u,1.42,front+.07,doorWidth+.18,2.72,.16);
+      box(root,shopGlass,u,1.45,front+.17,doorWidth,2.46,.10);
+      box(root,isWanfulong?'#574f46':'#b0aea0',u,1.45,front+.24,.055,2.46,.055);
+      if(!entry)box(root,'#8b867b',u,.29,front+.24,doorWidth,.38,.13);
+      if(!name){
+        box(root,['#564d46','#6f7d73','#67605b'][i%3],u,2.98,front+.18,bay*.91,.45,.21);
+        if(i%3===0)box(root,'#827d70',u,2.70,front+.45,bay*.92,.13,.7);
+      }
+      if(isJiajiali)box(root,'#677b7c',u,h-.59,front+.12,bay-.13,1.03,.14);
+    }
+    for(let floor=1;floor<record.floors;floor++){
+      const y=(floor+.54)*(h/record.floors);
+      for(let i=0;i<count;i++){
+        const u=(i+.5-count/2)*bay;
+        for(const side of [-1,1]){
+          box(root,'#bcb9ab',u,y,side*(front+.06),bay*.58,1.44,.15);
+          box(root,'#4b626b',u,y,side*(front+.16),bay*.52,1.32,.10);
+        }
+      }
+    }
+    if(name){
+      const ledge=isWanfulong?h-1.48:3.19;
+      box(root,'#414747',0,ledge,front+.50,w+.22,.25,1.36);
+      namedBoard(root,name,0,isWanfulong?ledge+.84:h+.56,front+.34,w*.88,isWanfulong?1.28:1.02,0,
+        isWanfulong?'#a22321':'#dddcd5',isWanfulong?'#f0c73a':'#b23437');
+    }
+  }
 }
 
 function roadAt(lines,z) {
@@ -2272,17 +2447,52 @@ function addShuncheng(scene,box,namedBoard) {
     }
   }
 
-  const stationCenter=footprints[0];
-  floorStrip('#ada89b',stationCenter.x,stationCenter.z+29,80,36,.097,-.23);
-  for(let i=-2;i<=2;i++) floorStrip('#d4cbbb',stationCenter.x+i*15,stationCenter.z+28,.10,25,.105,-.23);
+  floorStrip('#b8b1a5',-1731,-237,76,29,.097,.56);
+  for(let i=-3;i<=3;i++)floorStrip('#d4cbbb',-1731+i*6,-237-i*3.8,.11,7,.105,.56);
+  addStationStreetFronts(scene,box,namedBoard);
 
   for(const {x,z,w,d,h,base,accent,name,kind} of footprints) {
     const root=new T.Group();
     root.position.set(x,westGroundHeight(x,z),z);
-    root.rotation.y=kind==='station'?.19:0;
+    root.rotation.y=kind==='station'?.56:0;
+    root.name=name;
     scene.add(root);
     box(root,base,0,h/2,0,w,h,d);
     box(root,accent,0,h+.22,0,w+.7,.48,d+.6);
+    if(kind==='station'){
+      const front=d/2;
+      root.userData.buildingRecord={id:'pingyao-railway-station',name,x,z,w,d,height:h,levels:2,
+        buildingType:'public',heightSource:'station-facade-photo-estimate',estimated:true,footprintEstimated:true};
+      box(root,'#807f74',0,10.03,front+.34,w+.6,.36,.7);
+      box(root,'#d7c292',0,9.99,front+.72,w+.5,.075,.10);
+      box(root,'#dad8cb',0,8.82,front+.20,w+.1,.16,.43);
+      for(let i=-7;i<=7;i++){
+        const u=i*5.2;
+        box(root,'#c9c8bf',u,5.14,front+.32,.62,9.30,.68);
+        if(i===7)continue;
+        const bay=u+2.6;
+        box(root,'#404e57',bay,6.74,front+.04,3.66,3.08,.14);
+        box(root,'#728c96',bay,6.76,front+.13,3.30,2.81,.05);
+        box(root,'#414d52',bay,6.76,front+.18,.065,2.81,.065);
+        box(root,'#4f5c5e',bay,6.38,front+.18,3.30,.065,.065);
+        box(root,'#5f7076',bay,2.20,front+.11,3.74,3.16,.20);
+        box(root,'#aaa99d',bay,2.2,front+.22,.085,3.14,.08);
+      }
+      box(root,'#575f62',0,4.28,front+1.5,w*.74,.30,3.25);
+      box(root,'#a7c5d0',0,4.30,front+3.16,w*.74,.08,.11);
+      for(let i=0;i<4;i++){
+        const rise=(4-i)*.14;
+        box(root,'#8a8781',0,rise/2,front+.68+i*.39,w*.69,rise,1.36+i*.09);
+        box(root,'#6c6b68',0,rise-.012,front+1.35+i*.44,w*.69,.024,.031);
+      }
+      for(const side of [-1,1]){
+        for(let i=0;i<3;i++)box(root,'#646a69',side*w*.25,.72,front+.8+i*.59,.047,1.26,.047);
+        box(root,'#747b7a',side*w*.25,1.31,front+1.4,.07,.065,1.74,.25);
+      }
+      namedBoard(root,'平 遥 站',0,11.25,front+.25,24,1.7,0,'#aeb0a9','#b23e36');
+      namedBoard(root,'进站口',0,3.72,front+.24,5.7,.56,0,'#4b5456');
+      continue;
+    }
     box(root,accent,0,3.8,d/2+.7,w*.72,.32,2.05);
     for(let i=0;i<Math.floor(w/5);i++) {
       const dx=(i-(Math.floor(w/5)-1)/2)*4.5;
@@ -2329,7 +2539,7 @@ const namedWestShops = [
   {name:'成成过油肉',x:-1976,side:-1,width:10,style:1,address:'环建巷路口西北'},
   {name:'遥来香美食广场',x:-1988,side:1,width:15,style:3,address:'西关大街182号'},
   {name:'景上川菜馆',x:-1908,side:-1,width:10,style:1,address:'平遥二中北门以西'},
-  {name:'晓亮书店',x:-1896,side:-1,width:8,style:0,address:'下西关街167号'},
+  {name:'晓亮书店',x:-1766,side:1,width:8,style:0,address:'下西关街与环建巷交叉口东200米'},
   {name:'鲜活香超市',x:-1853,side:-1,width:10,style:0,address:'平遥二中北门旁'},
   {name:'十凤牛肉丸子面',x:-1800,side:-1,width:10,style:1,address:'古陶镇人民政府南门附近'},
   {name:'马俊兰州牛肉面',x:-1785,side:-1,width:10,style:3,address:'西关大街棉麻公司东侧'},
@@ -2342,9 +2552,9 @@ const namedWestShops = [
   {name:'书亦烧仙草',x:-1396,side:1,width:8,style:0,address:'古陶运腾市场北门旁'},
   {name:'蜜雪冰城',x:-1385,side:1,width:9,style:1,address:'古陶运腾市场旁'},
   {name:'茶百道',x:-1380,side:-1,width:8,style:2,address:'顺城北路交叉口以东'},
-  {name:'库迪咖啡',x:-1366,side:-1,width:9,style:4,address:'下西关街49号'},
+  {name:'库迪咖啡',x:-1365,side:-1,width:9,style:4,address:'下西关街49号'},
   {name:'1点点',x:-1349,side:-1,width:8,style:0,address:'西关大街53号'},
-  {name:'禾木点心局',x:-1248,side:-1,width:9,style:3,address:'郑孝燮路交叉口西侧'},
+  {name:'禾木点心局',x:-1245,side:-1,width:9,style:3,address:'郑孝燮路交叉口西侧'},
 ];
 
 function shopView(shop) {
@@ -2554,6 +2764,7 @@ function addWestFrontages(scene,namedBoard) {
         const offset=11.8+rnd()*1.2;
         const x=cx-dz*side*offset, z=cz+dx*side*offset;
         if(westBlockZones.some(zone=>pointInRing(x,z,zone.ring)))continue;
+        if(isShunchengParcel(x,z,radius))continue;
         if (name==='郑孝燮路'&&wallSide(x)) continue;
         if (!available(x,z,radius)) continue;
         const yaw=Math.atan2(dz*side,-dx*side);
@@ -2572,7 +2783,9 @@ function addWestFrontages(scene,namedBoard) {
   for(const unit of frontagePlan.units){
     const {x,z,yaw,width,depth,variant,shop}=unit;
     const fallbackFloors=variant===0||variant===3?2:variant===2?3:1;
-    const record=resolveBuildingHeight({x,z,w:width,d:depth,angle:yaw,fallbackFloors,buildingType:'commercial'});
+    const levels=x>=-1894?1:undefined;
+    const record=resolveBuildingHeight({x,z,w:width,d:depth,angle:yaw,levels,fallbackFloors,buildingType:'commercial',
+      source:levels?'single-storey-frontage-reference':null});
     const base=buildUnit(x,z,yaw,width,depth,variant,true,record);
     unit.base=base;unit.buildingRecord={id:`west-shop-${unit.row}-${heightRecords.length}`,name:shop?.name||'沿街商铺（未核实名称）',x,z,w:width,d:depth,angle:yaw,...record,footprintSource:'image-reviewed-connected-frontage',footprintEstimated:true};
     heightRecords.push(unit.buildingRecord);
@@ -2834,6 +3047,9 @@ function addWestGreenery(scene){
 
 
 const blockAngle=.108,blockCos=Math.cos(blockAngle),blockSin=Math.sin(blockAngle);
+const imageryAreas=[schoolImageryArea,gateImageryArea];
+const westStudyRings=[...westBlockZones.map(({ring})=>ring),...imageryAreas];
+const westBlockEdges=westStudyRings.map(ring=>segments([...ring,ring[0]]));
 function westBlockWorld(x,z){return [x*blockCos+z*blockSin,-x*blockSin+z*blockCos];}
 function westBlockLocal(x,z){return [x*blockCos-z*blockSin,x*blockSin+z*blockCos];}
 function blockSegmentHits(a,b,x,z,w,d){
@@ -2848,13 +3064,14 @@ function blockSegmentHits(a,b,x,z,w,d){
 }
 function blockRect(x,z,w,d){return [[x-w/2,z-d/2],[x+w/2,z-d/2],[x+w/2,z+d/2],[x-w/2,z+d/2]];}
 function westBlockProtectedRings(){
-  return [mapData.campus,mapData.wall,yufengBlockBoundary,...mapData.areas.map(([,r])=>r),...mapData.buildings.map(([,,r])=>r),
+  return [mapData.campus,mapData.wall,yufengBlockBoundary,surveyedWestPark,...stationStreetRings,...mapData.areas.map(([,r])=>r),...mapData.buildings.map(([,,r])=>r),
     ...commercialPlots.map(p=>blockRect(p.x,p.z,p.w+5,p.d+6)),
     blockRect(-1452.5,93,110,46), // existing shopping-center forecourt
     blockRect(-1253,443.4,112,168),blockRect(-1253,545,110,56), // theater eaves/plaza
     ...planWestFrontages().units.map(p=>{
       const c=Math.cos(p.yaw),s=Math.sin(p.yaw);
-      return blockRect(0,0,p.width+.4,p.depth+2).map(([x,z])=>[p.x+x*c+z*s,p.z-x*s+z*c]);
+      const setback=p.x>=-1894?5:0;
+      return blockRect(0,-setback/2,p.width+.4,p.depth+2+setback).map(([x,z])=>[p.x+x*c+z*s,p.z-x*s+z*c]);
     })];
 }
 let westBlockLayoutCache;
@@ -2869,22 +3086,42 @@ function createWestBlockLayout(){
   for(const ring of protectedRings){const polygon=ring.map(p=>westBlockLocal(...p));index({polygon},polygon);}
   const paths=[...mapData.roads.map(([,width,,points])=>({points,pad:width/2+2})),
     ...mapData.shunchengWays.map(points=>({points,pad:9})),...mapData.rail.map(points=>({points,pad:25})),
-    ...mapData.water.map(([width,points])=>({points,pad:width/2+2})),
-    ...westBlockAlleys.map(points=>({points,pad:3.1}))];
+    ...mapData.water.map(([width,points])=>({points,pad:width/2+2}))];
   for(const {points,pad} of paths)for(const e of segments(points)){
     const a=westBlockLocal(...e.start),b=westBlockLocal(...e.end);index({a,b,pad},[a,b],pad);
   }
+  function isBlocked(x,z,hw,hd,corners){
+    return obstacles.at(x,z).some(item=>{
+      if(item.a)return blockSegmentHits(item.a,item.b,x,z,hw+item.pad,hd+item.pad);
+      return corners.some(p=>pointInRing(...p,item.polygon))||pointInRing(x,z,item.polygon)||
+        segments([...item.polygon,item.polygon[0]]).some(e=>blockSegmentHits(e.start,e.end,x,z,hw,hd));
+    });
+  }
+  for(const {ring} of schoolImageryGround){
+    const polygon=ring.map(p=>westBlockLocal(...p));index({polygon},polygon);
+  }
+  for(const roof of schoolImageryRoofs){
+    const [x,z]=westBlockLocal(...roof.center),{w,d}=roof;
+    const corners=blockRect(x,z,w,d);
+    if(isBlocked(x,z,w/2,d/2,corners))continue;
+    plots.push({...roof,x,z,world:roof.center,angle:blockAngle,variant:plots.length%13,kind:'imagery'});
+    index({polygon:corners},corners);
+  }
+  for(const ring of imageryAreas){
+    const polygon=ring.map(p=>westBlockLocal(...p));index({polygon},polygon);
+  }
+  for(const path of westBlockAlleys)for(const edge of segments(path)){
+    const a=westBlockLocal(...edge.start),b=westBlockLocal(...edge.end);
+    index({a,b,pad:3.1},[a,b],3.1);
+  }
   for(const zone of zones){
     const xs=zone.local.map(p=>p[0]),zs=zone.local.map(p=>p[1]);
-    for(const [sx,sz,w,d] of [[32,36,29,32],[20,25,17,21],[16,21,13,17]]){
+    const sizes=[[32,36,29,32],[20,25,17,21],[16,21,13,17]];
+    for(const [sx,sz,w,d] of sizes){
       for(let z=Math.floor(Math.min(...zs)/sz)*sz;z<Math.max(...zs);z+=sz)for(let x=Math.floor(Math.min(...xs)/sx)*sx;x<Math.max(...xs);x+=sx){
         const hw=w/2+.65,hd=d/2+.65,corners=blockRect(x,z,hw*2,hd*2);
         if(!corners.every(p=>pointInRing(...p,zone.local)))continue;
-        if(obstacles.at(x,z).some(item=>{
-          if(item.a)return blockSegmentHits(item.a,item.b,x,z,hw+item.pad,hd+item.pad);
-          return corners.some(p=>pointInRing(...p,item.polygon))||pointInRing(x,z,item.polygon)||
-            segments([...item.polygon,item.polygon[0]]).some(e=>blockSegmentHits(e.start,e.end,x,z,hw,hd));
-        }))continue;
+        if(isBlocked(x,z,hw,hd,corners))continue;
         const hash=(Math.imul(x,73856093)^Math.imul(z,19349663))>>>0;
         plots.push({x,z,w,d,world:westBlockWorld(x,z),angle:blockAngle,zone:zone.id,variant:hash%13,kind:w>20&&hash%4===0?'residential':w>20&&hash%7===0?'workshop':'lowrise'});
         index({polygon:corners},corners);
@@ -2901,22 +3138,25 @@ function createWestBlockLayout(){
     for(let i=0;i<count;i++){
       const a=sample(line,i/count),b=sample(line,(i+1)/count);
       const corners=[a,b].flatMap(([x,z])=>[-1,1].map(side=>[x+nx*side*2.35,z+nz*side*2.35]));
-      if(!corners.every(([x,z])=>westBlockZones.some(zone=>pointInRing(x,z,zone.ring))&&!laneBlocked.some(r=>pointInRing(x,z,r))&&!roads.some(({line,pad})=>projectOnSegment([x,z],line).distance<pad)))continue;
+      if(!corners.every(([x,z])=>westBlockZones.some(zone=>pointInRing(x,z,zone.ring))&&!imageryAreas.some(r=>pointInRing(x,z,r))&&!laneBlocked.some(r=>pointInRing(x,z,r))&&!roads.some(({line,pad})=>projectOnSegment([x,z],line).distance<pad)))continue;
       laneSegments.push({a,b,width:4.7});
     }
   }
   westBlockLayoutCache={plots,laneSegments,protectedRings};return westBlockLayoutCache;
 }
 function isWestInteriorStudy(x,z,radius=0){
-  return westBlockZones.some(zone=>pointInRing(x,z,zone.ring)||segments([...zone.ring,zone.ring[0]]).some(e=>projectOnSegment([x,z],e).distance<radius));
+  return westStudyRings.some((ring,i)=>pointInRing(x,z,ring)||
+    (radius>0&&westBlockEdges[i].some(e=>projectOnSegment([x,z],e).distance<radius)));
 }
 
 
-function addWestBlocks(scene,layout=createWestBlockLayout()){
+function addWestBlocks(scene,layout=createWestBlockLayout(),namedBoard){
   const batch=createUrbanBatch(scene);
+  const parkingLines=createUrbanBatch(scene,{ground:westGroundHeight});
+  const storefrontSigns=[];
   let buildings=0;const heightRecords=[];
   for(const p of layout.plots){
-    const wall=['#b7b4a8','#c3b9a7','#a9ada8','#b8ab9b'][p.variant%4];
+    const wall=p.floors?'#aaa89a':['#b7b4a8','#c3b9a7','#a9ada8','#b8ab9b'][p.variant%4];
     const corners=[[-p.w/2,-p.d/2],[p.w/2,-p.d/2],[p.w/2,p.d/2],[-p.w/2,p.d/2]].map(([x,z])=>westBlockWorld(p.x+x,p.z+z));
     const heights=corners.map(([x,z])=>westGroundHeight(x,z)),base=Math.max(...heights)+.06,low=Math.min(...heights)-.15;
     const local=(x,z)=>westBlockWorld(p.x+x,p.z+z);
@@ -2925,18 +3165,76 @@ function addWestBlocks(scene,layout=createWestBlockLayout()){
     }
     function house(x,z,w,d,floors=1,rotation=0,sheet=false){
       buildings++;
-      const [px,pz]=local(x,z),record=resolveBuildingHeight({x:px,z:pz,w,d,angle:p.angle+rotation,fallbackFloors:floors,buildingType:sheet?'industrial':'residential'});
+      const [px,pz]=local(x,z),record=resolveBuildingHeight({x:px,z:pz,w,d,angle:p.angle+rotation,fallbackFloors:floors,preferRasterHeight:p.kind==='imagery',buildingType:p.use??(sheet?'industrial':p.kind==='imagery'?'unknown':'residential')});
       const h=record.height;floors=record.floors;const storey=(h-.35)/floors;
-      heightRecords.push({id:`west-interior-${buildings}`,x:px,z:pz,w,d,angle:p.angle+rotation,...record,footprintSource:'inferred-parcel',footprintEstimated:true});
+      heightRecords.push({id:`west-interior-${buildings}`,name:p.name,zone:p.zone,x:px,z:pz,w,d,angle:p.angle+rotation,...record,roofColor:p.roofColor,footprintSource:p.kind==='imagery'?'Esri World Imagery trace':'inferred-parcel',footprintEstimated:true});
       box(wall,x,h/2,z,w,h,d,rotation);
       const c=Math.cos(rotation),s=Math.sin(rotation);
       const at=(dx,dz)=>[x+dx*c+dz*s,z-dx*s+dz*c];
       const detail=(color,dx,y,dz,ww,hh,dd)=>{const [px,pz]=at(dx,dz);box(color,px,y,pz,ww,hh,dd,rotation);};
       // Ordinary concrete low-rise buildings, with flat slabs and parapets.
-      detail(sheet?'#526d7a':'#8a8d88',0,h+.14,0,w+.22,.28,d+.22);
+      detail(p.roofColor??(sheet?'#526d7a':'#8a8d88'),0,h+.14,0,w+.22,.28,d+.22);
       for(const side of [-1,1]){
         detail('#aaa99e',0,h+.47,side*(d/2-.1),w,.48,.2);
         detail('#aaa99e',side*(w/2-.1),h+.47,0,.2,.48,d);
+      }
+      if(p.kind==='imagery'){
+        for(let face=0;face<4;face++){
+          const yaw=face*Math.PI/2,span=face%2?d:w,depth=face%2?w:d;
+          const commercial=p.floors!=null,mainFace=commercial?face===1:face===0;
+          const facade=(color,u,y,ww,hh,dd,offset=0)=>{
+            const [px,pz]=at(u*Math.cos(yaw)+(depth/2+offset)*Math.sin(yaw),
+              -u*Math.sin(yaw)+(depth/2+offset)*Math.cos(yaw));
+            box(color,px,y,pz,ww,hh,dd,rotation+yaw);
+          };
+          const count=Math.max(1,Math.round(span/(commercial?5.5:3.8))),bay=span/count;
+          if(commercial&&mainFace){
+            const top=h-.16,bottom=storey*1.04,cladding=top-bottom;
+            facade('#a9baca',0,(bottom+top)/2,span,cladding,.16,.14);
+            for(let u=-span/2+1.8;u<span/2;u+=1.8)facade('#687484',u,(bottom+top)/2,.032,cladding,.04,.24);
+            for(let y=bottom+1.4;y<top;y+=1.4)facade('#687484',0,y,span,.032,.04,.24);
+            // Stepped strips approximate the curved edge of the dark accent in the reference photo.
+            for(let j=0;j<12;j++){
+              const t=(j+.5)/12,boundary=span*(.29-.17*t*t),edge=span*.46;
+              facade('#303b49',(boundary+edge)/2,bottom+t*cladding,edge-boundary,cladding/12+.015,.11,.28);
+            }
+            facade('#a3acb6',0,top,span,.28,.36,.17);
+            facade('#222c39',0,storey*.95,span*.30,.43,2.3,1.0);
+            for(let step=0;step<3;step++)facade('#3d4145',0,.07+step*.11,span*.30,.14,1.7-step*.4,1.08-step*.16);
+            const [signX,signZ]=local(x+depth/2+.34,z);
+            storefrontSigns.push({x:signX,z:signZ,y:base+bottom+.7,w:span*.24,angle:p.angle+yaw});
+          }
+          for(let floor=0;floor<floors;floor++){
+            if(commercial&&mainFace&&floor>0)continue;
+            const y=floor*storey;
+            if(commercial||floors>1)facade('#a5a499',0,y+.12,span,.23,.16,.06);
+            for(let i=0;i<count;i++){
+              const u=(i+.5-count/2)*bay,entry=floor===0&&mainFace&&i===Math.floor(count/2);
+              if(commercial&&floor===0&&mainFace){
+                const opening=bay*(entry?.92:.8);
+                facade('#37454a',u,storey*.47,opening,storey*.83,.16,.09);
+                facade('#53737a',u,storey*.47,opening-.16,storey*.72,.10,.20);
+                facade(entry?'#a97d65':'#8e7668',u,storey*.47,.085,storey*.79,.12,.28);
+                continue;
+              }
+              if(entry){
+                facade('#555451',u,storey*.38,1.45,storey*.76,.18,.08);
+                facade('#78878a',u,storey*.45,1.1,storey*.50,.09,.20);
+                continue;
+              }
+              const ww=Math.min(bay*.7,commercial?2.9:1.75);
+              if(commercial&&!mainFace&&floor>0&&i%2===1){
+                facade('#777970',u,y+storey*.55,ww,storey*.43,.08,.06);
+                continue;
+              }
+              facade('#d2cfc1',u,y+storey*.55,ww+.13,storey*.44+.13,.13,.06);
+              facade('#3d535d',u,y+storey*.55,ww,storey*.44,.10,.15);
+              facade('#abb0a6',u,y+storey*.55,.07,storey*.44,.10,.21);
+            }
+          }
+          if(mainFace&&!commercial)facade('#767b76',0,storey*.90,2.2,.18,.7,.28);
+        }
+        return;
       }
       if(sheet)for(let dx=-w/2+.5;dx<w/2;dx+=.9)detail('#697e86',dx,h+.30,0,.045,.035,d-.4);
       else if(p.variant%3===0&&w>10)detail('#b1b0a4',-w*.22,h+.75,-d*.18,2.4,1.1,1.8);
@@ -2956,7 +3254,10 @@ function addWestBlocks(scene,layout=createWestBlockLayout()){
     // Solid foundations fill small terrain differences, rather than floating slabs.
     box('#85857a',0,(low-base)/2,0,p.w,base-low,p.d);
     box('#a2a196',0,.025,0,p.w,.05,p.d);
-    if(p.kind==='residential'){
+    if(p.kind==='imagery'){
+      house(0,0,p.w,p.d,p.floors??(p.w>35?2:1));
+      continue;
+    }else if(p.kind==='residential'){
       house(0,-p.d*.25,p.w-1,10,3+p.variant%2,0,false);
       house(0,p.d*.34,p.w-3,5,1,Math.PI,false);
     }else if(p.kind==='workshop'){
@@ -2973,6 +3274,33 @@ function addWestBlocks(scene,layout=createWestBlockLayout()){
     box('#575d53',p.w*.25,.45,p.d*.14,.75,.9,.65);
   }
   const root=batch.finish();root.name='下西关街两侧内部街坊（近似）';
+  for(const {x,y,z,w,angle} of storefrontSigns)namedBoard?.(root,'光大时尚',x,y,z,w,1.35,angle,'#a9baca','#963f55');
+  for(const {kind,name,color,ring} of schoolImageryGround){
+    const points=ring.map(([x,z])=>new T.Vector2(x,z));
+    const triangles=T.ShapeUtils.triangulateShape(points,[]);
+    const positions=triangles.flatMap(triangle=>triangle.flatMap(i=>{
+      const [x,z]=ring[i];return [x,westGroundHeight(x,z)+.045,z];
+    }));
+    const surface=new T.BufferGeometry();
+    surface.setAttribute('position',new T.Float32BufferAttribute(positions,3));
+    surface.computeVertexNormals();
+    const mesh=new T.Mesh(surface,new T.MeshStandardMaterial({
+      color,roughness:1,side:T.DoubleSide,
+    }));
+    mesh.name=name??(kind==='parking'?'卫星影像 · 停车硬地':'卫星影像 · 开敞地面');
+    mesh.receiveShadow=true;root.add(mesh);
+    if(kind==='parking'){
+      const [x,z]=ring[0], [endX,endZ]=ring.at(-1);
+      const length=Math.hypot(endX-x,endZ-z),dx=(endX-x)/length,dz=(endZ-z)/length;
+      for(let offset=4;offset<length-4;offset+=2.7){
+        const px=x+dx*offset+dz*3.4,pz=z+dz*offset-dx*3.4;
+        if([1,5.8].every(inset=>pointInRing(x+dx*offset+dz*inset,z+dz*offset-dx*inset,ring))){
+          parkingLines.box('#c5c0ae',px,.065,pz,4.8,.016,.1,Math.atan2(dx,dz));
+        }
+      }
+    }
+  }
+  root.add(parkingLines.finish());
   const vertices=[];
   for(const {a,b,width} of layout.laneSegments){
     const len=Math.hypot(b[0]-a[0],b[1]-a[1]),nx=-(b[1]-a[1])/len,nz=(b[0]-a[0])/len;
@@ -3003,7 +3331,7 @@ function addSchoolInterior(scene){
   }
   root.add(batch.finish());
   function trackBand(outerX,outerZ,innerX,innerZ,color,lift){
-    const vertices=[],indices=[],cx=-1772,cz=252;
+    const vertices=[],indices=[],cx=-1731,cz=250;
     for(let i=0;i<=80;i++){
       const t=i*Math.PI/40;
       for(const [rx,rz] of [[outerX,outerZ],[innerX,innerZ]]){
@@ -3015,9 +3343,9 @@ function addSchoolInterior(scene){
     const geometry=new T.BufferGeometry();geometry.setAttribute('position',new T.Float32BufferAttribute(vertices,3));geometry.setIndex(indices);geometry.computeVertexNormals();
     const mesh=new T.Mesh(geometry,new T.MeshStandardMaterial({color,roughness:1,side:T.DoubleSide}));mesh.receiveShadow=true;root.add(mesh);
   }
-  trackBand(42,23,36,17,'#927768',.085);
-  trackBand(36,17,0,0,'#929b88',.085);
-  for(let k=0;k<4;k++)trackBand(41-k*1.4,22-k*1.4,40.92-k*1.4,21.92-k*1.4,'#c2bb9d',.092);
+  trackBand(47,25,40,19,'#c7836d',.085);
+  trackBand(40,19,0,0,'#4a8265',.085);
+  for(let k=0;k<4;k++)trackBand(46-k*1.4,24-k*1.4,45.92-k*1.4,23.92-k*1.4,'#c2bb9d',.092);
   root.userData={approximate:true,heightRecords};return root;
 }
 
@@ -3219,7 +3547,7 @@ function addStreetDetails(scene) {
   addTheater(scene,box,namedBoard);
   addWestDistrict(scene,box,namedBoard);
   addWestGreenery(scene);
-  addWestBlocks(scene);
+  addWestBlocks(scene,undefined,namedBoard);
   addShuncheng(scene,box,namedBoard);
 
   function frontage({x,z,w,name,body,sign,canopy,food}) {
@@ -3262,7 +3590,7 @@ function addStreetDetails(scene) {
   const floor=schoolGeo.attributes.position;
   for(let i=0;i<floor.count;i++) floor.setY(i,westGroundHeight(floor.getX(i),floor.getZ(i)));
   schoolGeo.computeVertexNormals();
-  const schoolGround = new T.Mesh(schoolGeo,new T.MeshStandardMaterial({color:'#a19e82'}));
+  const schoolGround = new T.Mesh(schoolGeo,new T.MeshStandardMaterial({color:'#cec0a7'}));
   schoolGround.position.y=.045;
   scene.add(schoolGround);
   const school=new T.Group();
@@ -3276,6 +3604,24 @@ function addStreetDetails(scene) {
   box(school,'#9b572f',0,4.02,0,20.5,.95,2);
   namedBoard(school,'平遥县第二中学校',0,4.02,-1.01,17.4,.86,Math.PI,'#693629');
   box(school,'#c5b396',0,.08,15,16,.16,35);
+  // The pedestrian entrance and teaching blocks use shallow stone steps and landings.
+  function schoolEntrance(x,z,width,steps){
+    const height=steps*.14;
+    box(school,'#b4ad9f',x,height/2,z+.9,width,height,1.8);
+    for(let i=0;i<steps;i++){
+      const rise=(steps-i)*.14;
+      box(school,'#a39e95',x,rise/2,z-.19-i*.38,width,rise,.38);
+      box(school,'#77736e',x,rise-.013,z-.36-i*.38,width,.026,.028);
+    }
+    for(const side of [-1,1]){
+      const railX=x+side*(width/2-.16);
+      for(const end of [-.9,.85])box(school,'#686b67',railX,.62+height/2,z+end,.045,1.05,.045);
+      box(school,'#797d76',railX,1.13+height/2,z,.063,.059,1.95);
+    }
+  }
+  schoolEntrance(-6.6,1.5,2.6,2);
+  schoolEntrance(6.6,1.5,2.6,2);
+  for(let i=-6;i<=6;i++)box(school,'#8c8578',i*1.14,.084,9,.035,.016,10);
   for (const line of segments([...mapData.campus,mapData.campus[0]])) {
     const [left,right]=[line.start,line.end].sort((a,b)=>a[0]-b[0]);
     if (left[1]<168 && right[1]<168 && left[0]<-1870 && right[0]>-1847) {
@@ -3289,10 +3635,21 @@ function addStreetDetails(scene) {
     school.userData.heightRecords.push({id:`school-main-${x}-${z}`,name:'平遥二中教学楼（近似）',x:x-1858,z:z+156,w:width,d:18,height,levels:floors,buildingType:'public',heightSource:'photo-and-type-estimate',confidence:.35,estimated:true,footprintEstimated:true});
     box(school,'#a4533f',x,height/2,z,width,height,18);
     box(school,'#e5c8a2',x,height+.28,z,width+.65,.55,18.6);
+    box(school,'#796d62',x,.46,z,width+.08,.92,18.06);
+    schoolEntrance(x,z-10,5.4,3);
+    box(school,'#493d39',x,1.88,z-9.10,3.4,2.95,.17);
+    for(const side of [-1,1]){
+      box(school,'#617a84',x+side*.8,1.87,z-9.22,1.42,2.63,.08);
+      box(school,'#d8c3a7',x+side*2.00,1.62,z-9.55,.35,2.78,.45);
+    }
+    box(school,'#b9ab92',x,3.08,z-10.08,5.32,.24,2.3);
     for(let f=0;f<floors;f++) {
       for(let wx=-width/2+3;wx<width/2-2;wx+=4.7) {
+        if(f===0&&Math.abs(wx)<2.8)continue;
         box(school,'#ede0ca',x+wx,2.2+f*3.35,z-9.035,2.7,1.95,.11);
         box(school,'#586c72',x+wx,2.2+f*3.35,z-9.105,2.36,1.63,.08);
+        box(school,'#b7b6a7',x+wx,2.2+f*3.35,z-9.16,.075,1.63,.031);
+        box(school,'#e0c8a6',x+wx,1.27+f*3.35,z-9.16,2.88,.15,.29);
       }
     }
   }
@@ -4051,8 +4408,6 @@ function attachLandmarkUI({manager,camera,canvas,world,pause,visit}) {
     label.setAttribute('aria-label',`查看${record.name}介绍`);label.addEventListener('click',()=>show(record));layer.append(label);labels.push({record,label});
     const button=document.createElement('button');button.textContent=record.name;button.addEventListener('click',()=>show(record));list.append(button);
   }
-  const open=document.getElementById('landmark-open');open.disabled=false;
-  open.addEventListener('click',()=>{pause();card.hidden=true;title.textContent='城市地标';if(!dialog.open)dialog.showModal();});
   document.getElementById('landmark-visit').addEventListener('click',()=>{if(selected){dialog.close();visit(selected);}});
   const toggle=document.getElementById('landmark-label-toggle');
   toggle.addEventListener('change',()=>{layer.hidden=!toggle.checked;});
@@ -4427,7 +4782,7 @@ sun.shadow.mapSize.set(2048,2048);
 Object.assign(sun.shadow.camera,{left:-1300,right:1300,top:1300,bottom:-1300,near:1,far:2500});
 sun.shadow.normalBias = .14;
 scene.add(sun,sun.target,sky,daySky);
-const {lantern, gates,streetLighting,school} = buildCity(scene);
+const {lantern,streetLighting,school} = buildCity(scene);
 const landmarkManager = createLandmarkManager(scene,{onChange:()=>{renderer.shadowMap.needsUpdate=true;}});
 landmarkManager.loadAll();
 landmarkManager.registerExternal(schoolLandmarkRecord,school.root,school.dispose);
@@ -4550,17 +4905,6 @@ get('overview').addEventListener('click',()=>{
   get('start').textContent = '开始体验';
 });
 get('sources').addEventListener('click',pause);
-const gateSelect = get('gate');
-gates.forEach((gate,index) => gateSelect.add(new Option(gate.direction+' · '+gate.name,index)));
-gateSelect.disabled = false;
-gateSelect.addEventListener('change', () => {
-  if (gateSelect.value === '') return;
-  const {center:[x,z], normal:[nx,nz],spawn,look:target} = gates[Number(gateSelect.value)];
-  gateSelect.value = '';
-  aimFromStreet(spawn ?? [x+nx*72,4.1,z+nz*72],target ?? [x-nx*20,4.1,z-nz*20]);
-  startFlying();
-});
-
 const streetNameAt = streetAtPosition();
 const streetDialog = get('street-dialog');
 const query = get('street-query');
@@ -4611,17 +4955,9 @@ function openStreetSearch(initial='') {
   showStreetResults();
   query.focus();
 }
-for (const id of ['street-open','street-intro']) {
-  get(id).disabled=false;
-  get(id).addEventListener('click',()=>openStreetSearch());
-}
-get('shuncheng-intro').disabled=false;
-for(const id of ['school-intro','school-open']){
-  get(id).disabled=false;get(id).addEventListener('click',()=>visitStreet(schoolStops[0]));
-}
-for(const id of ['shuncheng-intro','shuncheng-guide']) {
-  get(id).addEventListener('click',()=>openStreetSearch('顺城路全线'));
-}
+get('street-open').disabled=false;
+get('street-open').addEventListener('click',()=>openStreetSearch());
+get('shuncheng-guide').addEventListener('click',()=>openStreetSearch('顺城路全线'));
 get('street-search').addEventListener('submit',event=>{
   event.preventDefault();
   showStreetResults();

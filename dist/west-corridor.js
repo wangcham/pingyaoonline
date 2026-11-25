@@ -6,6 +6,7 @@ import {isWestDistrictParcel} from './west-district.js';
 import {makeGrid, pointInRing, projectOnSegment, sample, segments} from './geography.js';
 import {shunchengCarriageways} from './west-road-layout.js';
 import {westBlockAlleys,westBlockZones} from './west-block-data.js';
+import {isShunchengParcel} from './shuncheng.js';
 
 const westRoads = mapData.roads.filter(([, ,name, points]) =>
   (name === '下西关街' || name === '上西关街' || name === '顺城北路' || name === '郑孝燮路') &&
@@ -31,7 +32,7 @@ const namedWestShops = [
   {name:'成成过油肉',x:-1976,side:-1,width:10,style:1,address:'环建巷路口西北'},
   {name:'遥来香美食广场',x:-1988,side:1,width:15,style:3,address:'西关大街182号'},
   {name:'景上川菜馆',x:-1908,side:-1,width:10,style:1,address:'平遥二中北门以西'},
-  {name:'晓亮书店',x:-1896,side:-1,width:8,style:0,address:'下西关街167号'},
+  {name:'晓亮书店',x:-1766,side:1,width:8,style:0,address:'下西关街与环建巷交叉口东200米'},
   {name:'鲜活香超市',x:-1853,side:-1,width:10,style:0,address:'平遥二中北门旁'},
   {name:'十凤牛肉丸子面',x:-1800,side:-1,width:10,style:1,address:'古陶镇人民政府南门附近'},
   {name:'马俊兰州牛肉面',x:-1785,side:-1,width:10,style:3,address:'西关大街棉麻公司东侧'},
@@ -44,9 +45,9 @@ const namedWestShops = [
   {name:'书亦烧仙草',x:-1396,side:1,width:8,style:0,address:'古陶运腾市场北门旁'},
   {name:'蜜雪冰城',x:-1385,side:1,width:9,style:1,address:'古陶运腾市场旁'},
   {name:'茶百道',x:-1380,side:-1,width:8,style:2,address:'顺城北路交叉口以东'},
-  {name:'库迪咖啡',x:-1366,side:-1,width:9,style:4,address:'下西关街49号'},
+  {name:'库迪咖啡',x:-1365,side:-1,width:9,style:4,address:'下西关街49号'},
   {name:'1点点',x:-1349,side:-1,width:8,style:0,address:'西关大街53号'},
-  {name:'禾木点心局',x:-1248,side:-1,width:9,style:3,address:'郑孝燮路交叉口西侧'},
+  {name:'禾木点心局',x:-1245,side:-1,width:9,style:3,address:'郑孝燮路交叉口西侧'},
 ];
 
 function shopView(shop) {
@@ -256,6 +257,7 @@ export function addWestFrontages(scene,namedBoard) {
         const offset=11.8+rnd()*1.2;
         const x=cx-dz*side*offset, z=cz+dx*side*offset;
         if(westBlockZones.some(zone=>pointInRing(x,z,zone.ring)))continue;
+        if(isShunchengParcel(x,z,radius))continue;
         if (name==='郑孝燮路'&&wallSide(x)) continue;
         if (!available(x,z,radius)) continue;
         const yaw=Math.atan2(dz*side,-dx*side);
@@ -274,7 +276,9 @@ export function addWestFrontages(scene,namedBoard) {
   for(const unit of frontagePlan.units){
     const {x,z,yaw,width,depth,variant,shop}=unit;
     const fallbackFloors=variant===0||variant===3?2:variant===2?3:1;
-    const record=resolveBuildingHeight({x,z,w:width,d:depth,angle:yaw,fallbackFloors,buildingType:'commercial'});
+    const levels=x>=-1894?1:undefined;
+    const record=resolveBuildingHeight({x,z,w:width,d:depth,angle:yaw,levels,fallbackFloors,buildingType:'commercial',
+      source:levels?'single-storey-frontage-reference':null});
     const base=buildUnit(x,z,yaw,width,depth,variant,true,record);
     unit.base=base;unit.buildingRecord={id:`west-shop-${unit.row}-${heightRecords.length}`,name:shop?.name||'沿街商铺（未核实名称）',x,z,w:width,d:depth,angle:yaw,...record,footprintSource:'image-reviewed-connected-frontage',footprintEstimated:true};
     heightRecords.push(unit.buildingRecord);

@@ -19,8 +19,8 @@ export const commercialPlots = [
     name:'万人商厦',subtitle:'顺城路37号',groundShops:['汉庭优佳酒店'],face:Math.PI/2},
   {x:-1575,z:69,w:52,d:32,floors:6,facade:'#bdad95',trim:'#345052',glass:'#5d7a85',
     name:'希岸酒店',subtitle:'顺城路31号',groundShops:['希岸酒店'],face:0},
-  {x:-1503,z:56,w:39,d:28,floors:7,facade:'#b0a897',trim:'#654b73',glass:'#637d86',
-    name:'麗枫酒店',subtitle:'顺城路56号',groundShops:['麗枫酒店'],face:0},
+  {x:-1511,z:75,w:27,d:28,floors:4,facade:'#cfaa83',trim:'#665d5b',glass:'#687c7b',
+    name:'麗枫酒店',subtitle:'顺城路56号',groundShops:[],face:-Math.PI/2},
 ];
 
 export const westDistrictStops = [
@@ -73,10 +73,12 @@ export function addWestDistrict(scene,box,namedBoard) {
     const sideways=Math.abs(Math.sin(face))>.5;
     const width=sideways?d:w, depth=sideways?w:d;
     const podium = width>80;
+    const lavande=name==='麗枫酒店';
     const height=5.2+(floors-1)*(podium?4:3.35);
     group.userData.buildingRecord={id:`commercial-${name}`,name,x,z,w,d,angle:face,
       ...resolveBuildingHeight({x,z,w,d,buildingType:name.includes('酒店')?'hotel':name.includes('写字楼')?'office':'commercial',fallbackFloors:floors,estimatedHeight:height}),
-      height,levels:floors,floors,heightSource:'existing-approximation',source:'existing-approximation',confidence:.3,estimated:true,approximate:true,footprintSource:'AMap-POI-and-image-estimate',footprintEstimated:true};
+      height,levels:floors,floors,heightSource:lavande?'facade-photo-levels':'existing-approximation',
+      source:lavande?'facade-photo-levels':'existing-approximation',confidence:lavande?.6:.3,estimated:true,approximate:true,footprintSource:'AMap-POI-and-image-estimate',footprintEstimated:true};
     const front=depth/2;
     box(group,'#a8a195',0,-.55,0,width+1,1.1,depth+1);
     box(group,facade,0,height/2,0,width,height,depth);
@@ -84,6 +86,16 @@ export function addWestDistrict(scene,box,namedBoard) {
     box(group,facade,width*.22,height+1.45,-depth*.2,width*.25,2.6,depth*.32);
     box(group,'#b4ada0',0,.12,front+2.3,width+.4,.24,4.8);
     box(group,trim,0,4.45,front+.7,width+.35,.55,1.65);
+    if(lavande){
+      for(const y of [5.18,8.45,11.85])box(group,'#69655e',0,y,0,width+.35,.35,depth+.35);
+      for(let i=0;i<3;i++)box(group,'#77746a',0,.07+i*.125,front+1.6-i*.33,width*.42,.14,2-i*.50);
+      for(let j=0;j<6;j++){
+        const xx=(j-2.5)*width/6;
+        box(group,'#4f6269',xx,1.68,front+.16,width/6-.34,2.72,.16);
+        box(group,'#ac9278',xx,1.7,front+.27,.08,2.75,.08);
+      }
+      namedBoard(group,'LAVANDE 麗枫酒店',0,3.9,front+1.58,width*.82,1.05,0,'#3a414b');
+    }
     for(const side of [-1,1]) {
       const windows=Math.floor(width/(podium?5.45:4.55));
       for(let floor=1;floor<floors;floor++) {
@@ -107,7 +119,7 @@ export function addWestDistrict(scene,box,namedBoard) {
     }
     const topSignY=podium?height-2.3:height-1.5;
     box(group,trim,0,topSignY,front+.3,Math.min(width*.72,38),2.65,.24);
-    namedBoard(group,name,0,topSignY,front+.43,Math.min(width*.68,36),2.4,0,trim);
+    namedBoard(group,lavande?'LAVANDE 麗枫酒店':name,0,topSignY,front+.43,Math.min(width*.68,36),2.4,0,lavande?'#76629d':trim);
     const tenantWidth=Math.min(14,(width-entryWidth)/4.15);
     groundShops.forEach((shop,i)=>{
       const side=i%2===0?-1:1;

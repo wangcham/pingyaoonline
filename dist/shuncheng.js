@@ -3,6 +3,36 @@ import {mapData} from './map-data.js';
 import {sample, segments} from './geography.js';
 import {westGroundHeight} from './west-terrain.js';
 import {atYufengAccess} from './west-road-layout.js';
+import {resolveBuildingHeight} from './building-heights.js';
+
+// Roofs traced from the WGS84 station-area imagery export; dimensions are local meters.
+const stationImagePoint=(u,v)=>[
+  (112.158+u/1320*.0088-112.1815)*111320*Math.cos(37.204*Math.PI/180),
+  (37.204-(37.2076-v/810*.0054))*111320,
+];
+const stationStreetPlots=[
+  [875,392,48,29,-Math.PI/2,1,'#8b907f','#a9ada7','家家利超市','顺城路25号'],
+  [726,462,20,15,2.23,1,'#605d4b','#c4bbaa','万福隆超市总店','顺城路9号'],
+  [584,357,26,11,2.23,1,'#96a79d','#bcb5a3'],
+  [649,418,22,10,2.23,2,'#726f63','#afa795'],
+  [679,437,12,8,2.23,1,'#646454','#c1b39d'],
+  [751,496,20,10,2.23,1,'#69695d','#b5a48f'],
+  [776,532,26,12,2.23,2,'#777971','#bbb2a4'],
+  [807,573,22,11,2.23,1,'#646b63','#b5ab9e'],
+  [834,611,18,9,2.23,1,'#696e63','#c4baa7'],
+  [728,317,19,10,-.91,1,'#4d544e','#9e9d8d'],
+  [758,346,24,11,-.91,2,'#7d8175','#c2b7a3'],
+  [853,458,20,10,-.91,1,'#777b6a','#ada591'],
+  [943,549,23,12,-.91,2,'#69796c','#a5aa9b'],
+  [963,598,17,10,-.91,1,'#646658','#b7ac99'],
+].map(([u,v,w,d,yaw,floors,roof,wall,name,address])=>{
+  const [x,z]=stationImagePoint(u,v);return {x,z,w,d,yaw,floors,roof,wall,name,address};
+});
+export const stationStreetRings=stationStreetPlots.map(({x,z,w,d,yaw})=>{
+  const c=Math.cos(yaw),s=Math.sin(yaw);
+  return [[-w/2,-d/2],[w/2,-d/2],[w/2,d/2],[-w/2,d/2]]
+    .map(([u,v])=>[x+u*c+v*s,z-u*s+v*c]);
+});
 
 const junctions = [
   {name:'中都街 × 顺城北路',x:-1721,z:-195,bearing:-.66,type:'station',width:19,
@@ -48,8 +78,17 @@ export const shunchengStops = junctions.map(junction=>{
   return {name,keywords:'顺城路全线 顺城路路口',address:note+' · 街景细节示意',
     eye:eye??[laneX,6.8*scale,eyeZ],target:look??[x+2,1.4,z+(type==='end'?0:-8)]};
 });
+shunchengStops.push(
+  {name:'平遥站 · 进站口',keywords:'平遥火车站 火车站 中都街 台阶',address:'中都路14号 · 站房南侧',
+    eye:[-1721,3.8,-222],target:[-1736,4.4,-268]},
+  ...stationStreetPlots.filter(p=>p.name).map(({x,z,d,yaw,name,address})=>({
+    name,keywords:'顺城北路 家家利 万福隆 超市',address,
+    eye:name==='家家利超市'?[-1595,2.5,-128]:[x+Math.sin(yaw)*(d/2+9),2.3,z+Math.cos(yaw)*(d/2+9)],
+    target:name==='家家利超市'?[-1581,2.8,-126]:[x,2.8,z],
+  })),
+);
 const footprints = [
-  {x:-1773,z:-247,w:73,d:27,h:11,base:'#bfb9a3',accent:'#7d6757',name:'平遥站',kind:'station'},
+  {x:-1754,z:-284,w:81,d:23,h:10.5,base:'#b9b9b1',accent:'#72766f',name:'平遥站',kind:'station'},
   {x:-1399,z:1708,w:42,d:37,h:25,base:'#c5b49c',accent:'#5c594d',name:'全季酒店',kind:'hotel'},
   {x:-1270,z:1804,w:46,d:32,h:14,base:'#bbbbad',accent:'#355777',name:'南城派出所',kind:'hotel'},
 ];
@@ -61,7 +100,60 @@ const landscapeParcels=[
 
 export function isShunchengParcel(x,z,radius) {
   return [...footprints,...landscapeParcels].some(p=>
-    Math.abs(p.x-x)<p.w/2+radius+3&&Math.abs(p.z-z)<p.d/2+radius+3);
+    Math.abs(p.x-x)<p.w/2+radius+3&&Math.abs(p.z-z)<p.d/2+radius+3)||
+    stationStreetPlots.some(p=>{
+      const dx=x-p.x,dz=z-p.z,c=Math.cos(p.yaw),s=Math.sin(p.yaw);
+      return Math.abs(dx*c-dz*s)<p.w/2+radius&&Math.abs(dx*s+dz*c)<p.d/2+radius;
+    });
+}
+
+function addStationStreetFronts(scene,box,namedBoard){
+  for(const p of stationStreetPlots){
+    const {x,z,w,d,yaw,roof,wall,name,floors}=p;
+    const isJiajiali=name==='家家利超市', isWanfulong=name==='万福隆超市总店';
+    const record=resolveBuildingHeight({x,z,w,d,angle:yaw,buildingType:'commercial',
+      fallbackFloors:floors,levels:name?1:undefined,storeyHeight:isJiajiali?5.4:isWanfulong?4.8:3.28,
+      source:name?'storefront-photo-visible-level':'',preferRasterHeight:!name});
+    const h=record.height, front=d/2;
+    const root=new T.Group();root.name=name??'顺城北路沿街铺面';
+    root.position.set(x,westGroundHeight(x,z),z);root.rotation.y=yaw;scene.add(root);
+    root.userData.buildingRecord={...record,id:`station-street-${x.toFixed(1)}`,name,x,z,w,d,angle:yaw,
+      footprintSource:'Esri imagery trace',footprintEstimated:true};
+    box(root,wall,0,h/2,0,w,h,d);
+    box(root,roof,0,h+.12,0,w+.34,.24,d+.34);
+    box(root,'#9e978a',0,.11,front+.95,w,.22,1.8);
+    const count=Math.max(2,Math.round(w/(name?5.0:4.1))),bay=w/count;
+    for(let i=0;i<count;i++){
+      const u=(i+.5-count/2)*bay;
+      const entry=i===Math.floor(count/2),doorWidth=bay*(entry?.85:.76);
+      const shopGlass=isWanfulong?'#333c3e':'#516870';
+      box(root,'#666760',u,1.42,front+.07,doorWidth+.18,2.72,.16);
+      box(root,shopGlass,u,1.45,front+.17,doorWidth,2.46,.10);
+      box(root,isWanfulong?'#574f46':'#b0aea0',u,1.45,front+.24,.055,2.46,.055);
+      if(!entry)box(root,'#8b867b',u,.29,front+.24,doorWidth,.38,.13);
+      if(!name){
+        box(root,['#564d46','#6f7d73','#67605b'][i%3],u,2.98,front+.18,bay*.91,.45,.21);
+        if(i%3===0)box(root,'#827d70',u,2.70,front+.45,bay*.92,.13,.7);
+      }
+      if(isJiajiali)box(root,'#677b7c',u,h-.59,front+.12,bay-.13,1.03,.14);
+    }
+    for(let floor=1;floor<record.floors;floor++){
+      const y=(floor+.54)*(h/record.floors);
+      for(let i=0;i<count;i++){
+        const u=(i+.5-count/2)*bay;
+        for(const side of [-1,1]){
+          box(root,'#bcb9ab',u,y,side*(front+.06),bay*.58,1.44,.15);
+          box(root,'#4b626b',u,y,side*(front+.16),bay*.52,1.32,.10);
+        }
+      }
+    }
+    if(name){
+      const ledge=isWanfulong?h-1.48:3.19;
+      box(root,'#414747',0,ledge,front+.50,w+.22,.25,1.36);
+      namedBoard(root,name,0,isWanfulong?ledge+.84:h+.56,front+.34,w*.88,isWanfulong?1.28:1.02,0,
+        isWanfulong?'#a22321':'#dddcd5',isWanfulong?'#f0c73a':'#b23437');
+    }
+  }
 }
 
 function roadAt(lines,z) {
@@ -200,17 +292,52 @@ export function addShuncheng(scene,box,namedBoard) {
     }
   }
 
-  const stationCenter=footprints[0];
-  floorStrip('#ada89b',stationCenter.x,stationCenter.z+29,80,36,.097,-.23);
-  for(let i=-2;i<=2;i++) floorStrip('#d4cbbb',stationCenter.x+i*15,stationCenter.z+28,.10,25,.105,-.23);
+  floorStrip('#b8b1a5',-1731,-237,76,29,.097,.56);
+  for(let i=-3;i<=3;i++)floorStrip('#d4cbbb',-1731+i*6,-237-i*3.8,.11,7,.105,.56);
+  addStationStreetFronts(scene,box,namedBoard);
 
   for(const {x,z,w,d,h,base,accent,name,kind} of footprints) {
     const root=new T.Group();
     root.position.set(x,westGroundHeight(x,z),z);
-    root.rotation.y=kind==='station'?.19:0;
+    root.rotation.y=kind==='station'?.56:0;
+    root.name=name;
     scene.add(root);
     box(root,base,0,h/2,0,w,h,d);
     box(root,accent,0,h+.22,0,w+.7,.48,d+.6);
+    if(kind==='station'){
+      const front=d/2;
+      root.userData.buildingRecord={id:'pingyao-railway-station',name,x,z,w,d,height:h,levels:2,
+        buildingType:'public',heightSource:'station-facade-photo-estimate',estimated:true,footprintEstimated:true};
+      box(root,'#807f74',0,10.03,front+.34,w+.6,.36,.7);
+      box(root,'#d7c292',0,9.99,front+.72,w+.5,.075,.10);
+      box(root,'#dad8cb',0,8.82,front+.20,w+.1,.16,.43);
+      for(let i=-7;i<=7;i++){
+        const u=i*5.2;
+        box(root,'#c9c8bf',u,5.14,front+.32,.62,9.30,.68);
+        if(i===7)continue;
+        const bay=u+2.6;
+        box(root,'#404e57',bay,6.74,front+.04,3.66,3.08,.14);
+        box(root,'#728c96',bay,6.76,front+.13,3.30,2.81,.05);
+        box(root,'#414d52',bay,6.76,front+.18,.065,2.81,.065);
+        box(root,'#4f5c5e',bay,6.38,front+.18,3.30,.065,.065);
+        box(root,'#5f7076',bay,2.20,front+.11,3.74,3.16,.20);
+        box(root,'#aaa99d',bay,2.2,front+.22,.085,3.14,.08);
+      }
+      box(root,'#575f62',0,4.28,front+1.5,w*.74,.30,3.25);
+      box(root,'#a7c5d0',0,4.30,front+3.16,w*.74,.08,.11);
+      for(let i=0;i<4;i++){
+        const rise=(4-i)*.14;
+        box(root,'#8a8781',0,rise/2,front+.68+i*.39,w*.69,rise,1.36+i*.09);
+        box(root,'#6c6b68',0,rise-.012,front+1.35+i*.44,w*.69,.024,.031);
+      }
+      for(const side of [-1,1]){
+        for(let i=0;i<3;i++)box(root,'#646a69',side*w*.25,.72,front+.8+i*.59,.047,1.26,.047);
+        box(root,'#747b7a',side*w*.25,1.31,front+1.4,.07,.065,1.74,.25);
+      }
+      namedBoard(root,'平 遥 站',0,11.25,front+.25,24,1.7,0,'#aeb0a9','#b23e36');
+      namedBoard(root,'进站口',0,3.72,front+.24,5.7,.56,0,'#4b5456');
+      continue;
+    }
     box(root,accent,0,3.8,d/2+.7,w*.72,.32,2.05);
     for(let i=0;i<Math.floor(w/5);i++) {
       const dx=(i-(Math.floor(w/5)-1)/2)*4.5;

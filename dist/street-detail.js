@@ -111,7 +111,7 @@ export function addStreetDetails(scene) {
   addTheater(scene,box,namedBoard);
   addWestDistrict(scene,box,namedBoard);
   addWestGreenery(scene);
-  addWestBlocks(scene);
+  addWestBlocks(scene,undefined,namedBoard);
   addShuncheng(scene,box,namedBoard);
 
   function frontage({x,z,w,name,body,sign,canopy,food}) {
@@ -154,7 +154,7 @@ export function addStreetDetails(scene) {
   const floor=schoolGeo.attributes.position;
   for(let i=0;i<floor.count;i++) floor.setY(i,westGroundHeight(floor.getX(i),floor.getZ(i)));
   schoolGeo.computeVertexNormals();
-  const schoolGround = new T.Mesh(schoolGeo,new T.MeshStandardMaterial({color:'#a19e82'}));
+  const schoolGround = new T.Mesh(schoolGeo,new T.MeshStandardMaterial({color:'#cec0a7'}));
   schoolGround.position.y=.045;
   scene.add(schoolGround);
   const school=new T.Group();
@@ -168,6 +168,24 @@ export function addStreetDetails(scene) {
   box(school,'#9b572f',0,4.02,0,20.5,.95,2);
   namedBoard(school,'平遥县第二中学校',0,4.02,-1.01,17.4,.86,Math.PI,'#693629');
   box(school,'#c5b396',0,.08,15,16,.16,35);
+  // The pedestrian entrance and teaching blocks use shallow stone steps and landings.
+  function schoolEntrance(x,z,width,steps){
+    const height=steps*.14;
+    box(school,'#b4ad9f',x,height/2,z+.9,width,height,1.8);
+    for(let i=0;i<steps;i++){
+      const rise=(steps-i)*.14;
+      box(school,'#a39e95',x,rise/2,z-.19-i*.38,width,rise,.38);
+      box(school,'#77736e',x,rise-.013,z-.36-i*.38,width,.026,.028);
+    }
+    for(const side of [-1,1]){
+      const railX=x+side*(width/2-.16);
+      for(const end of [-.9,.85])box(school,'#686b67',railX,.62+height/2,z+end,.045,1.05,.045);
+      box(school,'#797d76',railX,1.13+height/2,z,.063,.059,1.95);
+    }
+  }
+  schoolEntrance(-6.6,1.5,2.6,2);
+  schoolEntrance(6.6,1.5,2.6,2);
+  for(let i=-6;i<=6;i++)box(school,'#8c8578',i*1.14,.084,9,.035,.016,10);
   for (const line of segments([...mapData.campus,mapData.campus[0]])) {
     const [left,right]=[line.start,line.end].sort((a,b)=>a[0]-b[0]);
     if (left[1]<168 && right[1]<168 && left[0]<-1870 && right[0]>-1847) {
@@ -181,10 +199,21 @@ export function addStreetDetails(scene) {
     school.userData.heightRecords.push({id:`school-main-${x}-${z}`,name:'平遥二中教学楼（近似）',x:x-1858,z:z+156,w:width,d:18,height,levels:floors,buildingType:'public',heightSource:'photo-and-type-estimate',confidence:.35,estimated:true,footprintEstimated:true});
     box(school,'#a4533f',x,height/2,z,width,height,18);
     box(school,'#e5c8a2',x,height+.28,z,width+.65,.55,18.6);
+    box(school,'#796d62',x,.46,z,width+.08,.92,18.06);
+    schoolEntrance(x,z-10,5.4,3);
+    box(school,'#493d39',x,1.88,z-9.10,3.4,2.95,.17);
+    for(const side of [-1,1]){
+      box(school,'#617a84',x+side*.8,1.87,z-9.22,1.42,2.63,.08);
+      box(school,'#d8c3a7',x+side*2.00,1.62,z-9.55,.35,2.78,.45);
+    }
+    box(school,'#b9ab92',x,3.08,z-10.08,5.32,.24,2.3);
     for(let f=0;f<floors;f++) {
       for(let wx=-width/2+3;wx<width/2-2;wx+=4.7) {
+        if(f===0&&Math.abs(wx)<2.8)continue;
         box(school,'#ede0ca',x+wx,2.2+f*3.35,z-9.035,2.7,1.95,.11);
         box(school,'#586c72',x+wx,2.2+f*3.35,z-9.105,2.36,1.63,.08);
+        box(school,'#b7b6a7',x+wx,2.2+f*3.35,z-9.16,.075,1.63,.031);
+        box(school,'#e0c8a6',x+wx,1.27+f*3.35,z-9.16,2.88,.15,.29);
       }
     }
   }

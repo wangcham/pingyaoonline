@@ -2,7 +2,7 @@ import * as T from 'three';
 import {mapData} from './map-data.js';
 import {segments, sample,projectOnSegment} from './geography.js';
 import {westElevation} from './west-elevation.js';
-import {westBlockAlleys} from './west-block-data.js';
+import {westBlockAlleys,schoolGroundTints} from './west-block-data.js';
 
 const westRoute = segments(mapData.lowerWestRoad);
 const elevationBase = Math.min(...westElevation.map(([,level])=>level));
@@ -130,17 +130,27 @@ export function westRoadSurfaceHeight(x,z){
 }
 
 export function addWestRoadSurface(scene) {
-  const ground=new T.PlaneGeometry(980,380,180,76);
+  const ground=new T.PlaneGeometry(980,550,180,110);
   ground.rotateX(-Math.PI/2);
-  ground.translate(-1670,0,95);
+  ground.translate(-1670,0,180);
   const terrain=ground.attributes.position, terrainUV=ground.attributes.uv;
+  const groundColors=new Float32Array(terrain.count*3),color=new T.Color();
+  const originalColor=new T.Color('#c3b692'),cityColor=new T.Color('#aaa388');
+  const tints=schoolGroundTints.map(tint=>({...tint,color:new T.Color(tint.color)}));
   for(let i=0;i<terrain.count;i++) {
     const x=terrain.getX(i),z=terrain.getZ(i);
     terrain.setY(i,westGroundHeight(x,z)-.075);
     terrainUV.setXY(i,x/4,z/4);
+    color.copy(originalColor).lerp(cityColor,smooth(242,285,z));
+    for(const {center:[cx,cz],radius,color:tint} of tints){
+      const distance=Math.hypot(x-cx,z-cz);
+      if(distance<radius)color.lerp(tint,1-smooth(radius*.24,radius,distance));
+    }
+    color.toArray(groundColors,i*3);
   }
+  ground.setAttribute('color',new T.BufferAttribute(groundColors,3));
   ground.computeVertexNormals();
-  const terrainMesh=new T.Mesh(ground,new T.MeshStandardMaterial({color:'#c3b692',roughness:1}));
+  const terrainMesh=new T.Mesh(ground,new T.MeshStandardMaterial({vertexColors:true,roughness:1}));
   terrainMesh.receiveShadow=true;
   scene.add(terrainMesh);
 

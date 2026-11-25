@@ -49,7 +49,6 @@ select{font:inherit;font-size:.88rem;color:inherit;border:1px solid #f3e7cc56;ba
 #street-location{position:absolute;z-index:1;top:88px;left:clamp(14px,4vw,64px);max-width:calc(100% - 28px);padding:10px 14px;background:#20291fe8;border:1px solid #ffffff35;border-radius:5px;pointer-events:none}
 #street-location small{display:block;color:#e1d8c6;margin-top:.25em}
 #street-location small:empty{display:none}
-#street-intro{margin-left:.5rem}
 #street-dialog{width:min(540px,calc(100% - 28px))}
 #street-dialog #street-search{float:none;margin:0 0 16px}
 .search-row{display:flex;gap:8px;margin-top:6px}
@@ -61,8 +60,6 @@ select{font:inherit;font-size:.88rem;color:inherit;border:1px solid #f3e7cc56;ba
 
 .map-lookup{font-size:.9rem;margin:0 0 14px}
 
-#shuncheng-intro{margin-left:.5rem;margin-top:.5rem}
-#school-intro{margin-left:.5rem;margin-top:.5rem}
 .map-lookup{display:flex;align-items:center;justify-content:space-between;gap:8px}
 
 /* Landmark labels are anchored to world coordinates and never capture look gestures. */
@@ -74,7 +71,7 @@ select{font:inherit;font-size:.88rem;color:inherit;border:1px solid #f3e7cc56;ba
 #landmark-accuracy{padding:10px 12px;background:#b7904722;border-left:3px solid #ad925d;font-size:13px}
 #landmark-coordinate{overflow-wrap:anywhere}#landmark-sources{display:flex;gap:15px;flex-wrap:wrap}
 .landmark-option{display:flex;align-items:center;gap:8px;font-size:13px}
-header{z-index:3}nav button,nav select{white-space:nowrap}
-@media(max-width:1100px){header{align-items:flex-start}nav{flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:73%}nav button,nav select{font-size:.78rem;padding:.5rem}.brand{flex-shrink:0;font-size:1rem}.brand small{display:none}}
+header{z-index:3}nav button{white-space:nowrap}
+@media(max-width:1100px){header{align-items:flex-start}nav{flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:73%}nav button{font-size:.78rem;padding:.5rem}.brand{flex-shrink:0;font-size:1rem}.brand small{display:none}}
 
 #flight-landmark-info{position:absolute;right:24px;top:90px;width:min(330px,70vw);padding:16px;background:#202927e8;color:#eee9dc;border:1px solid #a49c7e70;border-radius:8px;line-height:1.7;pointer-events:none;font-size:13px;z-index:8}

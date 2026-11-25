@@ -43,7 +43,7 @@ export function resolveBuildingHeight(options){
   samples.sort((a,b)=>a-b);
   const estimate=samples.length>=Math.max(4,nx*nz*.25)?samples[Math.floor((samples.length-1)*.85)]:null;
   // GBA is an old image-derived estimate, NOT reliable DSM/LiDAR. Never flatten newer massing.
-  const useRaster=estimate!==null&&estimate>fallback;
+  const useRaster=estimate!==null&&(options.preferRasterHeight||estimate>fallback);
   return record(useRaster?estimate:fallback,useRaster?null:fallbackLevels,useRaster?'GBA.Height-2019':'existing-approximation',useRaster?.4:.3,true,
     {rasterHeight:estimate,dataYear:useRaster?2019:null});
 }

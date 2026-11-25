@@ -37,7 +37,7 @@ sun.shadow.mapSize.set(2048,2048);
 Object.assign(sun.shadow.camera,{left:-1300,right:1300,top:1300,bottom:-1300,near:1,far:2500});
 sun.shadow.normalBias = .14;
 scene.add(sun,sun.target,sky,daySky);
-const {lantern, gates,streetLighting,school} = buildCity(scene);
+const {lantern,streetLighting,school} = buildCity(scene);
 const landmarkManager = createLandmarkManager(scene,{onChange:()=>{renderer.shadowMap.needsUpdate=true;}});
 landmarkManager.loadAll();
 landmarkManager.registerExternal(schoolLandmarkRecord,school.root,school.dispose);
@@ -160,17 +160,6 @@ get('overview').addEventListener('click',()=>{
   get('start').textContent = '开始体验';
 });
 get('sources').addEventListener('click',pause);
-const gateSelect = get('gate');
-gates.forEach((gate,index) => gateSelect.add(new Option(gate.direction+' · '+gate.name,index)));
-gateSelect.disabled = false;
-gateSelect.addEventListener('change', () => {
-  if (gateSelect.value === '') return;
-  const {center:[x,z], normal:[nx,nz],spawn,look:target} = gates[Number(gateSelect.value)];
-  gateSelect.value = '';
-  aimFromStreet(spawn ?? [x+nx*72,4.1,z+nz*72],target ?? [x-nx*20,4.1,z-nz*20]);
-  startFlying();
-});
-
 const streetNameAt = streetAtPosition();
 const streetDialog = get('street-dialog');
 const query = get('street-query');
@@ -221,17 +210,9 @@ function openStreetSearch(initial='') {
   showStreetResults();
   query.focus();
 }
-for (const id of ['street-open','street-intro']) {
-  get(id).disabled=false;
-  get(id).addEventListener('click',()=>openStreetSearch());
-}
-get('shuncheng-intro').disabled=false;
-for(const id of ['school-intro','school-open']){
-  get(id).disabled=false;get(id).addEventListener('click',()=>visitStreet(schoolStops[0]));
-}
-for(const id of ['shuncheng-intro','shuncheng-guide']) {
-  get(id).addEventListener('click',()=>openStreetSearch('顺城路全线'));
-}
+get('street-open').disabled=false;
+get('street-open').addEventListener('click',()=>openStreetSearch());
+get('shuncheng-guide').addEventListener('click',()=>openStreetSearch('顺城路全线'));
 get('street-search').addEventListener('submit',event=>{
   event.preventDefault();
   showStreetResults();
