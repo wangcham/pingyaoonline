@@ -1,3 +1,24 @@
+import {isWestNeighbourhood,westNeighbourIntersects,westNeighbourBlocks} from './west-neighbourhood-data.js';
+import {addWestNeighbourhood} from './west-neighbourhood.js';
+import {citySurfaceRoads} from './city-extension.js';
+import {cityExtensionData} from './city-extension-data.js';
+import {isRegionalBuilding,isRegionalSurveyArea,isGuchengStationParcel} from './regional-survey.js';
+import {addRegionalDistricts} from './regional-districts.js';
+import {addGuchengStation} from './gucheng-station.js';
+import {addQixiangBlock} from './qixiang-block.js';
+import {isQixiangBlock} from './qixiang-block-data.js';
+import {isSouthCityStudy} from './south-city-survey.js';
+import {addSouthCity} from './south-city.js';
+import {isWestSiteParcel,westSiteIntersectsRing} from './west-sites-data.js';
+import {addTiansen} from './tiansen.js';
+import {addPingyaoThirdSchool} from './pingyao-third-school.js';
+import {addCivicSite} from './civic-sites.js';
+import {civicSiteSurveys} from './civic-sites-data.js';
+import {isWestLinkStudy,westLinkBoundary,westLinkRingsIntersect} from './west-link-survey.js';
+import {isYingxunPark} from './yingxun-park-data.js';
+import {addWestLinkDistrict} from './west-link-district.js';
+import {addYingxunGreenery} from './yingxun-greenery.js';
+import {buildingRoadClearance,clearanceRect} from './road-clearance.js';
 import * as T from 'three';
 import {isPingyaoSchoolParcel} from './pingyao-school-data.js';
 import {addPingyaoSchool} from './pingyao-school.js';
@@ -13,7 +34,9 @@ import {westGroundHeight} from './west-terrain.js';
 import {addStreetDetails, isStreetDetailParcel} from './street-detail.js';
 import {locateGates, makeGrid, passageCut, pointInRing, projectOnSegment, sample, segments} from './geography.js';
 
-export function buildCity(scene) {
+export async function buildCity(scene,{onProgress=()=>{}}={}) {
+  const checkpoint=async label=>{onProgress(label);await new Promise(resolve=>setTimeout(resolve,0));};
+  await checkpoint('正在准备道路与地形…');
   let seed = 8783;
   const random = () => {
     seed = (Math.imul(1664525, seed) + 1013904223) >>> 0;
@@ -110,11 +133,12 @@ export function buildCity(scene) {
   for (const [name,height,ring,metadata] of mapData.buildings) {
     if (name==='又见平遥剧场'||name==='又见平遥') continue;
     const [cx,cz]=ring.reduce((sum,p)=>[sum[0]+p[0]/ring.length,sum[1]+p[1]/ring.length],[0,0]);
-    if (isLandmarkParcel(cx,cz) || ring.some(([x,z])=>isLandmarkParcel(x,z)) || isPingyaoSchoolParcel(cx,cz)) continue;
+    if (westNeighbourIntersects(ring) || isQixiangBlock(cx,cz) || isRegionalBuilding(cx,cz) || isSouthCityStudy(cx,cz) || westSiteIntersectsRing(ring) || westLinkRingsIntersect(ring,westLinkBoundary) || isLandmarkParcel(cx,cz) || ring.some(([x,z])=>isLandmarkParcel(x,z)) || isPingyaoSchoolParcel(cx,cz)) continue;
     const mesh=surface(ring,'#948b7b',.035,height);
     if(cx>=-2110&&cx<=-1190&&cz>=-260&&cz<=850)mesh.userData.buildingRecord={...metadata,name,x:cx,z:cz,height,footprint:ring};
   }
 
+  await checkpoint('正在准备街道与基础建筑…');
   const roadGrid=makeGrid(64);
   function indexLine(line, clearance) {
     const {start:[ax,az],end:[bx,bz]}=line;
@@ -122,9 +146,10 @@ export function buildCity(scene) {
       Math.max(ax,bx)+clearance,Math.max(az,bz)+clearance);
   }
   const roadLines=[];
-  for (const [type,width,name,points] of mapData.roads) {
+  for (const [type,width,name,points] of citySurfaceRoads) {
     for (const line of segments(points)) {
       const [x,z]=sample(line,.5);
+      if(isWestSiteParcel(x,z)&&isWestSiteParcel(...line.start)&&isWestSiteParcel(...line.end))continue;
       if(isPingyaoSchoolParcel(x,z)&&isPingyaoSchoolParcel(...line.start)&&isPingyaoSchoolParcel(...line.end))continue;
       const inside=pointInRing(x,z,mapData.wall);
       const main=width>=7;
@@ -145,7 +170,7 @@ export function buildCity(scene) {
       indexLine(line,width/2+34);
     }
   }
-  for (const rail of mapData.rail) {
+  for (const rail of [...mapData.rail,...cityExtensionData.rail]) {
     for (const line of segments(rail)) {
       segment('#7b7065',line.start,line.end,.09,4,.08);
       indexLine(line,37);
@@ -167,7 +192,7 @@ export function buildCity(scene) {
     return {ring, bounds:[Math.min(...xs),Math.min(...zs),Math.max(...xs),Math.max(...zs)]};
   });
   function canBuild(x,z,radius) {
-    if (!withinMap(x,z)||isStreetDetailParcel(x,z,radius)||isLandmarkParcel(x,z,radius)||isWestInteriorStudy(x,z,radius)||isPingyaoSchoolParcel(x,z,radius)) return false;
+    if (isWestNeighbourhood(x,z,radius)||!withinMap(x,z)||isRegionalSurveyArea(x,z,radius)||isGuchengStationParcel(x,z,radius)||isSouthCityStudy(x,z,radius)||isStreetDetailParcel(x,z,radius)||isLandmarkParcel(x,z,radius)||isWestInteriorStudy(x,z,radius)||isPingyaoSchoolParcel(x,z,radius)||isWestLinkStudy(x,z,radius)||isYingxunPark(x,z,radius)) return false;
     if (gates.some(({center:[gx,gz],normal:[nx,nz]})=>{
       const dx=x-gx,dz=z-gz;
       return Math.abs(dx*nx+dz*nz)<82+radius&&Math.abs(dz*nx-dx*nz)<8+radius;
@@ -209,7 +234,8 @@ export function buildCity(scene) {
         const radius=Math.hypot(w,d)/2;
         const offset=(width/2+radius+(inside?3:6))*side;
         const x=cx-dz*offset, z=cz+dx*offset;
-        if (inside!==pointInRing(x,z,mapData.wall)||!canBuild(x,z,radius)) continue;
+        const envelope=clearanceRect(x,z,w,d,inside?angle+Math.PI/2:angle,inside?.85:.45);
+        if (inside!==pointInRing(x,z,mapData.wall)||!canBuild(x,z,radius)||!buildingRoadClearance.clear(envelope)) continue;
         const plot={x,z,radius};
         parcelGrid.add(plot,x-radius-20,z-radius-20,x+radius+20,z+radius+20);
         if (inside) building(x,z,w,d,3.8+random()*2.3,angle+Math.PI/2);
@@ -223,7 +249,7 @@ export function buildCity(scene) {
       }
       if (width>=7 && random()<.52) {
         const x=cx-dz*(width/2+2.5), z=cz+dx*(width/2+2.5);
-        if (!withinMap(x,z)||isPingyaoSchoolParcel(x,z,4)) continue;
+        if (isWestNeighbourhood(x,z,5)||!withinMap(x,z)||isRegionalSurveyArea(x,z,5)||isSouthCityStudy(x,z,4)||isWestSiteParcel(x,z,4)||isPingyaoSchoolParcel(x,z,4)||isWestLinkStudy(x,z,4)||isYingxunPark(x,z,4)) continue;
         if (!inside) {if(!isWestGreenCorridor(x,z)&&!isWestInteriorStudy(x,z))tree(x,z,3.5+random()*2.5);}
         else {
           box('#5d4537',x,1.4,z,.21,2.8,.21);
@@ -240,7 +266,7 @@ export function buildCity(scene) {
     const l=Math.min(...xs), t=Math.min(...zs), w=Math.max(...xs)-l, d=Math.max(...zs)-t;
     for (let i=0;i<Math.min(100,w*d/95);i++) {
       const x=l+random()*w, z=t+random()*d;
-      if (pointInRing(x,z,ring)&&!isPingyaoSchoolParcel(x,z,5)) tree(x,z,3.2+random()*6);
+      if (pointInRing(x,z,ring)&&!isWestNeighbourhood(x,z,5)&&!isRegionalSurveyArea(x,z,5)&&!isSouthCityStudy(x,z,5)&&!isWestSiteParcel(x,z,5)&&!isPingyaoSchoolParcel(x,z,5)&&!isWestLinkStudy(x,z,5)&&!isYingxunPark(x,z,5)) tree(x,z,3.2+random()*6);
     }
   }
 
@@ -261,8 +287,24 @@ export function buildCity(scene) {
     mesh.receiveShadow=true;
     scene.add(mesh);
   }
+  await checkpoint('正在准备下西关街…');
   const streetLighting=addStreetDetails(scene);
+  await checkpoint('正在准备校园与公共建筑…');
   const school=addPingyaoSchool(scene);
+  const westSites=[addTiansen(scene),addPingyaoThirdSchool(scene)];
+  for(const site of civicSiteSurveys){await checkpoint(`正在准备${site.name}…`);westSites.push(addCivicSite(scene,site));}
+  for(const block of westNeighbourBlocks){await checkpoint(`正在准备${block.name}…`);westSites.push(await addWestNeighbourhood(scene,block,checkpoint));}
+  await checkpoint('正在准备西城街坊…');
+  const westLink=addWestLinkDistrict(scene);
+  await checkpoint('正在准备南城街坊…');
+  const southCity=addSouthCity(scene);
+  await checkpoint('正在准备其他片区…');
+  const regionalCity=addRegionalDistricts(scene,{progressive:true});
+  const guchengStation=addGuchengStation(scene);
+  await checkpoint('正在准备七号巷院落…');
+  const qixiangBlock=addQixiangBlock(scene);
+  await checkpoint('正在准备古城与公园…');
+  addYingxunGreenery(scene);
   addOldTownCourtyards(scene,ancientPlots);
-  return {lantern:materials.get('#ffbc63'),gates,streetLighting,school};
+  return {lantern:materials.get('#ffbc63'),gates,streetLighting,school,westSites,westLink,southCity,regionalCity,guchengStation,qixiangBlock};
 }

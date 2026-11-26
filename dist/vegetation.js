@@ -2,7 +2,7 @@ import * as T from 'three';
 
 // Geometry leaves, not transparent cards: no alpha sorting or coplanar billboards.
 // Every tree shares these meshes; seeded variation remains stable between views.
-export function createTreeBatch(scene,{ground=()=>0,leafDensity=48,park=false}={}) {
+export function createTreeBatch(scene,{ground=()=>0,leafDensity=48,park=false,chunkSize=0}={}) {
   let state=47831;
   const random=()=>((state=(Math.imul(state,1664525)+1013904223)>>>0)/4294967296);
   function leafCluster(seed) {
@@ -92,10 +92,14 @@ export function createTreeBatch(scene,{ground=()=>0,leafDensity=48,park=false}={
     items.forEach((entries,kind)=>{
       if(!entries.length){geometries[kind].dispose();return;}
       const material=new T.MeshStandardMaterial({vertexColors:true,roughness:kind? .88:1,side:kind?T.DoubleSide:T.FrontSide});
-      const mesh=new T.InstancedMesh(geometries[kind],material,entries.length),color=new T.Color();
-      entries.forEach((p,i)=>{mesh.setMatrixAt(i,p.matrix);mesh.setColorAt(i,color.set(p.color));});
+      const chunks=new Map();for(const p of entries){const m=p.matrix.elements,key=chunkSize?`${Math.floor(m[12]/chunkSize)}:${Math.floor(m[14]/chunkSize)}`:'all';if(!chunks.has(key))chunks.set(key,[]);chunks.get(key).push(p);}
+      for(const [chunkId,chunk] of chunks){
+      const mesh=new T.InstancedMesh(geometries[kind],material,chunk.length),color=new T.Color();
+      chunk.forEach((p,i)=>{mesh.setMatrixAt(i,p.matrix);mesh.setColorAt(i,color.set(p.color));});
+      if(chunkSize)mesh.userData.chunkId=chunkId;
       mesh.name=kind?'不透明几何叶簇':'渐细树干与分枝';
       mesh.castShadow=true;mesh.receiveShadow=true;mesh.computeBoundingSphere();root.add(mesh);
+      }
     });
     root.userData={treeCount,shrubCount};scene.add(root);return root;
   }};

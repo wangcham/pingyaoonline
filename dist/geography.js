@@ -2,7 +2,7 @@
 export function pointInRing(x, z, ring) {
   let inside = false;
   for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const [ax, az] = ring[j], [bx, bz] = ring[i];
+    const ax=ring[j][0],az=ring[j][1],bx=ring[i][0],bz=ring[i][1];
     if ((az > z) !== (bz > z) && x < ax + (bx - ax) * (z - az) / (bz - az)) inside = !inside;
   }
   return inside;
@@ -25,8 +25,22 @@ export function projectOnSegment(point, segment) {
   const dz = segment.end[1] - segment.start[1];
   const fraction = ((point[0] - segment.start[0]) * dx + (point[1] - segment.start[1]) * dz) / (segment.length ** 2);
   const t = Math.max(0, Math.min(1, fraction));
-  const [x, z] = sample(segment, t);
+  const x=segment.start[0]+dx*t,z=segment.start[1]+dz*t;
   return {t, distance: Math.hypot(point[0] - x, point[1] - z)};
+}
+
+// For immutable survey outlines: reject distant points using the cached bounds
+// before polygon/edge checks. This does not simplify or move the source ring.
+export function createRingQuery(ring){
+ const bounds=[Infinity,Infinity,-Infinity,-Infinity];
+ for(const p of ring){bounds[0]=Math.min(bounds[0],p[0]);bounds[1]=Math.min(bounds[1],p[1]);bounds[2]=Math.max(bounds[2],p[0]);bounds[3]=Math.max(bounds[3],p[1]);}
+ const edges=segments([...ring,ring[0]]);
+ return {bounds,contains(x,z,pad=0,inclusive=false){
+  if(x<bounds[0]-pad||x>bounds[2]+pad||z<bounds[1]-pad||z>bounds[3]+pad)return false;
+  if(pointInRing(x,z,ring))return true;
+  if(pad<=0&&!inclusive)return false;
+  return edges.some(e=>{const d=projectOnSegment([x,z],e).distance;return inclusive?d<=pad:d<pad;});
+ }};
 }
 
 export function locateGates(map) {

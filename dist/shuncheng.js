@@ -98,11 +98,13 @@ const landscapeParcels=[
   {x:-1126,z:2748,w:68,d:48},
 ];
 
+const shunchengParcelBoxes=[...footprints,...landscapeParcels];
+const stationParcelQueries=stationStreetPlots.map(p=>({...p,c:Math.cos(p.yaw),s:Math.sin(p.yaw)}));
 export function isShunchengParcel(x,z,radius) {
-  return [...footprints,...landscapeParcels].some(p=>
+  return shunchengParcelBoxes.some(p=>
     Math.abs(p.x-x)<p.w/2+radius+3&&Math.abs(p.z-z)<p.d/2+radius+3)||
-    stationStreetPlots.some(p=>{
-      const dx=x-p.x,dz=z-p.z,c=Math.cos(p.yaw),s=Math.sin(p.yaw);
+    stationParcelQueries.some(p=>{
+      const dx=x-p.x,dz=z-p.z,c=p.c,s=p.s;
       return Math.abs(dx*c-dz*s)<p.w/2+radius&&Math.abs(dx*s+dz*c)<p.d/2+radius;
     });
 }

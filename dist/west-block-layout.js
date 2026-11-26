@@ -1,5 +1,7 @@
+import {westSiteProtectedRings} from './west-sites-data.js';
+import {westLinkBoundary} from './west-link-survey.js';
 import {mapData} from './map-data.js';
-import {makeGrid,pointInRing,segments,projectOnSegment,sample} from './geography.js';
+import {makeGrid,pointInRing,segments,projectOnSegment,sample,createRingQuery} from './geography.js';
 import {commercialPlots} from './west-district.js';
 import {yufengBlockBoundary} from './yufeng-block.js';
 import {planWestFrontages} from './west-corridor.js';
@@ -10,7 +12,7 @@ import {stationStreetRings} from './shuncheng.js';
 const blockAngle=.108,blockCos=Math.cos(blockAngle),blockSin=Math.sin(blockAngle);
 const imageryAreas=[schoolImageryArea,gateImageryArea];
 const westStudyRings=[...westBlockZones.map(({ring})=>ring),...imageryAreas];
-const westBlockEdges=westStudyRings.map(ring=>segments([...ring,ring[0]]));
+const westBlockQueries=westStudyRings.map(createRingQuery);
 export function westBlockWorld(x,z){return [x*blockCos+z*blockSin,-x*blockSin+z*blockCos];}
 export function westBlockLocal(x,z){return [x*blockCos-z*blockSin,x*blockSin+z*blockCos];}
 function blockSegmentHits(a,b,x,z,w,d){
@@ -25,7 +27,7 @@ function blockSegmentHits(a,b,x,z,w,d){
 }
 function blockRect(x,z,w,d){return [[x-w/2,z-d/2],[x+w/2,z-d/2],[x+w/2,z+d/2],[x-w/2,z+d/2]];}
 export function westBlockProtectedRings(){
-  return [mapData.campus,mapData.wall,yufengBlockBoundary,surveyedWestPark,...stationStreetRings,...mapData.areas.map(([,r])=>r),...mapData.buildings.map(([,,r])=>r),
+  return [westLinkBoundary,...westSiteProtectedRings,mapData.campus,mapData.wall,yufengBlockBoundary,surveyedWestPark,...stationStreetRings,...mapData.areas.map(([,r])=>r),...mapData.buildings.map(([,,r])=>r),
     ...commercialPlots.map(p=>blockRect(p.x,p.z,p.w+5,p.d+6)),
     blockRect(-1452.5,93,110,46), // existing shopping-center forecourt
     blockRect(-1253,443.4,112,168),blockRect(-1253,545,110,56), // theater eaves/plaza
@@ -106,6 +108,5 @@ export function createWestBlockLayout(){
   westBlockLayoutCache={plots,laneSegments,protectedRings};return westBlockLayoutCache;
 }
 export function isWestInteriorStudy(x,z,radius=0){
-  return westStudyRings.some((ring,i)=>pointInRing(x,z,ring)||
-    (radius>0&&westBlockEdges[i].some(e=>projectOnSegment([x,z],e).distance<radius)));
+  return westBlockQueries.some(q=>q.contains(x,z,radius));
 }

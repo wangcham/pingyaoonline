@@ -34,6 +34,7 @@ export function resolveBuildingHeight(options){
   }
   const fallbackLevels=heightNumber(fallbackFloors)??2;
   const fallback=heightNumber(options.estimatedHeight)??fallbackLevels*storey+.35;
+  if(options.useRasterHeight===false)return record(fallback,fallbackLevels,'existing-approximation',.3,true,{rasterHeight:null,dataYear:null});
   const samples=[],c=Math.cos(angle),s=Math.sin(angle),nx=Math.max(2,Math.min(80,Math.ceil(w/3))),nz=Math.max(2,Math.min(80,Math.ceil(d/3)));
   for(let i=0;i<nx;i++)for(let j=0;j<nz;j++){
     const dx=((i+.5)/nx-.5)*w,dz=((j+.5)/nz-.5)*d;

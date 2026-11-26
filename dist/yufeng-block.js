@@ -1,7 +1,7 @@
 import * as T from 'three';
 import {resolveBuildingHeight} from './building-heights.js';
 import {mapData} from './map-data.js';
-import {pointInRing,segments,projectOnSegment} from './geography.js';
+import {pointInRing,segments,projectOnSegment,createRingQuery} from './geography.js';
 import {westGroundHeight} from './west-terrain.js';
 import {createUrbanBatch} from './urban-batch.js';
 import {createPavingMaterial} from './paving.js';
@@ -19,9 +19,8 @@ export const yufengStops=[
   {name:'宇峰写字楼 · 楼后街巷',keywords:'宇锋 宇峰 写字楼 内部 后街 后巷 街景',address:'楼后通道、两侧门脸与楼间院落 · 布局近似',eye:[-1538,2.1,38],target:[-1538,2.8,-38]},
   {name:'宇峰写字楼 · 北侧街坊',keywords:'宇锋 宇峰 写字楼 里面 北侧 支巷',address:'北侧支巷、低层商住楼与小院 · 布局近似',eye:[-1589,2.1,-68],target:[-1589,3,-111]},
 ];
-export function isYufengBlock(x,z,radius=0){
-  return pointInRing(x,z,yufengBlockBoundary)||segments([...yufengBlockBoundary,yufengBlockBoundary[0]]).some(e=>projectOnSegment([x,z],e).distance<radius+1);
-}
+const yufengBoundaryQuery=createRingQuery(yufengBlockBoundary);
+export function isYufengBlock(x,z,radius=0){return yufengBoundaryQuery.contains(x,z,radius+1);}
 export function addYufengBlock(scene,namedBoard){
   const heightRecords=[];
   const a=createUrbanBatch(scene,{paving:createPavingMaterial('yard'),ground:westGroundHeight});

@@ -1,3 +1,14 @@
+import {westNeighbourStops,isWestNeighbourhood} from './west-neighbourhood-data.js';
+import {citySurfaceRoads,cityExperienceBounds} from './city-extension.js';
+import {regionalStops,isRegionalBuilding} from './regional-survey.js';
+import {qixiangStops} from './qixiang-block-data.js';
+import {civicSiteStops} from './civic-sites-data.js';
+import {isSouthCityStudy} from './south-city-survey.js';
+import {isWestSiteParcel,westSiteSurveys} from './west-sites-data.js';
+import {isWestLinkStudy} from './west-link-survey.js';
+import {isYingxunPark} from './yingxun-park-data.js';
+import {smallSouthGateStop} from './yingxun-park-data.js';
+import {attachCityPlanUI} from './city-plan.js';
 import * as T from 'three';
 import {isPingyaoSchoolParcel,schoolLandmarkRecord,schoolStops,schoolBoundary} from './pingyao-school-data.js';
 import {buildCity} from './model.js';
@@ -37,14 +48,15 @@ sun.shadow.mapSize.set(2048,2048);
 Object.assign(sun.shadow.camera,{left:-1300,right:1300,top:1300,bottom:-1300,near:1,far:2500});
 sun.shadow.normalBias = .14;
 scene.add(sun,sun.target,sky,daySky);
-const {lantern,streetLighting,school} = buildCity(scene);
+const {lantern,streetLighting,school,westSites,westLink,southCity,regionalCity,guchengStation,qixiangBlock} = await buildCity(scene,{onProgress:label=>{get('start').textContent=label;}});
 const landmarkManager = createLandmarkManager(scene,{onChange:()=>{renderer.shadowMap.needsUpdate=true;}});
 landmarkManager.loadAll();
 landmarkManager.registerExternal(schoolLandmarkRecord,school.root,school.dispose);
+for(const site of westSites)landmarkManager.registerExternal(site.record,site.root,site.dispose);
 const buildingRecords=collectBuildingRecords(scene).map(record=>({...record,coordinate:localToGeographic([record.x,record.z]),crs:'WGS84'}));
 get('building-data-summary').textContent=`已记录 ${buildingRecords.length} 栋/处建筑的高度、层数、类型和来源；其中 ${buildingRecords.filter(r=>r.estimated).length} 处高度为估算。商铺分户不等同于独立建筑测绘。`;
 get('building-data-export').addEventListener('click',()=>{
-  const blob=new Blob([JSON.stringify({project:'平遥online',scope:'下西关街及紧邻区域、平遥中学校园',records:buildingRecords},null,2)],{type:'application/json'});
+  const blob=new Blob([JSON.stringify({project:'平遥online',scope:'平遥城区与古城站连接片区；包含卫星判读与估算建筑',records:buildingRecords},null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='平遥建筑数据.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 
@@ -62,9 +74,23 @@ function lighting() {
   if (lantern) lantern.emissiveIntensity = 3.4;
   streetLighting.setNight(isNight);
   school.setNight(isNight);
+  westSites.forEach(site=>site.setNight(isNight));
+  westLink.setNight(isNight);
+  southCity.setNight(isNight);
+  regionalCity.setNight(isNight);guchengStation.setNight(isNight);
+  qixiangBlock.setNight(isNight);
   renderer.shadowMap.needsUpdate = true;
 }
 lighting();
+let regionalStatusKey='';
+function updateRegionalStatus(){
+  const {ready,total,failed}=regionalCity.status,key=`${ready}:${failed}`;if(key===regionalStatusKey)return;regionalStatusKey=key;
+  get('region-status').hidden=ready===total;
+  get('region-status').textContent=failed?'部分街区细节尚未载入，可重试。':`已可开始体验，其他街区细节载入中（${ready}/${total}）。`;
+  get('region-retry').hidden=failed===0;
+}
+get('region-retry').addEventListener('click',()=>{regionalCity.retryFailed();updateRegionalStatus();});
+updateRegionalStatus();
 
 const motionKeys = new Set(['KeyW','KeyA','KeyS','KeyD','Space','KeyQ','ShiftLeft','ShiftRight','ArrowLeft','ArrowRight','ArrowUp','ArrowDown']);
 const keys = new Set();
@@ -165,15 +191,16 @@ const streetDialog = get('street-dialog');
 const query = get('street-query');
 const results = get('street-results');
 const normalizeStreet = value => value.toLowerCase().replace(/[\s·×（）()]/g,'');
+const allStreetStops=[...streetStops,...civicSiteStops,...westNeighbourStops,...regionalStops];
 const searchableRoads = new Map();
-for (const [, , name, points] of mapData.roads) {
-  if (!name || streetStops.some(stop=>stop.name===name)) continue;
+for (const [, , name, points] of citySurfaceRoads) {
+  if (!name || allStreetStops.some(stop=>stop.name===name)) continue;
   const road = segments(points).reduce((longest,line)=>!longest||line.length>longest.length?line:longest,null);
   if (!road || (searchableRoads.get(name)?.length ?? 0)>=road.length) continue;
   const [x,z] = sample(road,.42), [tx,tz] = sample(road,.65);
   searchableRoads.set(name,{name,keywords:'',address:'道路位置来自地图',eye:[x,7,z],target:[tx,6,tz],length:road.length});
 }
-const streetRecords = [...streetStops,...searchableRoads.values()];
+const streetRecords = [...allStreetStops,...searchableRoads.values()];
 function visitStreet(stop) {
   streetDialog.close();
   selectedStreetStop=stop.length ? null : stop;
@@ -189,7 +216,7 @@ function showStreetResults() {
   const isRoadGuide = term === '顺城路全线';
   const found = term
     ? streetRecords.filter(stop=>normalizeStreet(stop.name+stop.keywords).includes(term)).slice(0,isRoadGuide?24:12)
-    : streetStops.filter(stop=>stop.keywords!=='下西关街商户');
+    : allStreetStops.filter(stop=>stop.keywords!=='下西关街商户');
   results.replaceChildren();
   if (!found.length) results.textContent='地图里暂时没有这个名字。';
   for (const stop of found) {
@@ -212,12 +239,17 @@ function openStreetSearch(initial='') {
 }
 get('street-open').disabled=false;
 get('street-open').addEventListener('click',()=>openStreetSearch());
+get('qixiang-entry').addEventListener('click',()=>visitStreet(qixiangStops[0]));
+get('qixiang-overview').addEventListener('click',()=>visitStreet(qixiangStops[1]));
+get('west-neighbourhood').addEventListener('click',()=>visitStreet(westNeighbourStops[0]));
+for(const [i,id] of ['hospital','outlets','government','ziyuechen'].entries())get(`civic-${id}`).addEventListener('click',()=>visitStreet(civicSiteStops[i*2]));
 get('shuncheng-guide').addEventListener('click',()=>openStreetSearch('顺城路全线'));
 get('street-search').addEventListener('submit',event=>{
   event.preventDefault();
   showStreetResults();
 });
 query.addEventListener('input',showStreetResults);
+attachCityPlanUI({pause,visitSmallSouth:()=>visitStreet(smallSouthGateStop),visitQixiang:()=>visitStreet(qixiangStops[1]),visitCivic:index=>visitStreet(civicSiteStops[index*2+1]),visitNeighbour:index=>visitStreet(westNeighbourStops[index])});
 
 const landmarkUI = attachLandmarkUI({manager:landmarkManager,camera,canvas,world,pause,
   visit(record) {
@@ -239,7 +271,7 @@ resize();
 
 const directions = ['北','东北','东','东南','南','西南','西','西北'];
 const movement = new T.Vector3();
-const [west,north,east,south] = mapData.bounds;
+const [west,north,east,south] = cityExperienceBounds;
 const minimap = get('minimap');
 const mapContext = minimap.getContext('2d');
 const mapBackground = document.createElement('canvas');
@@ -256,10 +288,11 @@ function mapLine(points,color,width) {
 }
 background.fillStyle='#26332b';
 background.fillRect(0,0,160,160);
-for (const [,width,,points] of mapData.roads) mapLine(points,width>=7?'#a9a58b':'#58675a',width>=7?1:.55);
+for (const [,width,,points] of citySurfaceRoads) mapLine(points,width>=7?'#a9a58b':'#58675a',width>=7?1:.55);
 for (const route of mapData.shunchengWays) mapLine(route,'#e7dac0',1.2);
 mapLine(mapData.wall,'#e5ba80',1.6);
 mapLine(schoolBoundary,'#c6d7d2',1.1);
+for(const site of westSiteSurveys)mapLine([...site.boundary,site.boundary[0]],'#c6d7d2',1.1);
 background.fillStyle='#f4e4c8';
 background.font='12px system-ui';
 background.fillText('北',140,15);
@@ -282,7 +315,7 @@ function updateMap() {
 let shadowRegion='';
 function updateStreetShadow(){
   const {x,y,z}=camera.position;
-  const close=((x>-2110&&x<-1190&&z>0&&z<230)||isPingyaoSchoolParcel(x,z,30))&&y-westGroundHeight(x,z)<150;
+  const close=((x>-2110&&x<-1190&&z>0&&z<230)||isPingyaoSchoolParcel(x,z,30)||isWestNeighbourhood(x,z,30)||isWestSiteParcel(x,z,30)||isWestLinkStudy(x,z)||isYingxunPark(x,z)||isSouthCityStudy(x,z)||isRegionalBuilding(x,z,60))&&y-westGroundHeight(x,z)<150;
   const cx=close?Math.round(x/64)*64:0,cz=close?Math.round(z/64)*64:0,key=`${close}:${cx}:${cz}`;
   if(key===shadowRegion)return;shadowRegion=key;
   const ground=close?westGroundHeight(cx,cz):0,radius=close?260:1300;
@@ -315,7 +348,7 @@ function render(now) {
     const y=altitude;
     const stopDistance = stop => Math.hypot(x-stop.eye[0],z-stop.eye[2]);
     if (selectedStreetStop && stopDistance(selectedStreetStop)>55) selectedStreetStop=null;
-    const nearby = y < 85 ? streetStops.filter(stop=>stopDistance(stop)<33) : [];
+    const nearby = y < 85 ? allStreetStops.filter(stop=>stopDistance(stop)<33) : [];
     const localStop = y < 85 && (selectedStreetStop ||
       nearby.reduce((closest,stop)=>!closest||stopDistance(stop)<stopDistance(closest)?stop:closest,null));
     const label = y < 120 && (localStop?.name || streetNameAt(x,z));
@@ -329,6 +362,10 @@ function render(now) {
   landmarkUI.update(now);
   streetLighting.update(camera,now);
   school.update(camera,now);
+  westSites.forEach(site=>site.update(camera,now));
+  if(regionalCity.update(camera,now))renderer.shadowMap.needsUpdate=true;
+  updateRegionalStatus();
+  if(qixiangBlock.update(camera))renderer.shadowMap.needsUpdate=true;
   updateStreetShadow();
   renderer.render(scene,camera);
 }

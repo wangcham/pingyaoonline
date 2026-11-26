@@ -1,24 +1,36 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#242920"><title>平遥online</title>
 <link rel="stylesheet" href="./style.css">
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}</script>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 </head><body>
 <main>
 <div id="world" aria-label="平遥县城三维体验地图"></div>
-<header><div class="brand"><span class="seal">平<br>遥</span><span>平遥online<small>PINGYAO · STREET EXPERIENCE</small></span></div><nav><button id="night" aria-pressed="false">☾ 夜景</button><button id="overview">俯瞰县城</button><button id="street-open" disabled>搜索街景</button><button id="sources">资料与模型</button><button id="capture-retry" hidden>重试锁定鼠标</button></nav></header>
+<header><div class="brand"><span class="seal">平<br>遥</span><span>平遥online<small>PINGYAO · STREET EXPERIENCE</small></span></div><nav><button id="night" aria-pressed="false">☾ 夜景</button><button id="overview">俯瞰县城</button><button id="street-open" disabled>搜索街景</button><button id="city-plan-open" disabled>全城分区</button><button id="sources">资料与模型</button><button id="capture-retry" hidden>重试锁定鼠标</button></nav></header>
 <section id="intro">
 <p class="eyebrow">山西 · 晋中</p><h1>平遥online</h1>
 <p class="lead">从平遥二中门前出发，<br>沿街探索，自由切换高度与视角。</p>
 <button id="start" class="primary" disabled>正在载入场景…</button>
 <p id="error" role="status"></p>
+<p id="region-status" role="status" hidden></p><button id="region-retry" type="button" hidden>重试街区细节</button>
 </section>
 <div id="street-location" hidden><strong id="street-name"></strong><small id="street-note"></small></div>
 <aside id="instruments" hidden><span id="compass">北</span><b id="altitude">—</b><small>离地高度 · 米</small><canvas id="minimap" width="160" height="160" aria-label="当前位置示意图"></canvas></aside>
 <div id="touch" hidden aria-label="移动方向"><button data-key="KeyW" aria-label="前进">↑</button><button data-key="KeyA" aria-label="左移">←</button><button data-key="KeyS" aria-label="后退">↓</button><button data-key="KeyD" aria-label="右移">→</button><button data-key="Space" aria-label="上升">＋</button><button data-key="KeyQ" aria-label="下降">－</button></div>
 <footer><div id="help"><kbd>W A S D</kbd> 移动 <kbd>空格 / Q</kbd> 升降 <kbd>Shift</kbd> 加速 <kbd>Esc</kbd> 暂停</div><span><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a></span></footer>
+<dialog id="city-plan-dialog" aria-labelledby="city-plan-title">
+<form method="dialog"><button aria-label="关闭全城分区">×</button></form>
+<p class="eyebrow">平遥 · 全城建设范围</p><h2 id="city-plan-title">25 个片区，一直延伸至古城站</h2>
+<p>涵盖古城内外、西城、东城、南城、北城及古城站连接片区。已有局部模型不代表整片完成；农田、水面和真实空地按实际用途保留。</p>
+<div class="city-plan-actions"><button id="city-plan-all" type="button">显示全部</button><button id="city-plan-export" type="button">导出分区清单</button><button id="city-plan-visit" type="button" hidden>查看小南门绿带</button></div>
+<div class="city-plan-layout"><canvas id="city-plan-map" width="1080" height="1080" aria-label="全城编号分区示意图，北向上，非卫星底图"></canvas><div id="city-plan-list" aria-label="片区列表"></div></div>
+<p class="city-plan-note">每格 500 米；跨界格共用同一编号。选择片区可查看核对格与卫星地图链接。虚线表示当前三维地图边界，边界外仍待接入详细路网与模型。</p>
+<div id="city-plan-detail" aria-live="polite"></div>
+</dialog>
 <dialog id="street-dialog">
 <form method="dialog"><button aria-label="关闭街景搜索">×</button></form>
 <h2>街景与校园</h2>
+<section class="detail-block-card" aria-label="西城新增街景"><strong>西城 · 医院、奥莱与生活街区</strong><p>查看医院与政务片区、西城新区、柳根花园、兴平路和书林家园的沿街及内部街景。</p><button id="west-neighbourhood" type="button">西城完整街坊</button> <button id="civic-hospital" type="button">人民医院</button> <button id="civic-outlets" type="button">奥特莱斯</button> <button id="civic-government" type="button">政务大厅</button> <button id="civic-ziyuechen" type="button">紫悦宸</button></section>
+<section class="detail-block-card" aria-label="七号巷精细区块"><strong>七号巷北侧</strong><p>主房、附房、小院和内部巷道连成完整街坊。</p><button id="qixiang-entry" type="button">进入街坊</button> <button id="qixiang-overview" type="button">俯瞰整块</button></section>
 <form id="street-search"><label for="street-query">搜学校、路名或店铺</label><div class="search-row"><input id="street-query" type="search" placeholder="例如 平遥中学" autocomplete="off"><button type="submit">搜索</button></div></form>
 <p class="map-lookup"><a id="amap-lookup" href="https://www.amap.com/ssr/embed/search?keyword=%E6%99%AF%E6%9E%97%E6%B1%9F%E7%B1%B3%E6%B2%B9%E7%B3%95&amp;city=140728" target="_blank" rel="noopener">在高德核对</a> <button id="shuncheng-guide" type="button">顺城路各路口</button></p>
 <div id="street-results"></div>
@@ -34,7 +46,12 @@
 <dialog id="details"><form method="dialog"><button aria-label="关闭">×</button></form><h2>资料与实景模型</h2><p>城墙、城门点位和道路来自 OpenStreetMap。地图中缺失的建筑使用程序生成的示意模型。下西关街使用高程数据估算纵坡；路拱、路缘、排水设施和铺装为建模细节。其他地段仍为简化地形。城门楼和街道宽度经过简化。</p>
 <p><a href="https://whc.unesco.org/en/list/812/maps/" target="_blank" rel="noopener">UNESCO 世界遗产中心 · 平遥古城地图</a></p>
 <p lang="en">Produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.</p>
-<h3>平遥中学</h3><p>古城东侧的山西省平遥中学，与城西平遥二中分开建模。校园边界采用 <a href="https://www.openstreetmap.org/way/401952981" target="_blank" rel="noopener">OSM 401952981</a>；楼群、运动场、球场、校内道路及绿地分区参考 <a href="https://www.amap.com/place/B016200A69" target="_blank" rel="noopener">高德卫星图与公开相册</a>（2026-11-25 核对，影像拍摄日期未知）。红白楼体、白色弧角校名墙、校史墙、红色雕塑及屋顶球体参考用户照片。地图相册存在不同版本的校门景墙，本版采用用户照片版本。按补充的卫星截图收窄并退让南部两排楼，校名墙移至东南门对外前区，入口通道与庭园分开；校史景墙按实景改为两排错列的低墙与黑白石座，未辨清年份留空；入口改用银灰矮护栏与蓝白板面，前庭外缘保持敞开。尺寸和门线细部仍为近似。</p><p>内部建筑轮廓为影像人工判读，楼高、部分楼层及功能为估算；广场采用卫星图可见的浅灰色分区，单块砖尺寸、砖缝、树种、设施及入口细部位置近似，并非逐砖或测绘级复原。所有校园建筑可在建筑数据中查看来源与置信度。近处点击校园可查看介绍。</p><h3>古城铺装与院落</h3><p>古城街道按提供的照片改为灰色长方石板，保留磨损与接缝。街区内部新增连续院落及窄巷，避让地图道路、地标、已有建筑和公园。缺少测绘的住宅院落、宇峰写字楼后巷及北侧街坊均为示意布局，不代表真实门牌或店铺顺序。</p>
+<h3>七号巷北侧精细街坊 · C03-01</h3><p>以 <a href="https://www.amap.com/ssr/embed/view?lng=112.16373440475463&amp;lat=37.1994&amp;zoom=19&amp;maptype=satellite&amp;platform=pc" target="_blank" rel="noopener">19 级卫星影像</a>核对约 210 × 72 米范围内的屋顶组团、院落与边界巷道。主房、侧房、附房、开放院门、内部铺装和排水分别建模。60 个院落是建模单元，不是已核实的户籍或房产数量；分户、层高和门线近似。空调、热水器、自行车、晾衣、花盆、门灯等为参考性生活细节，没有冒充逐户实拍。本区块单独验收，其他地区仍保留原有建设状态。</p>
+<h3>人民医院、奥莱、政务大厅与紫悦宸</h3>
+<p>2026-11-26 查看高德固定中心的 17–19 级卫星图及可见外观相册，将四处从普通街坊模型替换为独立楼群：人民医院新院区 9 处、尚特奥特莱斯 9 处、政务大厅 2 处主要楼体、紫悦宸 12 处住宅楼体。加入院内通路、铺装分区、停车线、树池、门窗、屋顶设备、入口及夜间照明。搜索“紫悦城”也可定位到地图上的“紫悦宸”。</p>
+<p>卫星影像拍摄日期未知，轮廓由人工判读，包含屋顶视差；楼高及设施位置仍有估算。医院住院楼暂按 15 层（13–17 层待核），紫悦宸各楼暂按约 6 层。奥莱以东侧商业组团和公开相册为参考，未将西侧施工场地虚构为完成的商场。政务大厅缺少清晰正面照片，暂用浅灰米色墙面，蓝色屋面按卫星图表达。地砖颜色、铺装分区有影像参考，单砖和窗格不是逐个实测。</p>
+<p><a href="https://www.amap.com/place/B0FFHTX6L6" target="_blank" rel="noopener">人民医院新院区</a> · <a href="https://www.amap.com/place/B0K0TUX1YO" target="_blank" rel="noopener">尚特奥特莱斯</a> · <a href="https://www.amap.com/place/B0FFGRNCQT" target="_blank" rel="noopener">平遥县政务大厅</a> · <a href="https://www.amap.com/place/B0FFKR097X" target="_blank" rel="noopener">紫悦宸</a>。高德卫星影像 / DigitalGlobe &amp; SpaceView 仅作人工判读参考，未下载或嵌入卫星瓦片；道路来源为 © OpenStreetMap contributors。</p>
+<h3>全城街坊与古城站</h3><p>北城、东关、西城新区、西南片区及古城站连接段，依据高德卫星影像判读屋顶、内部巷道和空地，补充 OSM 路网。连排屋顶组团中的逐户边界、楼层、立面、院墙、树位和铺装包含估算；高楼没有统一压成低楼，未核实的层数保留估算范围。影像拍摄日期未知。</p><p>古城站站房按广场南侧的屋顶定位，外观参考<a href="https://m.thepaper.cn/newsDetail_forward_33565391" target="_blank" rel="noopener">中国铁路公开照片</a>；地图 POI 位于站前广场，不代替站房轮廓。各分区仍保留待逐栋校核与待验收状态。</p><h3>平遥中学</h3><p>古城东侧的山西省平遥中学，与城西平遥二中分开建模。校园边界采用 <a href="https://www.openstreetmap.org/way/401952981" target="_blank" rel="noopener">OSM 401952981</a>；楼群、运动场、球场、校内道路及绿地分区参考 <a href="https://www.amap.com/place/B016200A69" target="_blank" rel="noopener">高德卫星图与公开相册</a>（2026-11-25 核对，影像拍摄日期未知）。红白楼体、白色弧角校名墙、校史墙、红色雕塑及屋顶球体参考用户照片。地图相册存在不同版本的校门景墙，本版采用用户照片版本。按补充的卫星截图收窄并退让南部两排楼，校名墙移至东南门对外前区，入口通道与庭园分开；校史景墙按实景改为两排错列的低墙与黑白石座，未辨清年份留空；入口改用银灰矮护栏与蓝白板面，前庭外缘保持敞开。尺寸和门线细部仍为近似。</p><p>内部建筑轮廓为影像人工判读，楼高、部分楼层及功能为估算；广场采用卫星图可见的浅灰色分区，单块砖尺寸、砖缝、树种、设施及入口细部位置近似，并非逐砖或测绘级复原。所有校园建筑可在建筑数据中查看来源与置信度。近处点击校园可查看介绍。</p><h3>古城铺装与院落</h3><p>古城街道按提供的照片改为灰色长方石板，保留磨损与接缝。街区内部新增连续院落及窄巷，避让地图道路、地标、已有建筑和公园。缺少测绘的住宅院落、宇峰写字楼后巷及北侧街坊均为示意布局，不代表真实门牌或店铺顺序。</p>
 <h3>下西关街与路口商铺</h3><p>沿街店面按高德卫星影像显示的连续铺房关系调整，共墙排列，校门与道路通道留空。路口西南角的平遥黄金珠宝城、东南角的周大生已核对公开门店地址和照片，并接入楼体底层。屋面高度、店铺分界及门脸尺寸仍为近似。希岸酒店附近的示意支路止于顺城路车道边缘，以贴地坡面连接。</p>
 <h3>街区内部与二中周边</h3><p>下西关街两侧向后方延伸多排现代楼房、经营用房和连接巷道，以平屋顶、女儿墙和日常门窗表达城外街坊；补充二中操场及东侧附属楼。又见平遥西侧原先扩大绘制的草坪已改为建筑街坊，保留地图确认的绿地。街坊分界、支巷及楼层根据卫星影像的总体形态近似表达，未逐户测绘；学校、主路、剧场及既有建筑占地保持避让。</p>
 <h3>建筑数据</h3><p id="building-data-summary"></p><button id="building-data-export" type="button">导出建筑数据</button><h3>建筑高度参考</h3><p>城西普通建筑按位置参考 <a href="https://doi.org/10.14459/2025mp1782307" target="_blank" rel="noopener">GlobalBuildingAtlas / GBA.Height</a>（Zhu 等，2025；<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>）。本地裁剪、重采样及量化；原始影像主要为 2019 年，所得高度是遥感估算。已建模的较高楼体保留独立高度，不被旧数据压低。新建高楼的逐栋位置、层数仍待核实；此版本未完成当前全部高低楼复原。</p>
@@ -52,7 +69,7 @@
 <script type="module">
 import('./city.js').catch(error => {
   console.error(error);
-  document.querySelector('#error').textContent = '无法加载三维场景。请确认网络可访问 jsDelivr，且浏览器支持 WebGL 2。';
+  document.querySelector('#error').textContent = '无法加载三维场景。请确认文件完整，并使用支持 WebGL 2 的浏览器。';
   document.querySelector('#start').textContent = '场景加载失败';
 });
 </script>

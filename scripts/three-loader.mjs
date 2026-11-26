@@ -1,0 +1,5 @@
+// CPU-only data/geometry tools use the same pinned library as the application.
+export async function resolve(specifier,context,next){
+ if(specifier==='three')return {url:new URL('../dist/vendor/three.module.min.js',import.meta.url).href,shortCircuit:true};
+ return next(specifier,context);
+}

@@ -1,4 +1,9 @@
+import {isWestNeighbourhood} from './west-neighbourhood-data.js';
+import {southCityStops} from './south-city-survey.js';
 import * as T from 'three';
+import {westSiteStops,isWestSiteParcel} from './west-sites-data.js';
+import {westLinkStops} from './west-link-survey.js';
+import {smallSouthGateStop} from './yingxun-park-data.js';
 import {schoolStops} from './pingyao-school-data.js';
 import {addWestStreetExperience} from './west-experience.js';
 import {addWestGreenery} from './west-greenery.js';
@@ -10,10 +15,14 @@ import {addWestFrontages, isWestFrontage, westStops} from './west-corridor.js';
 import {addTheater, theaterStops} from './theater.js';
 import {addWestDistrict, isWestDistrictParcel, westDistrictStops} from './west-district.js';
 import {addShuncheng, isShunchengParcel, shunchengStops} from './shuncheng.js';
-import {makeGrid, pointInRing, projectOnSegment, segments} from './geography.js';
+import {makeGrid, createRingQuery,pointInRing, projectOnSegment, segments} from './geography.js';
 
 export const streetStops = [
   ...schoolStops,
+  ...westSiteStops,
+  ...westLinkStops,
+  ...southCityStops,
+  smallSouthGateStop,
   ...westInteriorStops,
   {name:'下西关街 · 绿化步道',keywords:'绿化 行道树 花坛 景林江米油糕 城门外',address:'下西门外至油糕店一带 · 树木与花坛位置近似',eye:[-1760,2.1,116],target:[-1840,3.2,130]},
   {name:'古城灰石板街景',keywords:'古城 地砖 石板 院落 街坊 西大街',address:'灰石板铺装参考提供照片 · 街区院落为密度示意',eye:[-608,2.1,-46],target:[-540,3,-60]},
@@ -51,14 +60,12 @@ export function streetAtPosition() {
   };
 }
 
-const campusBoundary = segments([...mapData.campus,mapData.campus[0]]);
+const campusQuery=createRingQuery(mapData.campus);
+const streetDetailCircles=[[-1888,150,11],[-1942,952,14],[-1440,870,27],[-1248,450,77],[-1259,538,62],[-1138,830,18]];
 
 export function isStreetDetailParcel(x,z,radius) {
-  if (isShunchengParcel(x,z,radius)||isWestDistrictParcel(x,z,radius)||isWestFrontage(x,z,radius)||pointInRing(x,z,mapData.campus)) return true;
-  if (campusBoundary.some(line=>projectOnSegment([x,z],line).distance<radius+2)) return true;
-  return [
-    [-1888,150,11],[-1942,952,14],[-1385,815,51],[-1440,870,27],[-1248,450,77],[-1259,538,62],[-1138,830,18],
-  ].some(([px,pz,size])=>Math.hypot(x-px,z-pz)<size+radius);
+  if (isWestNeighbourhood(x,z,radius)||isWestSiteParcel(x,z,radius)||isShunchengParcel(x,z,radius)||isWestDistrictParcel(x,z,radius)||isWestFrontage(x,z,radius)||campusQuery.contains(x,z,radius+2)) return true;
+  return streetDetailCircles.some(([px,pz,size])=>Math.hypot(x-px,z-pz)<size+radius);
 }
 
 export function addStreetDetails(scene) {
@@ -227,17 +234,6 @@ export function addStreetDetails(scene) {
     mesh.position.set(cx,y,cz);
     scene.add(mesh);
   }
-
-  const mall=new T.Group();
-  mall.position.set(-1383,0,812);
-  mall.rotation.y=-.09;
-  scene.add(mall);
-  box(mall,'#c2b5a1',0,7.8,0,54,15.6,35);
-  box(mall,'#9f9382',13,11,1,28,22,32);
-  box(mall,'#607478',-2,4.9,18,44,7,.25);
-  for(let x=-23;x<=23;x+=5.5) box(mall,'#d1c4b1',x,5,18.2,.28,7,.25);
-  box(mall,'#8f5140',-4,10.3,19,46,.45,3);
-  namedBoard(mall,'田森汇 · 城市生活公园',-2,12.4,18.1,40,2.6,0,'#734739');
 
   function streetSign(name,x,z,face,w=6) {
     box(scene,'#64736e',x,2.13,z,.13,4.26,.13);

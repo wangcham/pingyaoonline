@@ -39,7 +39,23 @@ assert.equal(ids.get('intro').hidden,true,'school search must enter the experien
 const {isPingyaoSchoolParcel}=await import('../dist/pingyao-school-data.js');
 assert.ok(isPingyaoSchoolParcel(testRenderer.camera.position.x,testRenderer.camera.position.z),'school search must reach the eastern campus');
 assert.ok(testRenderer.scene.getObjectByName('山西省平遥中学'));
-assert.equal(ids.get('landmark-list').children.length,6,'school must appear alongside the five existing landmarks');
+assert.equal(ids.get('landmark-list').children.length,8,'both western sites appear alongside school and five existing landmarks');
 ids.get('night').click();testRenderer.frame(performance.now()+1200);
 const campus=testRenderer.scene.getObjectByName('山西省平遥中学');assert.ok(campus.children.some(o=>o.isPointLight&&o.visible),'campus lamps must follow day/night state');
+for(const [query,name] of [['田森','田森汇 · 顺城路立面'],['平遥三中','平遥三中 · 东南门']]){
+  ids.get('street-open').click();streetQuery.value=query;streetQuery.dispatchEvent(new Event('input'));
+  const result=ids.get('street-results').children.find(choice=>choice.children[0].textContent===name);assert.ok(result,query+' remains searchable');
+  result.click();testRenderer.frame(performance.now()+1500);assert.equal(ids.get('intro').hidden,true);
+}
+assert.ok(testRenderer.scene.getObjectByName('田森汇'));assert.ok(testRenderer.scene.getObjectByName('平遥三中'));
+for(const [query,name] of [['南城','南城 · 连续街坊全景'],['街坊全景','二中至三中 · 街坊全景'],['内部街巷','永安北路 · 内部街巷'],['柳根街','柳根街 · 南侧街区'],['迎薰门','迎薰门 · 绿化步道']]){
+  ids.get('street-open').click();streetQuery.value=query;streetQuery.dispatchEvent(new Event('input'));
+  const result=ids.get('street-results').children.find(choice=>choice.children[0].textContent===name);assert.ok(result,query+' search');
+  result.click();testRenderer.frame(performance.now()+1800);assert.equal(ids.get('intro').hidden,true);
+}
+assert.ok(testRenderer.scene.getObjectByName('南城连续街坊 · 柳根街至南外环'));assert.ok(testRenderer.scene.getObjectByName('平遥二中至三中街坊'));assert.ok(testRenderer.scene.getObjectByName('迎薰门公园绿化'));
+ids.get('city-plan-open').click();assert.equal(ids.get('city-plan-dialog').open,true);assert.equal(ids.get('city-plan-list').children.length,25);
+ids.get('city-plan-list').children.find(row=>row.children[0].textContent.startsWith('B02')).click();assert.equal(ids.get('city-plan-visit').hidden,false);
+ids.get('city-plan-visit').click();testRenderer.frame(performance.now()+2000);assert.equal(ids.get('city-plan-dialog').open,false);assert.equal(ids.get('intro').hidden,true);
+assert.ok(Math.abs(testRenderer.camera.position.x+603)<.1);
 console.log('Scene boot, entry without Pointer Lock, Escape, school search/labels, day/night and frame update passed without opening a browser.');

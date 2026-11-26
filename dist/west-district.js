@@ -2,11 +2,12 @@ import * as T from 'three';
 import {resolveBuildingHeight} from './building-heights.js';
 import {addYufengBlock,isYufengBlock,yufengStops} from './yufeng-block.js';
 import {mapData} from './map-data.js';
-import {pointInRing, projectOnSegment, segments} from './geography.js';
+import {createRingQuery,pointInRing, projectOnSegment, segments} from './geography.js';
 import {westGroundHeight} from './west-terrain.js';
 import {createTreeBatch} from './vegetation.js';
 import {surveyedWestPark} from './west-green-survey.js';
 import {addJunctionJewelry,jewelryStops} from './junction-jewelry.js';
+import {addRoadAdjustedCommercial} from './road-adjusted-commercial.js';
 
 export const commercialPlots = [
   {x:-1450,z:151,w:106,d:70,floors:5,facade:'#bab2a2',trim:'#635c56',glass:'#426678',
@@ -44,6 +45,7 @@ export const westDistrictStops = [
 
 // Satellite review shows buildings west of the theater; retain mapped green areas only.
 const greenAreas = [surveyedWestPark,mapData.yongdingPark];
+const greenAreaQueries=greenAreas.map(createRingQuery);
 const parkPaths = [
   [[-1179,930],[-1161,958],[-1164,998],[-1154,1062],[-1124,1115],[-1081,1119],[-1081,1081],[-1095,1032],[-1110,995],[-1133,949],[-1179,930]],
 ];
@@ -55,7 +57,7 @@ const parkWater = [
 export function isWestDistrictParcel(x,z,radius=0) {
   const mallApproach=x-radius<-1400&&x+radius>-1505&&z+radius>70&&z-radius<116;
   return isYufengBlock(x,z,radius) || mallApproach || commercialPlots.some(plot=>Math.abs(x-plot.x)<plot.w/2+radius+2&&Math.abs(z-plot.z)<plot.d/2+radius+2)
-    || greenAreas.some(ring=>pointInRing(x,z,ring));
+    || greenAreaQueries.some(q=>q.contains(x,z));
 }
 
 function pathCurve(points) {
@@ -65,6 +67,7 @@ function pathCurve(points) {
 export function addWestDistrict(scene,box,namedBoard) {
   addYufengBlock(scene,namedBoard);
   for (const plot of commercialPlots) {
+    if(['宇峰写字楼','希岸酒店','麗枫酒店'].includes(plot.name)&&addRoadAdjustedCommercial(scene,plot,namedBoard))continue;
     const {x,z,w,d,floors,facade,trim,glass,name,groundShops,face}=plot;
     const group=new T.Group();
     group.position.set(x,westGroundHeight(x,z),z);
@@ -75,7 +78,7 @@ export function addWestDistrict(scene,box,namedBoard) {
     const podium = width>80;
     const lavande=name==='麗枫酒店';
     const height=5.2+(floors-1)*(podium?4:3.35);
-    group.userData.buildingRecord={id:`commercial-${name}`,name,x,z,w,d,angle:face,
+    group.userData.buildingRecord={id:`commercial-${name}`,name,x,z,w,d,angle:0,
       ...resolveBuildingHeight({x,z,w,d,buildingType:name.includes('酒店')?'hotel':name.includes('写字楼')?'office':'commercial',fallbackFloors:floors,estimatedHeight:height}),
       height,levels:floors,floors,heightSource:lavande?'facade-photo-levels':'existing-approximation',
       source:lavande?'facade-photo-levels':'existing-approximation',confidence:lavande?.6:.3,estimated:true,approximate:true,footprintSource:'AMap-POI-and-image-estimate',footprintEstimated:true};
