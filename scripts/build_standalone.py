@@ -24,7 +24,35 @@ def safe_script(source):
 page = (dist / 'index.html').read_text(encoding='utf-8')
 style = (dist / 'style.css').read_text(encoding='utf-8')
 sources = inline_module('sources.js')
-modules = ['map-data.js', 'city-extension-data.js', 'city-extension.js', 'geography.js', 'landmarks/coordinates.js', 'road-clearance.js', 'qixiang-block-data.js', 'city-survey-progress.js', 'city-plan-data.js', 'city-plan.js', 'pingyao-school-data.js', 'civic-sites-data.js', 'west-neighbourhood-data.js', 'west-sites-data.js', 'render-stability.js', 'flight-pointer.js', 'west-building-height-data.js', 'building-heights.js', 'west-elevation.js', 'west-block-data.js', 'west-terrain.js', 'survey-surfaces.js', 'paving.js', 'urban-batch.js', 'road-adjusted-commercial.js', 'west-road-layout.js', 'vegetation.js', 'pingyao-school.js', 'modern-site.js', 'civic-sites.js', 'west-neighbourhood.js', 'tiansen.js', 'pingyao-third-school.js', 'west-green-survey.js', 'yufeng-block.js', 'junction-jewelry.js', 'west-district.js', 'west-link-survey.js', 'yingxun-park-data.js', 'west-link-district.js', 'south-city-survey.js', 'south-city.js', 'yingxun-greenery.js', 'shuncheng.js', 'west-corridor.js', 'theater.js', 'west-greenery.js', 'west-block-layout.js', 'west-blocks.js', 'west-experience.js', 'street-detail.js', 'landmarks/survey.js', 'landmarks/data.js', 'old-town-layout.js', 'old-town.js', 'landmarks/architecture.js', 'landmarks/PingyaoCityWall.js', 'landmarks/PingyaoBellTower.js', 'landmarks/Rishengchang.js', 'landmarks/PingyaoCountyYamen.js', 'landmarks/PingyaoConfucianTemple.js', 'landmarks/LandmarkManager.js', 'regional-survey-data.js', 'regional-survey.js', 'regional-districts.js', 'gucheng-station.js', 'qixiang-block.js', 'model.js', 'sky.js', 'city.js']
+modules = ['map-data.js', 'city-extension-data.js', 'city-extension.js', 'geography.js', 'landmarks/coordinates.js', 'road-clearance.js', 'school-sites-data.js', 'qixiang-block-data.js', 'city-survey-progress.js', 'city-plan-data.js', 'city-plan.js', 'pingyao-school-data.js', 'civic-sites-data.js', 'west-neighbourhood-data.js', 'west-sites-data.js', 'render-stability.js', 'flight-pointer.js', 'west-building-height-data.js', 'building-heights.js', 'west-elevation.js', 'west-block-data.js', 'west-terrain.js', 'survey-surfaces.js', 'paving.js', 'urban-batch.js', 'road-adjusted-commercial.js', 'west-road-layout.js', 'vegetation.js', 'pingyao-school.js', 'modern-site.js', 'school-appearance.js', 'school-sites.js', 'civic-sites.js', 'west-neighbourhood.js', 'tiansen.js', 'pingyao-third-school.js', 'west-green-survey.js', 'yufeng-block.js', 'junction-jewelry.js', 'west-district.js', 'west-link-survey.js', 'yingxun-park-data.js', 'west-link-district.js', 'south-city-survey.js', 'south-city.js', 'yingxun-greenery.js', 'shuncheng.js', 'west-corridor.js', 'theater.js', 'west-greenery.js', 'west-block-layout.js', 'west-blocks.js', 'west-experience.js', 'street-detail.js', 'landmarks/survey.js', 'landmarks/data.js', 'old-town-layout.js', 'old-town.js', 'landmarks/architecture.js', 'landmarks/PingyaoCityWall.js', 'landmarks/PingyaoBellTower.js', 'landmarks/Rishengchang.js', 'landmarks/PingyaoCountyYamen.js', 'landmarks/PingyaoConfucianTemple.js', 'landmarks/LandmarkManager.js', 'regional-survey-data.js', 'regional-survey.js', 'regional-districts.js', 'gucheng-station.js', 'qixiang-block.js', 'model.js', 'sky.js', 'city.js']
+modules[modules.index('school-sites.js'):modules.index('school-sites.js')]=['local-commerce-materials.js','school-ground-layout.js','school-ground-details.js']
+modules.insert(modules.index('pingyao-school.js'), 'pingyao-school-details.js')
+modules.insert(modules.index('school-sites-data.js'), 'gutao-shops-data.js')
+modules.insert(modules.index('school-sites-data.js'), 'moat-data.js')
+modules.insert(modules.index('west-sites-data.js'), 'tiansen-life-data.js')
+modules.insert(modules.index('model.js'), 'moat.js')
+modules.insert(modules.index('moat.js'), 'small-south-bridge.js')
+modules.insert(modules.index('street-detail.js'), 'yingxun-waterfront.js')
+modules.insert(modules.index('street-detail.js'), 'ring-commerce.js')
+modules.insert(modules.index('street-detail.js'), 'gucheng-station-data.js')
+modules.insert(modules.index('gucheng-station.js'), 'gucheng-station-details.js')
+modules.insert(modules.index('school-sites.js'), 'gutao-shopfronts.js')
+modules.insert(modules.index('street-detail.js'), 'second-school.js')
+modules[modules.index('tiansen.js'):modules.index('tiansen.js')]=['street-scooters.js','tiansen-street-details.js','tiansen-street-life.js']
+modules.insert(modules.index('civic-sites.js'), 'outlets-detail.js')
+modules.insert(modules.index('civic-sites.js'), 'outlets-context.js')
+modules.insert(modules.index('city.js'), 'fullscreen.js')
+modules.insert(modules.index('old-town-layout.js'), 'old-town-streets-data.js')
+modules.insert(modules.index('model.js'), 'old-town-streets.js')
+modules.insert(modules.index('west-corridor.js'), 'jinglin-shop.js')
+modules.insert(modules.index('west-block-data.js'), 'jinglin-context-data.js')
+modules.insert(modules.index('street-detail.js'), 'jinglin-context.js')
+# street-detail initializes streetStops immediately. Its old-town data and the
+# landmark survey it reads must already exist in the flattened standalone scope.
+street_data_dependencies = ['landmarks/survey.js', 'landmarks/data.js', 'old-town-streets-data.js']
+for name in street_data_dependencies:
+    modules.remove(name)
+modules[modules.index('street-detail.js'):modules.index('street-detail.js')] = street_data_dependencies
 app = "import('three').then(async T => {\n" + '\n'.join(map(inline_module, modules)) + '\n})'
 # Local preview serves the pinned MIT library from dist/vendor. The shareable
 # HTML embeds the same modules as data URLs, so file:// needs no CDN or fetch.

@@ -4,6 +4,7 @@ import {sample, segments} from './geography.js';
 import {westGroundHeight} from './west-terrain.js';
 import {atYufengAccess} from './west-road-layout.js';
 import {resolveBuildingHeight} from './building-heights.js';
+import {clearancePolygonsOverlap} from './road-clearance.js';
 
 // Roofs traced from the WGS84 station-area imagery export; dimensions are local meters.
 const stationImagePoint=(u,v)=>[
@@ -33,6 +34,7 @@ export const stationStreetRings=stationStreetPlots.map(({x,z,w,d,yaw})=>{
   return [[-w/2,-d/2],[w/2,-d/2],[w/2,d/2],[-w/2,d/2]]
     .map(([u,v])=>[x+u*c+v*s,z-u*s+v*c]);
 });
+export function stationStreetIntersects(ring){return stationStreetRings.some(p=>clearancePolygonsOverlap(p,ring));}
 
 const junctions = [
   {name:'中都街 × 顺城北路',x:-1721,z:-195,bearing:-.66,type:'station',width:19,

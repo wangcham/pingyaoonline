@@ -1,0 +1,44 @@
+{
+  "site": "山西省平遥中学",
+  "date": "2026-11-27",
+  "newUIControls": false,
+  "basis": "保留已有 OSM 校园边界、高德卫星图人工判读楼群及用户照片校正的东南入口；本轮未获取新卫星图或调用高德 API。",
+  "sources": [
+    "https://www.openstreetmap.org/way/401952981",
+    "https://www.amap.com/place/B016200A69"
+  ],
+  "accuracy": "新增步道、种植、廊架、球桌、车棚和家具为校园范围内的空间设计近似，不代表核实的设施位置。长侧墙窗列、树冠和材料细部同样为模型细化。",
+  "counts": {
+    "buildings": 25,
+    "entrancePaths": 41,
+    "gardenBeds": 21,
+    "facilities": 28,
+    "sportsFencePanels": 16,
+    "drawCalls": 93,
+    "triangles": 776578,
+    "instances": 34685
+  },
+  "validation": [
+    "新增设施边界、建筑及运动场避让",
+    "步道和校道不被新增家具阻断",
+    "连接楼侧窗真实射线可见性",
+    "校名墙及校史景墙可见性",
+    "东南门通行与开放前区",
+    "夜间灯光复用和材质纹理卸载",
+    "npm run check",
+    "npm test: 26 passed",
+    "npm run build",
+    "全场景 CPU 启动、搜索和昼夜切换"
+  ],
+  "visualReview": {
+    "scope": "Chrome 独立校园渲染，周边灰色地面是检查背景，不代表整城周边模型；未测量整城 GPU 帧率。",
+    "images": [
+      "data/pingyao-middle-overview.png",
+      "data/pingyao-middle-court.png",
+      "data/pingyao-middle-activity.png",
+      "data/pingyao-middle-bikes.png",
+      "data/pingyao-middle-gate.png",
+      "data/pingyao-middle-night.png"
+    ]
+  }
+}

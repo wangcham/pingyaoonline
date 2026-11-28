@@ -90,9 +90,22 @@ export const civicSiteSurveys=civicRawSites.map(raw=>{
  });
  return s;
 });
-const civicBoundaryQueries=civicSiteSurveys.map(s=>createRingQuery(s.boundary));
+// Context around the outlet is owned separately from its retail footprints.
+// Satellite foundations + Amap Yaodu Ruifu exterior photographs; dates/heights
+// and current parking boundaries are approximate, not cadastral measurements.
+export const outletsContextSurvey=(()=>{
+ const mall=civicSiteSurveys.find(s=>s.id==='outlets');
+ const boundary=civicClipBoundary([[180,215],[500,125],[575,123],[785,526],[757,605],[275,680]].map(p=>civicImagePoint('outlets',...p)),mall.origin);
+ const towers=[[325,274],[450,249],[285,394],[445,374],[345,524],[525,524],[305,604],[495,584]].map(([x,y],i)=>{
+  const[u,v]=civicLocal(mall,[x,y]);return{id:`residential-${i}`,u,v,w:i%2?48:54,d:19,levels:i%3===0?15:16,type:'residential',name:'遥都瑞府周边住宅（轮廓近似）',heightSource:'Amap-residential-photo-level-estimate',confidence:.35};
+ });
+ return {...mall,id:'outlets-context',name:'奥莱周边 · 住宅与停车场',boundary,contextBoundary:boundary,towers,estimated:true};
+})();
+civicSiteSurveys.find(s=>s.id==='outlets').contextBoundary=outletsContextSurvey.boundary;
+outletsContextSurvey.accuracy='周边住宅外观参考高德遥都瑞府相册及奥莱开业照片；卫星图仍含施工状态，住宅轮廓、层数、停车场与电动车区边界均含估算。';
+const civicBoundaryQueries=civicSiteSurveys.map(s=>createRingQuery(s.contextBoundary));
 export function isCivicSite(x,z,pad=0){return civicBoundaryQueries.some(q=>q.contains(x,z,pad));}
-export function civicSiteIntersects(ring){return civicSiteSurveys.some(s=>clearancePolygonsOverlap(ring,s.boundary));}
+export function civicSiteIntersects(ring){return civicSiteSurveys.some(s=>clearancePolygonsOverlap(ring,s.contextBoundary));}
 export const civicSiteRecords=civicSiteSurveys.map(s=>{
  const position=civicWorld(s,...s.gate),front=s.angle+s.gateFacing;
  return {id:s.id,name:s.name,position,coordinate:localToGeographic(position),crs:'WGS84',scale:1,height:7,
@@ -103,3 +116,6 @@ export const civicSiteStops=civicSiteSurveys.flatMap((s,i)=>{
  const r=civicSiteRecords[i];return [{name:`${s.name} · 入口`,keywords:`${s.name} ${s.aliases??''} ${s.kind==='outlets'?'奥莱':''} 街景`,address:s.description,eye:[r.position[0]+r.view[0],r.view[1],r.position[1]+r.view[2]],target:[r.position[0],4,r.position[1]]},
  {name:`${s.name} · 全景`,keywords:`${s.name} ${s.aliases??''} 院内 停车 绿化 楼群`,address:s.accuracy,eye:[s.origin[0]+160,240,s.origin[1]+230],target:[s.origin[0],0,s.origin[1]]}];
 });
+const outletsRetailSurvey=civicSiteSurveys.find(s=>s.id==='outlets');
+const outletsRetailEye=civicWorld(outletsRetailSurvey,-25,-65),outletsRetailTarget=civicWorld(outletsRetailSurvey,-40,-90);
+civicSiteStops.push({name:'尚特奥特莱斯 · 品牌内街',keywords:'奥莱 奥特莱斯 商店 店铺 品牌 NIKE 耐克 ADIDAS 阿迪达斯 PINKO MCM LACOSTE TOMMY CK 波司登 斯凯奇',address:'尚特奥特莱斯 · 商业内街',eye:[outletsRetailEye[0],2.4,outletsRetailEye[1]],target:[outletsRetailTarget[0],3.1,outletsRetailTarget[1]]});

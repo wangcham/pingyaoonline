@@ -1,0 +1,50 @@
+{
+  "checked": "2026-11-28",
+  "scope": "城外主干道店面、迎薰公园人工湖、护城河与小南门桥",
+  "sources": [
+    {
+      "url": "https://sx.cri.cn/n/20250716/32881a84-39e4-d0dd-3a00-8850b142f8e4.html",
+      "use": "已查看2025年7月迎薰公园航拍，参考湖岸石材、贴岸园路及浓密树冠；照片未作为贴图打包"
+    },
+    {
+      "url": "https://www.hlhbsc.org/news_detail.aspx?news=1088",
+      "use": "已查看所载平遥护城河石拱桥照片，参考浅色石栏和拱形；不能据此证明照片就是小南门桥"
+    },
+    {
+      "url": "https://www.openstreetmap.org/copyright",
+      "use": "沿用项目既有道路、水面和城墙轮廓，康宁路交点确定桥与小南门通道位置"
+    }
+  ],
+  "result": {
+    "storefronts": 964,
+    "ponds": 2,
+    "shoreSegments": 264,
+    "lakeBenches": 5,
+    "smallSouthBridge": [
+      -595.288389,
+      891.580623
+    ],
+    "smallSouthPortal": [
+      -599.3,
+      847
+    ],
+    "people": 0
+  },
+  "accuracy": "店面附着现有建筑临街面。12类业态招牌为街景示意，不表示已核实的商户名称、数量或营业状态；桥型、分户宽度、树形与岸边设施为参考近似，非测绘。保留已有田森、新华书店、奥莱及古城细节。",
+  "validation": [
+    "29项单元测试通过",
+    "场景语法检查通过",
+    "单文件构建和启动检查通过",
+    "tests/ring-waterfront.mjs：铺面避让道路与水体、湖面面积、日夜灯光、几何、城门通行通过",
+    "tests/moat.mjs：四面河岸与所有桥梁通行通过",
+    "tests/west-link.mjs：公园树木、湖面孔洞与门前通道通过",
+    "浏览器检查北城和东城门面、人工湖、小南门桥及夜景；无控制台错误"
+  ],
+  "screenshots": [
+    "north-ring-shops.jpg",
+    "east-ring-shops.jpg",
+    "east-ring-shops-night.jpg",
+    "artificial-lake-day.jpg",
+    "small-south-bridge.jpg"
+  ]
+}

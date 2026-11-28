@@ -1,3 +1,4 @@
+import {isSchoolSite,schoolSiteIntersects} from './school-sites-data.js';
 import {splitSurveyRoof} from './west-link-survey.js';
 import {geographicToLocal,localToGeographic} from './landmarks/coordinates.js';
 import {pointInRing,segments,projectOnSegment,createRingQuery,makeGrid} from './geography.js';
@@ -37,7 +38,7 @@ southRows('outer',6,'residential','#a79e8a',[[129,84,66,23],[212,60,69,23],[205,
 
 export const southCityBoundaries=Object.keys(southCityFrames).map(id=>[[15,12],[1264,12],[1264,708],[15,708]].map(p=>southImagePoint(id,...p)));
 const southCityQueries=southCityBoundaries.map(createRingQuery);
-export function isSouthCityStudy(x,z,pad=0){if(x< -1000-pad||x>260+pad||z<940-pad||z>3650+pad)return false;return !isYingxunPark(x,z,pad)&&southCityQueries.some(q=>q.contains(x,z,pad));}
+export function isSouthCityStudy(x,z,pad=0){if(x< -1000-pad||x>260+pad||z<940-pad||z>3650+pad)return false;return !isSchoolSite(x,z,pad)&&!isYingxunPark(x,z,pad)&&southCityQueries.some(q=>q.contains(x,z,pad));}
 function southPolygon(frame,points){return points.map(p=>southImagePoint(frame,...p));}
 export const southCityOpenGround=[
  ['liugen','paving',[[456,162],[592,147],[614,276],[475,298]]],
@@ -86,7 +87,7 @@ export function createSouthCityLayout(){
   for(const item of parts){
   item.ring=clearanceRect(item.x,item.z,item.w,item.d,p.angle);
   const envelope=clearanceRect(item.x,item.z,item.w,item.d,p.angle,1.3);
-  const reason=!envelope.every(v=>isSouthCityStudy(...v))?'boundary':!southClearance.clear(envelope)?'road':southCityOpenGround.some(g=>clearancePolygonsOverlap(envelope,g.ring))?'open-ground':roofs.some(r=>clearancePolygonsOverlap(envelope,r.ring))?'duplicate':null;
+  const reason=schoolSiteIntersects(envelope)?'detailed-school':!envelope.every(v=>isSouthCityStudy(...v))?'boundary':!southClearance.clear(envelope)?'road':southCityOpenGround.some(g=>clearancePolygonsOverlap(envelope,g.ring))?'open-ground':roofs.some(r=>clearancePolygonsOverlap(envelope,r.ring))?'duplicate':null;
   if(reason)omitted.push({id:item.id,reason});else roofs.push(item);
   }
  });

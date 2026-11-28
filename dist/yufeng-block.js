@@ -6,6 +6,8 @@ import {westGroundHeight} from './west-terrain.js';
 import {createUrbanBatch} from './urban-batch.js';
 import {createPavingMaterial} from './paving.js';
 import {yufengAccessEdge,nearestShuncheng} from './west-road-layout.js';
+import {stationStreetIntersects} from './shuncheng.js';
+import {clearanceRect} from './road-clearance.js';
 
 // Surrounding block is inferred from the existing commercial anchors, not a cadastral survey.
 export const yufengBlockBoundary=[[-1628,-140],[-1497,-140],[-1497,-38],[-1518,-38],[-1518,34],[-1530,90],[-1546,90],[-1546,36],[-1600,36],[-1640,-70]];
@@ -38,6 +40,7 @@ export function addYufengBlock(scene,namedBoard){
     }
     for(let i=0;i<steps;i++){
       const v=[vertex(i/steps,lo),vertex((i+1)/steps,lo),vertex((i+1)/steps,hi),vertex(i/steps,hi)];
+      if(stationStreetIntersects(v.map(p=>[p[0],p[2]])))continue;
       for(const k of [0,1,2,0,2,3])vertices.push(...v[k]);
     }
   }
@@ -54,6 +57,7 @@ export function addYufengBlock(scene,namedBoard){
     mesh.receiveShadow=true;laneRoot.add(mesh);
   }
   function building(x,z,w,d,floors,angle,index){
+    if(stationStreetIntersects(clearanceRect(x,z,w,d,angle,1.2)))return;
     const heightRecord=resolveBuildingHeight({x,z,w,d,angle,fallbackFloors:floors,buildingType:'residential'});floors=heightRecord.floors;
     heightRecords.push({id:`yufeng-rear-${index}`,x,z,w,d,angle,...heightRecord,footprintSource:'inferred-parcel',footprintEstimated:true});
     const h=heightRecord.height,wall=['#a6a59a','#94978f','#b0a595'][index%3];
@@ -92,6 +96,7 @@ export function addYufengBlock(scene,namedBoard){
   houses.forEach((p,i)=>building(...p,i));
   // Small shared yards behind the northern shop rows, with gates and service details.
   for(const x of [-1572,-1548,-1518]){
+    if(stationStreetIntersects(clearanceRect(x,-98,21,14)))continue;
     a.part('paving','#ffffff',x,.04,-98,19,.08,12);
     for(const dx of [-10,10])a.box('#797d76',x+dx,1.1,-98,.3,2.2,14);
     a.box('#76614e',x-4,.45,-98,2,.9,1.1);

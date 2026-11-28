@@ -1,0 +1,3144 @@
+{
+  "checked": "2026-11-28",
+  "crs": "GCJ-02",
+  "pois": [
+    {
+      "parent": "",
+      "address": "曙光西街88号",
+      "business": {
+        "opentime_today": "10:00-22:00",
+        "keytag": "商场",
+        "rating": "4.5",
+        "rectag": "商场",
+        "opentime_week": "周一至周日 10:00-22:00"
+      },
+      "distance": "0",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;商务住宅相关;商务住宅相关",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/bcb5f4090a95f9830000008275040895?type=pic"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/53abdf64a372cbfe0000007909074622?type=pic"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/05465f7f22e39ad30000004835314230"
+        }
+      ],
+      "typecode": "120000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "尚特奥特莱斯",
+      "location": "112.157031,37.184356",
+      "id": "B0K0TUX1YO"
+    },
+    {
+      "parent": "",
+      "address": "双林大道与呼北线交叉口西180米",
+      "business": {
+        "keytag": "小吃快餐",
+        "rating": "3.0",
+        "rectag": "小吃快餐"
+      },
+      "distance": "149",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/238543d1d336dc2cbc52d49d11fb52e9"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "遥都小吃",
+      "location": "112.156650,37.183050",
+      "id": "B0M1M1F0NC"
+    },
+    {
+      "parent": "",
+      "address": "曙光西街88号",
+      "business": {
+        "opentime_today": "09:00-14:30 17:00-24:00",
+        "keytag": "中餐",
+        "rating": "4.1",
+        "tel": "16635122111",
+        "rectag": "中餐",
+        "opentime_week": "周一至周日 09:00-14:30,17:00-24:00"
+      },
+      "distance": "159",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/a36af8ddef7451476629676122018e7e"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "亮哥面摊摊",
+      "location": "112.158077,37.183187",
+      "id": "B0MD0ZQWC6"
+    },
+    {
+      "parent": "",
+      "address": "双林大道与汇通路交叉口西北100米",
+      "business": {
+        "opentime_today": "09:00-14:00 16:30-21:30",
+        "keytag": "中餐",
+        "rating": "4.5",
+        "tel": "0354-5788999;13593137370",
+        "rectag": "中餐",
+        "opentime_week": "周一至周日 09:00-14:00,16:30-21:30"
+      },
+      "distance": "160",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/4dfb3fe269467955bb468cfcc36bb7ac"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/e581b845b2a8b2180000009479336005?type=pic"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/26c2f8dffa85e67b0000006786440509?type=pic"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "云遥礼宴中心",
+      "location": "112.157859,37.183073",
+      "id": "B0MABCT5ZW"
+    },
+    {
+      "parent": "",
+      "address": "中都乡遥都瑞府22号楼",
+      "business": {
+        "keytag": "火锅",
+        "rating": "4.1",
+        "tel": "15235434888",
+        "rectag": "火锅"
+      },
+      "distance": "187",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;火锅店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/229b20602acec3aa7e58c236bf41fb18"
+        }
+      ],
+      "typecode": "050117",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "平遥聚鲜阁火锅餐饮店",
+      "location": "112.156877,37.182677",
+      "id": "B0M1PS3KNL"
+    },
+    {
+      "parent": "",
+      "address": "中都乡双林大道",
+      "business": {
+        "keytag": "湘菜",
+        "rating": "3.3",
+        "tel": "18635422055",
+        "rectag": "湘菜"
+      },
+      "distance": "193",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/b5bcb9d224ef16702e21421c3dadb3aa"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "百味食府",
+      "location": "112.157575,37.182675",
+      "id": "B0MUHCPKA1"
+    },
+    {
+      "parent": "",
+      "address": "呼北线与曙光西街交叉口东南120米",
+      "business": {
+        "keytag": "公司",
+        "rectag": "公司"
+      },
+      "distance": "194",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区|公司企业;公司;公司",
+      "typecode": "120302|170200",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "平遥县明珠建筑工程有限公司印象小镇光大商住小区工程项目",
+      "location": "112.157556,37.186052",
+      "id": "B0LD4OSQKO"
+    },
+    {
+      "parent": "",
+      "address": "曙光西街88号",
+      "business": {
+        "keytag": "面馆",
+        "rating": "3.9",
+        "tel": "13294541544;14717857211",
+        "tag": "大碗面",
+        "rectag": "面馆"
+      },
+      "distance": "213",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/4351c7dfd21461d340d1ff4c606d3127"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "军军大碗面",
+      "location": "112.157111,37.182438",
+      "id": "B0MA7936TE"
+    },
+    {
+      "parent": "B0L16USL1X",
+      "address": "遥都瑞府22-109号",
+      "business": {
+        "keytag": "美发",
+        "rating": "3.8",
+        "tel": "19582091000",
+        "rectag": "美发"
+      },
+      "distance": "222",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/c14dc14af59a16001bb5125cab87c874"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/9e8737282363f08b2003db0d94df098d"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/e4d6dae481e78bb65d135b496e36808b"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "E.M美业",
+      "location": "112.156351,37.182434",
+      "id": "B0MGT77EQ1"
+    },
+    {
+      "parent": "",
+      "address": "双林大道与汇通路交叉口西240米",
+      "business": {
+        "keytag": "住宅区",
+        "rating": "3.3",
+        "tel": "18635087722",
+        "rectag": "住宅区"
+      },
+      "distance": "231",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0LBYHSLTE/comment/content_media_external_images_media_1000139066_ss__1767781214810_54873696.jpg"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/711585b353d4694807866cec4ac605c6"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/ae900bd2376b0b310000003182654193"
+        }
+      ],
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "遥都瑞府",
+      "location": "112.155606,37.182618",
+      "id": "B0LBYHSLTE"
+    },
+    {
+      "parent": "",
+      "address": "遥都瑞府底商门面22-113",
+      "business": {
+        "opentime_today": "09:30-19:00",
+        "cost": "119.00",
+        "keytag": "皮肤管理",
+        "rating": "3.8",
+        "tel": "15934111327;15935683887",
+        "rectag": "皮肤管理",
+        "opentime_week": "周一至周五 08:30-20:00；周六至周日 09:30-19:00"
+      },
+      "distance": "244",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/a9044914fd1c6d4e93792a5bf596402d"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "玫莉蔻(遥都瑞府店)",
+      "location": "112.155975,37.182325",
+      "id": "B0MAT5W274"
+    },
+    {
+      "parent": "B0LBYHSLTE",
+      "address": "遥都瑞府",
+      "business": {
+        "opentime_today": "09:00-19:00",
+        "keytag": "售楼处",
+        "rating": "4.5",
+        "tel": "0354-5923888",
+        "rectag": "售楼处",
+        "opentime_week": "周一至周日 09:00-19:00"
+      },
+      "distance": "276",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/62851d4200fba72ed415dd882724cded"
+        }
+      ],
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "遥都瑞府售楼部",
+      "location": "112.155888,37.182041",
+      "id": "B0K6JZMFAR"
+    },
+    {
+      "parent": "",
+      "address": "曙光西街印象小镇B区1-119号",
+      "business": {
+        "opentime_today": "09:30-21:30",
+        "keytag": "体育彩票",
+        "rectag": "体育彩票",
+        "opentime_week": "周一至周日 09:30-21:30"
+      },
+      "distance": "286",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;彩票彩券销售点;彩票彩券销售点",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/c1acaa16e31255bcfef505ae0c146d1f"
+        }
+      ],
+      "typecode": "071800",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "中国体育彩票(曙光西街店)",
+      "location": "112.157983,37.186816",
+      "id": "B0KDRRAIFC"
+    },
+    {
+      "parent": "",
+      "address": "汇通路41号",
+      "business": {
+        "opentime_today": "09:00-21:00",
+        "keytag": "美发",
+        "rating": "4.4",
+        "tel": "18135019940;18335489940",
+        "rectag": "美发",
+        "opentime_week": "周一至周日 09:00-21:00"
+      },
+      "distance": "290",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/5f026c20729534de02db485d1dc2df2e"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0LU4DMDN4/comment/content_media_external_file_100000411_1769304268459_23843802.jpg"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "西西里专注发型设计",
+      "location": "112.158080,37.186825",
+      "id": "B0LU4DMDN4"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "曙光西街印象小镇一期1-115号",
+      "business": {
+        "keytag": "肉类",
+        "rating": "3.5",
+        "tel": "18406589222",
+        "rectag": "肉类"
+      },
+      "distance": "291",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/8b974e9b8f67a7d83186bdd69719b7d0"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "冠云平遥牛肉(印象小镇店)",
+      "location": "112.158132,37.186825",
+      "id": "B0MAVC74GZ"
+    },
+    {
+      "parent": "",
+      "address": "曙光西街印象小镇B区1-113号",
+      "business": {
+        "opentime_today": "09:00-21:00",
+        "cost": "48.00",
+        "keytag": "蛋糕店",
+        "rating": "4.2",
+        "tel": "0354-5772288;13835404761",
+        "tag": "慕斯蛋糕,三明治",
+        "rectag": "蛋糕店",
+        "opentime_week": "周一至周日 09:00-21:00"
+      },
+      "distance": "295",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;餐饮相关场所;餐饮相关",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/d662c12dc17115d4b4663c6003cefbfa"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/13bd46d0b1724baa6ae2aa3425f20506"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/48f44c635dabfe98c88540209d48059b"
+        }
+      ],
+      "typecode": "050000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "贝壳烘焙(平遥店)",
+      "location": "112.158184,37.186851",
+      "id": "B0FFGLMHV9"
+    },
+    {
+      "parent": "",
+      "address": "印象小镇一期门面",
+      "business": {
+        "opentime_today": "09:00-21:00",
+        "cost": "33.00",
+        "keytag": "美发",
+        "rating": "4.4",
+        "tel": "18234448622",
+        "rectag": "美发",
+        "opentime_week": "周一至周日 09:00-21:00"
+      },
+      "distance": "299",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/3bbf90ad36a6e523e6acd21289b3fc95"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/7ff4cc501bc29c739e2538e2890bd520"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/55e651fa75874c3e20f34ca4e7ad105a"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "WF王飞形象设计室",
+      "location": "112.158340,37.186840",
+      "id": "B0JRMZOV5H"
+    },
+    {
+      "parent": "",
+      "address": "双林大道与汇通路交叉口南60米",
+      "business": {
+        "cost": "17.00",
+        "keytag": "中餐",
+        "rating": "2.8",
+        "rectag": "中餐"
+      },
+      "distance": "302",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/8b5704ce32994cc4d819ab34b05bae9f"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "王二小饭店",
+      "location": "112.158294,37.181827",
+      "id": "B0M6JUEBE3"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "城西街道曙光西路印象小镇一期门面底商1-107",
+      "business": {
+        "opentime_today": "08:00-18:30",
+        "keytag": "融合菜",
+        "rating": "4.1",
+        "tel": "13835454656",
+        "rectag": "融合菜",
+        "opentime_week": "周一至周日 08:00-18:30"
+      },
+      "distance": "306",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;餐饮相关场所;餐饮相关",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/c1ae4f9460559edaa22df718a5614a2b"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/e39f458539284f20fbf694108941c66c"
+        }
+      ],
+      "typecode": "050000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "妈妈来了月子餐外送(曙光西街店)",
+      "location": "112.158672,37.186779",
+      "id": "B0KGNROF3J"
+    },
+    {
+      "parent": "B0LDNX4QDU",
+      "address": "书林家园3期",
+      "business": {
+        "keytag": "快递代收",
+        "rating": "3.7",
+        "rectag": "快递代收"
+      },
+      "distance": "331",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "书林家园三期妈妈驿站",
+      "location": "112.158925,37.186925",
+      "id": "B0MUD9KWK0"
+    },
+    {
+      "parent": "",
+      "address": "西外环路山西交警大队车管所北9号",
+      "business": {
+        "opentime_today": "10:00-22:00",
+        "keytag": "中餐",
+        "rating": "3.7",
+        "rectag": "中餐",
+        "opentime_week": "周一至周日 10:00-22:00"
+      },
+      "distance": "347",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;特色/地方风味餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/b45f66f598e3e9670000009013844508?type=pic"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/b81fbc6e3aa01b5de7a5a48d1c870c36"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/18ad5810d26642070000009013848413?type=pic"
+        }
+      ],
+      "typecode": "050118",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "春春饭店",
+      "location": "112.158698,37.181527",
+      "id": "B0IRTXIA6A"
+    },
+    {
+      "parent": "",
+      "address": "曙光西路印象1期西门口2-128号",
+      "business": {
+        "opentime_today": "09:00-14:30 17:00-21:00",
+        "keytag": "肉类",
+        "rating": "3.4",
+        "tel": "13453225060;13994562312",
+        "rectag": "肉类",
+        "opentime_week": "周一至周日 09:00-14:30,17:00-21:00"
+      },
+      "distance": "349",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/ff577d43440b3130ff8815f242a327e4"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/bd210db5db2692610000003928264929?type=pic"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "溢福居卤肉店",
+      "location": "112.159293,37.186925",
+      "id": "B0M6RH0WRQ"
+    },
+    {
+      "parent": "",
+      "address": "呼北线与曙光西街交叉口西120米",
+      "business": {
+        "keytag": "写字楼",
+        "rectag": "写字楼"
+      },
+      "distance": "351",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;楼宇;商务写字楼",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/2b99b9a2f7eb41dd50cb0d6622631bc8"
+        }
+      ],
+      "typecode": "120201",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "农商银行营业大楼",
+      "location": "112.155029,37.187079",
+      "id": "B0LAHUHFWE"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "古陶镇曙光西街书林家园",
+      "business": {
+        "keytag": "四川火锅",
+        "rating": "4.1",
+        "tel": "13513546822;17835546822",
+        "rectag": "四川火锅"
+      },
+      "distance": "353",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/ad3c5a84be820ca9bb9bd6a3c2de598a"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/0fd6f805041e6b76d3a9f4ff41eb695d"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/dc2dcb6fb732d3a9ab92662bd81c5fa6"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "平遥县龙厂长餐饮店",
+      "location": "112.158254,37.187378",
+      "id": "B0MRYRQUPM"
+    },
+    {
+      "parent": "",
+      "address": "中都乡西外环路交通警察大队车管所北6号",
+      "business": {
+        "opentime_today": "10:20-14:20 17:00-24:00",
+        "cost": "36.00",
+        "keytag": "烤肉",
+        "rating": "4.1",
+        "tel": "15103533888",
+        "tag": "大碗面",
+        "rectag": "烤肉",
+        "opentime_week": "周一至周日 10:20-14:20,17:00-24:00"
+      },
+      "distance": "358",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;特色/地方风味餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/de5a470293156801fc45cf9254e81363"
+        }
+      ],
+      "typecode": "050118",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "六六五烧烤大碗面",
+      "location": "112.158560,37.181371",
+      "id": "B0LA15ACQG"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "城西街道书林三期c3-103号",
+      "business": {
+        "keytag": "美发",
+        "rating": "3.7",
+        "tel": "13294667298",
+        "rectag": "美发"
+      },
+      "distance": "359",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/d45ee4089dd53721a61d9f6852fd41e9"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/4b2e321e6010f1f10000003135812896?type=pic"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "平遥卡尔森美发店",
+      "location": "112.158108,37.187472",
+      "id": "B0MGVCEJHT"
+    },
+    {
+      "parent": "B0FFJ7CY3P",
+      "address": "曙光西街与兴平路交叉口西240米",
+      "business": {
+        "keytag": "住宅区",
+        "rectag": "住宅区"
+      },
+      "distance": "363",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/3c0f6ee1c8a3d4f81edf05f0c6a6125c"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/1e24340b2f6ce4f9755c72a48d50e937"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/49cedcd882b63c037f44cf7eb59d2392"
+        }
+      ],
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "印象小镇1期",
+      "location": "112.159893,37.186696",
+      "id": "B0L6XZN6AL"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "印象小镇1期",
+      "business": {
+        "cost": "35.00",
+        "keytag": "中餐",
+        "rating": "2.5",
+        "rectag": "中餐"
+      },
+      "distance": "367",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "四狗狗熬菜",
+      "location": "112.159775,37.186825",
+      "id": "B0MD6P9D7V"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "印象小镇1期",
+      "business": {
+        "keytag": "面馆",
+        "rating": "4.0",
+        "rectag": "面馆"
+      },
+      "distance": "367",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/858cc095900980e9ffb5df802e915449"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "酱肉手工面",
+      "location": "112.159775,37.186825",
+      "id": "B0MD1CU0JK"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "城西街道印象小镇一期2-117",
+      "business": {
+        "opentime_today": "08:30-20:30",
+        "keytag": "洗衣店",
+        "rating": "4.4",
+        "tel": "13333444393",
+        "rectag": "衣物染色",
+        "opentime_week": "周一至周日 08:30-20:30"
+      },
+      "distance": "375",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;洗衣店;洗衣店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/0390b3a1922a3aeff38659adee7bce0f"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/b9965b7b35c1f3aeb702f498834bb0e0"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/ad8928f87b42f71f70786e3f6df4793a"
+        }
+      ],
+      "typecode": "071500",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "洁丽雅洗衣",
+      "location": "112.159888,37.186850",
+      "id": "B0KDGZGGAU"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "印象小镇1期",
+      "business": {
+        "keytag": "小儿推拿",
+        "rating": "3.6",
+        "rectag": "小儿推拿"
+      },
+      "distance": "382",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;洗浴推拿场所;洗浴推拿场所|医疗保健服务;医疗保健服务场所;医疗保健服务场所",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/bf11b22480573b4c749e7b0dd67b5603?operate=original"
+        }
+      ],
+      "typecode": "071400|090000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "蜜儿堂儿推健康管理中心(印象小镇店)",
+      "location": "112.160025,37.186825",
+      "id": "B0LBRDI8Y2"
+    },
+    {
+      "parent": "",
+      "address": "双林大道与呼北线交叉口东160米",
+      "business": {
+        "keytag": "住宅区",
+        "rectag": "住宅区"
+      },
+      "distance": "395",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;商务住宅相关;商务住宅相关",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/f9eb4fc46f0c3fe6940aac6b76d59eb3"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/a7d51b7f28217826d8064e62b4016a92"
+        }
+      ],
+      "typecode": "120000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "children": [
+        {
+          "typecode": "150905",
+          "address": "博文公馆",
+          "subtype": "停车场",
+          "sname": " 地下停车场 ",
+          "name": "博文公馆地下停车场",
+          "location": "112.161285,37.183374",
+          "id": "B0MG273QKY"
+        }
+      ],
+      "name": "博文公馆",
+      "location": "112.161267,37.183240",
+      "id": "B0FFKKPV2N"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "印象小镇1期",
+      "business": {
+        "cost": "230.00",
+        "keytag": "皮肤管理",
+        "rating": "3.9",
+        "rectag": "皮肤管理"
+      },
+      "distance": "399",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/5c4ceb028b46668cc8ccb57b98a0de49"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "多美专业纹绣皮肤管理",
+      "location": "112.160164,37.186934",
+      "id": "B0L0FBURNV"
+    },
+    {
+      "parent": "B0MUURYBLQ",
+      "address": "五福里2号楼106号",
+      "business": {
+        "opentime_today": "08:00-18:30",
+        "keytag": "电讯营业厅",
+        "rating": "4.3",
+        "rectag": "电讯营业厅",
+        "opentime_week": "周一至周日 08:00-18:30"
+      },
+      "distance": "400",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;电讯营业厅;中国移动营业厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/95e3b2d7c10532fcae00079e968dad9b"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/407c8c924fb43745ce67290eca78cfc8"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/793f156ba5375fb04e7d8969051dfed8"
+        }
+      ],
+      "typecode": "070603",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "中国移动(五福里店)",
+      "location": "112.160567,37.182123",
+      "id": "B0M1M5E0LN"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "印象小镇B区",
+      "business": {
+        "keytag": "美容",
+        "rating": "3.7",
+        "tel": "16667763694",
+        "rectag": "美容"
+      },
+      "distance": "410",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/6aa8e5d7f998dbcee52b6ab58db24708"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/8a4dc5b348102fc678e4411b1685a307"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/193c0a2ad963bdd4e77437aec786c367"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "鑫瑞国际美容养生",
+      "location": "112.160397,37.186886",
+      "id": "B0MGASD9FJ"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "印象小镇1期",
+      "business": {
+        "keytag": "主题酒店",
+        "rating": "4.4",
+        "tel": "13303545455",
+        "rectag": "主题酒店"
+      },
+      "distance": "411",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/a20622e0bd5bc7ade51c9a15fd3e4864"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/3d93676b930869cf1f72a684b3a9b3f2"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0KB6D8968/comment/content_media_external_file_26330_ss__1753595699144_20066309.jpg"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "元亨婚礼主题酒店(印象小镇店)",
+      "location": "112.160224,37.187040",
+      "id": "B0KB6D8968"
+    },
+    {
+      "parent": "",
+      "address": "曙光西街辅路书林家园南区",
+      "business": {
+        "keytag": "住宅区",
+        "tel": "+861056320612,54976873",
+        "rectag": "住宅区"
+      },
+      "distance": "416",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/fb3b433af7920553bfba4ed3c8a98ff7"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/e315b0d4f85f1e868278602449d77b97"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/16b5bd775b7cccf6836862901737dec6"
+        }
+      ],
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "书林家园3期",
+      "location": "112.159186,37.187679",
+      "id": "B0LDNX4QDU"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "古陶镇曙光西街书林家园三期C1-107",
+      "business": {
+        "opentime_today": "08:30-19:30",
+        "cost": "182.00",
+        "keytag": "美发",
+        "rating": "4.0",
+        "tel": "13546736991;15935446046",
+        "rectag": "美发",
+        "opentime_week": "周一至周日 08:30-19:30"
+      },
+      "distance": "416",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/de0ec2bbb6d970069d32622805519be6"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/a0f64d9130d5b0790b32a5457c23309d"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/e294adb708f1bf014974448c673b3ecf"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "氧发堂植物染发养发(书林三期直营总店)",
+      "location": "112.159600,37.187491",
+      "id": "B0FFH3FUQ6"
+    },
+    {
+      "parent": "B0FFH5QJER",
+      "address": "鸿润·荣尊府南门旁",
+      "business": {
+        "keytag": "室内设计",
+        "rating": "3.6",
+        "rectag": "室内设计"
+      },
+      "distance": "417",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/8947399e512be734c97cc5de5525270f"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/84aea9f97f34b9c6f2abf049aaaa980b"
+        }
+      ],
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "筑诚室内设计",
+      "location": "112.161550,37.183314",
+      "id": "B0KBOUD89V"
+    },
+    {
+      "parent": "B0FFKW502W",
+      "address": "紫御华庭",
+      "business": {
+        "keytag": "儿童摄影",
+        "rating": "4.1",
+        "rectag": "儿童摄影"
+      },
+      "distance": "421",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;摄影冲印店;摄影冲印",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/59abbc2435071ff3944015e2b6c489ba"
+        }
+      ],
+      "typecode": "071300",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "至爱baby专业儿童亲子摄影(紫御华庭店)",
+      "location": "112.153159,37.186548",
+      "id": "B0K0X6JCV3"
+    },
+    {
+      "parent": "",
+      "address": "兴平路与双林大道交叉口西140米",
+      "business": {
+        "keytag": "住宅区",
+        "rectag": "住宅区"
+      },
+      "distance": "424",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/6ce2c4d62594a0d01f192f8cf3a94782"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/342d98e7465d139dfa258cb309d8181d"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/1fc99ee5b21d14b097b22ff1e03853cc"
+        }
+      ],
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "children": [
+        {
+          "typecode": "150905",
+          "address": "双林大道与兴平路交叉口西120米",
+          "subtype": "停车场",
+          "sname": " 停车场 ",
+          "name": "鸿润荣尊府停车场",
+          "location": "112.162013,37.183254",
+          "id": "B0G0275U1W"
+        }
+      ],
+      "name": "鸿润·荣尊府",
+      "location": "112.161792,37.183952",
+      "id": "B0FFH5QJER"
+    },
+    {
+      "parent": "B0IU3NCTSB",
+      "address": "紫御华庭1号楼",
+      "business": {
+        "keytag": "快递代收",
+        "rating": "3.8",
+        "rectag": "快递代收"
+      },
+      "distance": "429",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;物流速递;物流速递",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://img.alicdn.com/imgextra/i4/O1CN01WoNnrw1RvHlSyHo3S_!!6000000002173-0-tps-640-640.jpg"
+        }
+      ],
+      "typecode": "070500",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "菜鸟驿站",
+      "location": "112.152938,37.186414",
+      "id": "B0LKXKHIVR"
+    },
+    {
+      "parent": "B0FFH5QJER",
+      "address": "鸿润·荣尊府",
+      "business": {
+        "keytag": "生活服务,生活服务场所,生活服务场所",
+        "rating": "1.8"
+      },
+      "distance": "430",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "晋中宙阳网络科技有限公司",
+      "location": "112.161725,37.183375",
+      "id": "B0MRPNHO58"
+    },
+    {
+      "parent": "B0LDNX4QDU",
+      "address": "呼北线与曙光西街交叉口东北160米",
+      "business": {
+        "keytag": "生活服务,生活服务场所,生活服务场所",
+        "rating": "4.0"
+      },
+      "distance": "444",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "书林三期6号楼",
+      "location": "112.157430,37.188340",
+      "id": "B0LURX5399"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "呼北线与曙光西街交叉口东北160米",
+      "business": {
+        "keytag": "生活服务,生活服务场所,生活服务场所",
+        "rating": "3.0"
+      },
+      "distance": "444",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "林家园",
+      "location": "112.157430,37.188340",
+      "id": "B0LU14DNKO"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "古陶镇曙光西街印象小镇一期B区门面2-102",
+      "business": {
+        "opentime_today": "09:00-21:00",
+        "cost": "89.00",
+        "keytag": "美容",
+        "rating": "4.4",
+        "tel": "15503548701",
+        "rectag": "美容",
+        "opentime_week": "周一至周日 09:00-21:00"
+      },
+      "distance": "456",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0JU3R46TL/headerImg/406f5967c72c38c7852c2bc712e8d5f7_2048_2048_80.jpg"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0JU3R46TL/headerImg/6ee0fe07eb742cbe4707134701ae70d9_2048_2048_80.jpg"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/3c1f6f2cb45c380c77bb81874e74e2f8"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "玫莉蔻(曙光西街印象小镇店)",
+      "location": "112.160775,37.187175",
+      "id": "B0JU3R46TL"
+    },
+    {
+      "parent": "",
+      "address": "双林大道与呼北线交叉口东南160米",
+      "business": {
+        "keytag": "住宅区",
+        "rectag": "住宅区"
+      },
+      "distance": "460",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅区",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0G0GHITXI/comment/content_media_external_images_media_1312031_ss__1728029960912_37197393.jpg"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/95d24f4d1b62439b0000007220324795"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0G0GHITXI/comment/content_media_external_images_media_1000139071_ss__1767781015823_12625804.jpg"
+        }
+      ],
+      "typecode": "120300",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "五福里",
+      "location": "112.160849,37.181551",
+      "id": "B0G0GHITXI"
+    },
+    {
+      "parent": "",
+      "address": "曙光西街书林家园21号商铺",
+      "business": {
+        "opentime_today": "08:30-21:00",
+        "cost": "16.00",
+        "keytag": "美发",
+        "rating": "4.5",
+        "tel": "13303543265",
+        "rectag": "美发",
+        "opentime_week": "周一至周日 08:30-21:00"
+      },
+      "distance": "466",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/381ec91d7c3c47e27d989f158f6a1434"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0LB3C6EU0/comment/9966F5FC_BEB1_45B2_A7C6_822785353C4F_L0_001_1500_200_1758152865071_68051434.jpg"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "煊艺造型",
+      "location": "112.160555,37.187464",
+      "id": "B0LB3C6EU0"
+    },
+    {
+      "parent": "",
+      "address": "南外环鸿润荣尊府1号楼",
+      "business": {
+        "opentime_today": "24小时营业",
+        "keytag": "充电宝",
+        "rating": "3.6",
+        "rectag": "充电宝",
+        "opentime_week": "周一至周日 00:00-24:00"
+      },
+      "distance": "466",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;共享设备;充电宝",
+      "typecode": "072101",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "街电(美豪酒店平遥古城高铁站店)",
+      "location": "112.162108,37.183267",
+      "id": "B0FFLJYVNW"
+    },
+    {
+      "parent": "",
+      "address": "兴平路鸿润·荣尊府北侧约150米",
+      "business": {
+        "keytag": "住宅区",
+        "tel": "0354-5669888",
+        "rectag": "住宅区"
+      },
+      "distance": "466",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/c3ee2c8b9cea46e170ba8be44949d68c"
+        }
+      ],
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "children": [
+        {
+          "typecode": "150904",
+          "address": "文景苑",
+          "subtype": "停车场",
+          "sname": " 停车场 ",
+          "name": "文景苑小区停车场",
+          "location": "112.162558,37.185658",
+          "id": "B0LRDM6ORD"
+        }
+      ],
+      "name": "文景苑",
+      "location": "112.162108,37.185456",
+      "id": "B0FFGZVTJ4"
+    },
+    {
+      "parent": "B0G0GHITXI",
+      "address": "五福里",
+      "business": {
+        "keytag": "生活服务,生活服务场所,生活服务场所",
+        "rating": "1.9"
+      },
+      "distance": "474",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "远通工作室",
+      "location": "112.161934,37.182641",
+      "id": "B0MA19FE7X"
+    },
+    {
+      "parent": "B0G0GHITXI",
+      "address": "双林大道",
+      "business": {
+        "keytag": "写字楼",
+        "rectag": "写字楼"
+      },
+      "distance": "474",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;楼宇;商务写字楼",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/aa42ba9b85845042045d61f16c98d6d2"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/e6cf99b657f6cbd24353f294a82c84ee"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/03b5181b13099d55ec4f48cc32c2be7e"
+        }
+      ],
+      "typecode": "120201",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "平遥县聚成商务广场",
+      "location": "112.161934,37.182641",
+      "id": "B0J36UFU2L"
+    },
+    {
+      "parent": "",
+      "address": "印象小镇B区门店",
+      "business": {
+        "opentime_today": "09:00-15:00 17:30-22:00",
+        "keytag": "住宅区",
+        "tel": "15340805572",
+        "rectag": "住宅区",
+        "opentime_week": "09:00-15:00；17:30-22:00"
+      },
+      "distance": "483",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/0d96950d3b66167ee0d68d661879c810"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/58e5749e482693d5ae40a443f5405cde"
+        }
+      ],
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "吉祥楼",
+      "location": "112.161083,37.187265",
+      "id": "B0JG2UF9SI"
+    },
+    {
+      "parent": "B0G0GHITXI",
+      "address": "五福里",
+      "business": {
+        "opentime_today": "09:30-22:00",
+        "keytag": "婚庆服务",
+        "rating": "4.6",
+        "alias": "广玉泉四部",
+        "tel": "0354-5600888",
+        "rectag": "婚庆服务",
+        "opentime_week": "周一至周日 09:30-22:00"
+      },
+      "distance": "486",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0KAVREPHT/comment/content_media_external_images_media_1000139072_ss__1767780341795_05978675.jpg"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/e4b3c72ee888d7420000003075762656?type=pic"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0KAVREPHT/comment/205EE2FB_58C4_4392_931F_5E29410050E6_L0_001_1500_200_1767104440376_76500815.jpg"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "children": [
+        {
+          "typecode": "150904",
+          "address": "平遥广玉泉婚礼艺术中心",
+          "subtype": "停车场",
+          "sname": " 门前停车场 ",
+          "name": "广玉泉婚礼艺术中心(4部)-门前停车场",
+          "location": "112.161934,37.182643",
+          "id": "B0MUPOG4TG"
+        }
+      ],
+      "name": "平遥广玉泉婚礼艺术中心",
+      "location": "112.161891,37.182321",
+      "id": "B0KAVREPHT"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "曙光西街与兴平路交叉口西100米",
+      "business": {
+        "opentime_today": "08:00-21:00",
+        "cost": "91.00",
+        "keytag": "美容",
+        "rating": "3.7",
+        "tel": "16634232313",
+        "rectag": "美容",
+        "opentime_week": "周一至周日 08:00-21:00"
+      },
+      "distance": "495",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/b636d9e85881f1f01b2254ada0359d42"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/5f6f162f3261748a307ed16c049f01af"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/5a032b27d60948c1037add5e30bb6744"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "木木LEAF造型",
+      "location": "112.161388,37.187140",
+      "id": "B0I2HZYHB5"
+    },
+    {
+      "parent": "",
+      "address": "印象小镇B区3号商铺112",
+      "business": {
+        "opentime_today": "11:00-24:00",
+        "cost": "17.00",
+        "keytag": "面馆",
+        "rating": "4.1",
+        "tel": "19213485777",
+        "tag": "渝味重庆小面",
+        "rectag": "面馆",
+        "opentime_week": "周一至周日 11:00-24:00"
+      },
+      "distance": "496",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;四川菜(川菜)",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/9a1ec78fb69c8d990000009450486991?type=pic"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/56692ce85d2950c5ed529a137d01cecc"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0KU9ROX7S/comment/content_media_external_images_media_1000004905_ss__1745947827789_99900384.jpg"
+        }
+      ],
+      "typecode": "050102",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "鹏飞渝味重庆小面",
+      "location": "112.161407,37.187131",
+      "id": "B0KU9ROX7S"
+    },
+    {
+      "parent": "B0G0GHITXI",
+      "address": "五福里北门旁",
+      "business": {
+        "opentime_today": "24小时营业",
+        "cost": "106.00",
+        "keytag": "理疗养生馆",
+        "rating": "4.4",
+        "tel": "18535456966",
+        "rectag": "理疗养生馆",
+        "opentime_week": "周一至周日 00:00-24:00"
+      },
+      "distance": "499",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/263db49e4c4f15c961adb3f7edd5f2ae"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/87ba0e6edfdba6c48990a9317c4a08f1"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/4c93b7ad02f8f621b868e54b62ff4798"
+        }
+      ],
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "圣轩休闲养生会所",
+      "location": "112.162225,37.182625",
+      "id": "B0K1H1LRBO"
+    },
+    {
+      "parent": "",
+      "address": "双林大道南侧",
+      "business": {
+        "keytag": "住宅区",
+        "rectag": "住宅区"
+      },
+      "distance": "499",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "紫御澜庭小区",
+      "location": "112.153325,37.180975",
+      "id": "B0M2YB41OD"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "书林家园",
+      "business": {
+        "keytag": "养发",
+        "rating": "3.1",
+        "tel": "18234444483",
+        "rectag": "养发"
+      },
+      "distance": "503",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/acfcb55b25bdeb8e0c37721819a986a2"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "水源水丝沐空间养发馆",
+      "location": "112.160525,37.187925",
+      "id": "B0L3FH5GZN"
+    },
+    {
+      "parent": "",
+      "address": "中都乡双林大道北寒石文化园3号楼01-08",
+      "business": {
+        "opentime_today": "09:00-22:00",
+        "keytag": "中餐",
+        "rating": "4.4",
+        "tel": "13834816148;18035496635",
+        "rectag": "中餐",
+        "opentime_week": "周一至周日 09:00-22:00"
+      },
+      "distance": "508",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;特色/地方风味餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/59bf6a8ece7ef60a896ac01ce1533c02"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/c5ca10ceb830034ea8d86411a3282440"
+        }
+      ],
+      "typecode": "050118",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "锦阳家宴",
+      "location": "112.151918,37.182282",
+      "id": "B0L0LUAICB"
+    },
+    {
+      "parent": "",
+      "address": "印象小镇3-111",
+      "business": {
+        "opentime_today": "10:00-22:00",
+        "cost": "13.00",
+        "keytag": "小吃快餐",
+        "rating": "4.1",
+        "tel": "15034671368",
+        "rectag": "平遥特产",
+        "opentime_week": "周一至周日 10:00-22:00"
+      },
+      "distance": "509",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/973f76c1726a414379f9665878906c08"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/5fd92bc6d678d40870f1059155074db1"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/236d2e4c5c601afb604ce65c1a48dff7"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "金涛碗托二店(印象小镇店)",
+      "location": "112.161605,37.187127",
+      "id": "B0JAD5B83P"
+    },
+    {
+      "parent": "B0FFGZVTJ4",
+      "address": "兴平路文景苑门面H7",
+      "business": {
+        "opentime_today": "09:00-19:00",
+        "keytag": "图文快印",
+        "rating": "4.2",
+        "tel": "15525106529",
+        "rectag": "图文快印",
+        "opentime_week": "周一至周日 09:00-19:00"
+      },
+      "distance": "519",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;摄影冲印店;摄影冲印",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0JGX50LT4/headerImg/365091413f4df64cec454550205f24e2_2048_2048_80.jpg"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0JGX50LT4/headerImg/c2cbb88f9a4586af94a7c6bd3f424d7d_2048_2048_80.jpg"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0JGX50LT4/headerImg/b9e496597e4a9c43852a7f7dd99bc870_2048_2048_80.jpg"
+        }
+      ],
+      "typecode": "071300",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "海纳广告传媒(文景苑店)",
+      "location": "112.162794,37.185179",
+      "id": "B0JGX50LT4"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "曙光西街与兴平路交叉口西160米",
+      "business": {
+        "keytag": "住宅区",
+        "rectag": "住宅区"
+      },
+      "distance": "519",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "书林家园南区",
+      "location": "112.160575,37.188075",
+      "id": "B0LD39LLK3"
+    },
+    {
+      "parent": "B0FFKW502W",
+      "address": "紫御华庭商铺204",
+      "business": {
+        "opentime_today": "10:00-22:00",
+        "cost": "62.00",
+        "keytag": "火锅",
+        "rating": "3.7",
+        "tel": "13994550550",
+        "rectag": "火锅",
+        "opentime_week": "周一至周日 10:00-22:00"
+      },
+      "distance": "519",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;火锅店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/111898877f5fabe33d119bc3b99710f9"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/291f266838b015413b62a6d99d95ce55"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/228f6d59f837195b7270481383a2d0e2"
+        }
+      ],
+      "typecode": "050117",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "跌重庆地摊火锅",
+      "location": "112.151580,37.186074",
+      "id": "B0K6GD26VP"
+    },
+    {
+      "parent": "",
+      "address": "兴平路与曙光西街交叉口南140米",
+      "business": {
+        "keytag": "住宅区",
+        "rectag": "住宅区"
+      },
+      "distance": "521",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;商务住宅相关;商务住宅相关",
+      "typecode": "120000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "理想城",
+      "location": "112.162575,37.185925",
+      "id": "B0M245GZKJ"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "书林家园南区南门东210米",
+      "business": {
+        "opentime_today": "08:00-19:00",
+        "keytag": "驾校报名点",
+        "rating": "4.3",
+        "tel": "0354-3333131",
+        "rectag": "驾校报名点",
+        "opentime_week": "周一至周日 08:00-19:00"
+      },
+      "distance": "522",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/43ddc5702c4472ae4401f169878fd778"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/1fef9e23d30aae5045c87c8b8f81a9b6"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/9685b94cad86eb664f448e2793dd82f2"
+        }
+      ],
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "红星驾校报名处",
+      "location": "112.161115,37.187745",
+      "id": "B0FFICI805"
+    },
+    {
+      "parent": "",
+      "address": "文景苑东门旁",
+      "business": {
+        "cost": "47.00",
+        "keytag": "中餐",
+        "rating": "3.0",
+        "tag": "牛肉",
+        "rectag": "中餐"
+      },
+      "distance": "523",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/4ffd4330df165fd4fdb0be69d58d0cc4"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "宝聚源牛肉",
+      "location": "112.162675,37.185725",
+      "id": "B0M6FHZ7LJ"
+    },
+    {
+      "parent": "B0G0GHITXI",
+      "address": "五福里",
+      "business": {
+        "keytag": "门牌地址",
+        "rectag": "门牌地址"
+      },
+      "distance": "523",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;楼宇;商务写字楼",
+      "typecode": "120201",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "聚成商务3号楼",
+      "location": "112.162342,37.182300",
+      "id": "B0M13RQ1BD"
+    },
+    {
+      "parent": "",
+      "address": "呼北线与曙光西街交叉口西北220米",
+      "business": {
+        "keytag": "科室",
+        "rectag": "科室"
+      },
+      "distance": "529",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "平遥县人民医院保卫室",
+      "location": "112.154536,37.188680",
+      "id": "B0MB4KXF2K"
+    },
+    {
+      "parent": "B0FFKW502W",
+      "address": "紫御华庭",
+      "business": {
+        "keytag": "小吃快餐",
+        "rating": "3.0",
+        "rectag": "小吃快餐"
+      },
+      "distance": "532",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/a023b4d1d7e26fc8406f5f14e75afe36"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "三兄弟·早晚点",
+      "location": "112.151425,37.186075",
+      "id": "B0M1LHM6VG"
+    },
+    {
+      "parent": "B0G0GHITXI",
+      "address": "五福里北门旁",
+      "business": {
+        "opentime_today": "10:00-22:00",
+        "cost": "65.00",
+        "keytag": "火锅",
+        "rating": "4.2",
+        "tag": "大火锅",
+        "rectag": "火锅",
+        "opentime_week": "周一至周日 10:00-22:00"
+      },
+      "distance": "474",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;火锅店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/c79b850101300313a6b08bef8b72bfe5"
+        }
+      ],
+      "typecode": "050117",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "张老大火锅餐饮店(暂停营业)",
+      "location": "112.161934,37.182641",
+      "id": "B0LK19ELHH"
+    },
+    {
+      "parent": "",
+      "address": "兴平路东兴心脑血管东门面",
+      "business": {
+        "opentime_today": "09:00-22:00",
+        "keytag": "装修设计",
+        "rating": "4.0",
+        "tel": "17603446567",
+        "rectag": "装修设计",
+        "opentime_week": "周一至周日 09:00-22:00"
+      },
+      "distance": "537",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/c17c56689c0822864eb70b0dd7bfc5f1"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/9e784c7c2c475aeff3e55c60575816b4"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/19699d02a2588cbe41c1bf3a8de13d93"
+        }
+      ],
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "金帝装饰",
+      "location": "112.163086,37.184345",
+      "id": "B0J0FZOUDU"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "书林家园",
+      "business": {
+        "opentime_today": "09:00-23:00",
+        "cost": "40.00",
+        "keytag": "面馆",
+        "rating": "3.8",
+        "rectag": "面馆",
+        "opentime_week": "周一至周日 09:00-23:00"
+      },
+      "distance": "537",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/6b1640776f5b336e79e669b602b5dc32"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/49df6edb83e7eaadd3c44b48bc6bd9ba"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "营丰面馆(书林家园店)",
+      "location": "112.155661,37.189058",
+      "id": "B0H3HRZBI5"
+    },
+    {
+      "parent": "B0FFJ7CY3P",
+      "address": "曙光西街88号(南50米印象小镇)",
+      "business": {
+        "opentime_today": "11:30-14:00 17:30-22:00",
+        "cost": "64.00",
+        "keytag": "中餐",
+        "rating": "4.5",
+        "tel": "0354-5945888;15635493777",
+        "tag": "烧鱼",
+        "rectag": "中餐",
+        "opentime_week": "周一至周日 11:30-14:00,17:30-22:00"
+      },
+      "distance": "540",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;餐饮相关场所;餐饮相关",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0KU4AQRCT/comment/content_media_external_file_100048163_1772439922461_22852508.jpg"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/dbed9d6c05039297aa8696b1b21048d4"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/d742f9fbce67c1f17e8fa182d50c8874"
+        }
+      ],
+      "typecode": "050000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "泥碗春秋烧鱼郎口味菜馆(平遥店)",
+      "location": "112.162098,37.187053",
+      "id": "B0KU4AQRCT"
+    },
+    {
+      "parent": "B0L6XZN6AL",
+      "address": "曙光路印象小镇一期芭芭多芦荟美容",
+      "business": {
+        "keytag": "美容",
+        "rating": "3.7",
+        "rectag": "美容"
+      },
+      "distance": "541",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/9905e416fbb8330782559ef470472092"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "平遥县曙光路印象小镇一期芭芭多芦荟美容",
+      "location": "112.161966,37.187215",
+      "id": "B0KAUSIW0Z"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "书林家园",
+      "business": {
+        "opentime_today": "09:00-23:00",
+        "cost": "22.00",
+        "keytag": "拉面",
+        "rating": "4.3",
+        "tel": "18636810044",
+        "rectag": "拉面",
+        "opentime_week": "周一至周日 09:00-23:00"
+      },
+      "distance": "544",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;清真菜馆",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/ffcfeb30ccaea0ff9f14e92eed543ca1"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/769223a0bb684fb0c26c90a416746d9e"
+        }
+      ],
+      "typecode": "050121",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "中国兰州拉面(书林家园店)",
+      "location": "112.155770,37.189145",
+      "id": "B0LUX5NA6R"
+    },
+    {
+      "parent": "B0G0GHITXI",
+      "address": "古陶镇双林大道聚成商务广场二排东4号门面",
+      "business": {
+        "opentime_today": "09:00-22:30",
+        "cost": "39.00",
+        "keytag": "烧烤",
+        "rating": "3.7",
+        "tel": "13934419374",
+        "rectag": "烧烤",
+        "opentime_week": "周一至周日 09:00-22:30"
+      },
+      "distance": "546",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/df05e14a83176c496d1daf2deb2e208f"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "灶味香(荣尊府店)",
+      "location": "112.162525,37.182125",
+      "id": "B0K665VQ1B"
+    },
+    {
+      "parent": "B0G0GHITXI",
+      "address": "双林大道与兴平路交叉口西南80米",
+      "business": {
+        "opentime_today": "09:00-21:00",
+        "cost": "17.00",
+        "keytag": "小吃快餐",
+        "rating": "3.9",
+        "tel": "15635415173",
+        "tag": "大碗面",
+        "rectag": "小吃快餐",
+        "opentime_week": "周一至周日 09:00-21:00"
+      },
+      "distance": "547",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/b40c643c2fab0323660c001d5a978320"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/8335fbca103cf5a1f579f2da416353fe"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/57ae50986fc759030f22da1843335871"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "福多多大碗面(五福里店)",
+      "location": "112.162817,37.182635",
+      "id": "B0J6SU3LDL"
+    },
+    {
+      "parent": "",
+      "address": "",
+      "business": {
+        "keytag": "住宅区",
+        "rectag": "住宅区"
+      },
+      "distance": "550",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;商务住宅相关;商务住宅相关",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/21a7b26d7972733bd5da24f8da5c9223"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/dc33b3bba09cfbfa5ab61c0c92e74148"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0K2RSF14E/comment/2026-01-17-16-01-23%2B3C59AD28-7CDF-46AA-891A-8A84CC84A00_1768636888270_75678643.jpg"
+        }
+      ],
+      "typecode": "120000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "紫御蘭亭物业楼",
+      "location": "112.153465,37.180310",
+      "id": "B0K2RSF14E"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "书林家园",
+      "business": {
+        "cost": "23.00",
+        "keytag": "餐饮服务,餐饮相关场所,餐饮相关",
+        "rating": "3.9",
+        "tel": "15903545302"
+      },
+      "distance": "551",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;餐饮相关场所;餐饮相关",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/eeb9131aa92b42b00000003674106192"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/cb2f90b4ad1fb452725ad097aa93ce9a"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/fc81e2e1947a52376ca3b0da4a977dbc"
+        }
+      ],
+      "typecode": "050000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "燕日姐擦圪抖(书林家园店)",
+      "location": "112.155551,37.189170",
+      "id": "B0JG1DFXAP"
+    },
+    {
+      "parent": "",
+      "address": "呼北线与曙光西街交叉口东北280米",
+      "business": {
+        "keytag": "住宅区",
+        "tel": "0354-3566666",
+        "rectag": "住宅区"
+      },
+      "distance": "558",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0FFGA09DC/comment/content_media_external_file_1461_1768295042538_15138975.jpg"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0FFGA09DC/comment/content_media_external_file_1461_1768295042539_34126513.jpg"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/comment/content_service__1769845973078_57144553_1769846140756_05893402.jpg"
+        }
+      ],
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "children": [
+        {
+          "typecode": "150905",
+          "address": "书林家园",
+          "subtype": "停车场",
+          "sname": " 地下停车场 ",
+          "name": "书林家园北区-地下停车场",
+          "location": "112.157925,37.190175",
+          "id": "B0M1T1LMGA"
+        }
+      ],
+      "name": "书林家园",
+      "location": "112.157988,37.189313",
+      "id": "B0FFGA09DC"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "兴平路书林家园",
+      "business": {
+        "keytag": "小吃快餐",
+        "rating": "2.5",
+        "rectag": "小吃快餐"
+      },
+      "distance": "560",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;餐饮相关场所;餐饮相关",
+      "typecode": "050000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "建成纯碱馒头",
+      "location": "112.158075,37.189325",
+      "id": "B0JA9G9S1J"
+    },
+    {
+      "parent": "B0IGC7EXYA",
+      "address": "书林家园A6号",
+      "business": {
+        "opentime_today": "09:00-20:00",
+        "cost": "81.00",
+        "keytag": "生活服务,美容美发店,美容美发店",
+        "rating": "2.5",
+        "opentime_week": "周一至周日 09:00-20:00"
+      },
+      "distance": "568",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "蓝芙玉颜(平遥店)",
+      "location": "112.159614,37.189034",
+      "id": "B0L0X9LF2W"
+    },
+    {
+      "parent": "",
+      "address": "曙光西街南50米",
+      "business": {
+        "keytag": "住宅区",
+        "rating": "3.1",
+        "rectag": "住宅区"
+      },
+      "distance": "574",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/1888f8798a3e308d818283079612270f"
+        },
+        {
+          "title": "",
+          "url": "https://aos-comment.amap.com/B0FFJ7CY3P/comment/content_media_external_file_1460_1768294373001_99771374.jpg"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/3218047bf4926895c0dadb7e00111843"
+        }
+      ],
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "印象小镇",
+      "location": "112.162761,37.186765",
+      "id": "B0FFJ7CY3P"
+    },
+    {
+      "parent": "",
+      "address": "曙光西街与锦绣路交叉口西南60米",
+      "business": {
+        "keytag": "面馆",
+        "rating": "3.2",
+        "tag": "家常菜",
+        "rectag": "面馆"
+      },
+      "distance": "577",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/2be49e66f401712371354a2f799f21dc"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "家常菜面馆",
+      "location": "112.150625,37.185275",
+      "id": "B0MAU7TN7D"
+    },
+    {
+      "parent": "",
+      "address": "曙光西街与锦绣路交叉口西南60米",
+      "business": {
+        "opentime_today": "10:00-23:00",
+        "cost": "69.00",
+        "keytag": "烤串",
+        "rating": "4.0",
+        "rectag": "烤串",
+        "opentime_week": "周一至周日 10:00-23:00"
+      },
+      "distance": "578",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/412a5d5c110e804ecfc90b444a3e3dbc"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/09fff171142c57374f7d97dc20b251bb"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/c0ac3e1a0b5128ed82264ebee3956515"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "7号烧烤",
+      "location": "112.150597,37.185220",
+      "id": "B0H04Y8MPT"
+    },
+    {
+      "parent": "B0J13ALFRZ",
+      "address": "汇通路41号",
+      "business": {
+        "keytag": "生活服务,生活服务场所,生活服务场所",
+        "rating": "3.7"
+      },
+      "distance": "583",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/65483cefafd6cc44c68c49f51565c56b"
+        }
+      ],
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "拾光里营销中心",
+      "location": "112.151574,37.181424",
+      "id": "B0L1YUEC2M"
+    },
+    {
+      "parent": "",
+      "address": "锦绣路与曙光西街交叉口北200米",
+      "business": {
+        "keytag": "住宅区",
+        "rectag": "住宅区"
+      },
+      "distance": "583",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "商务住宅;住宅区;住宅小区",
+      "typecode": "120302",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "紫御华庭物业楼",
+      "location": "112.151631,37.187358",
+      "id": "B0M2SC5JV4"
+    },
+    {
+      "parent": "B0J13ALFRZ",
+      "address": "双林大道双林书院",
+      "business": {
+        "keytag": "售楼处",
+        "rating": "4.0",
+        "rectag": "售楼处"
+      },
+      "distance": "585",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "双林书院营销中心",
+      "location": "112.151584,37.181378",
+      "id": "B0J12ZXYPV"
+    },
+    {
+      "parent": "",
+      "address": "锦绣路与曙光西街交叉口西北40米",
+      "business": {
+        "cost": "24.00",
+        "keytag": "农家菜",
+        "rating": "3.7",
+        "rectag": "农家菜"
+      },
+      "distance": "587",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/404ef9702dabe0d4b3a64aef1aa5093a"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/bdc76eece8967d800000009370684648"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/a5d7986f448c02f80000009370690158"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "农家小馆",
+      "location": "112.150711,37.185929",
+      "id": "B0MBCBNIU9"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "城西街道柳根西街558号书林家园A块商住小区商铺C105铺",
+      "business": {
+        "opentime_today": "24小时营业",
+        "keytag": "家政",
+        "rating": "4.1",
+        "tel": "18503475801;18503475802",
+        "rectag": "月嫂",
+        "opentime_week": "周一至周日 00:00-24:00"
+      },
+      "distance": "587",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/a51ed5d618d12b7b1270a57e00a842b6"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/d3f1303fc68010fa0000003121446748"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/e3e028962cc759060000003121436822"
+        }
+      ],
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "平遥橙子阿姨月嫂育儿嫂保姆护工",
+      "location": "112.155316,37.189458",
+      "id": "B0K3H9WPVI"
+    },
+    {
+      "parent": "",
+      "address": "兴平路与曙光西街交叉口东南100米",
+      "business": {
+        "opentime_today": "09:30-14:30 17:30-22:30",
+        "cost": "55.00",
+        "keytag": "小火锅",
+        "rating": "4.1",
+        "tel": "18649345664",
+        "tag": "小火锅",
+        "rectag": "小火锅",
+        "opentime_week": "周一至周日 09:30-14:30,17:30-22:30"
+      },
+      "distance": "591",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;生活服务场所;生活服务场所",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/c6d54a3461274f0f0000002886484179?type=pic"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/4fdb666c258d5d1d0000002886458870?type=pic"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/9c22ce5a73f2886c0000002886458871?type=pic"
+        }
+      ],
+      "typecode": "070000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "荡古里·小火锅(古陶镇店)",
+      "location": "112.163175,37.186425",
+      "id": "B0L2PRRI1D"
+    },
+    {
+      "parent": "",
+      "address": "曙光西街北良如紫御华庭斜对面",
+      "business": {
+        "opentime_today": "09:00-21:00",
+        "cost": "57.00",
+        "keytag": "川菜",
+        "rating": "4.4",
+        "tel": "19335415536",
+        "rectag": "川菜",
+        "opentime_week": "周一至周日 09:00-21:00"
+      },
+      "distance": "591",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;四川菜(川菜)",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/0b13940e399c6cf582db3a890cef4ad0"
+        }
+      ],
+      "typecode": "050102",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "老成都川菜馆(平遥店)",
+      "location": "112.150448,37.185234",
+      "id": "B0J0HHPU4A"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "汇通路28号",
+      "business": {
+        "opentime_today": "08:00-23:00",
+        "cost": "33.00",
+        "keytag": "中餐",
+        "rating": "3.5",
+        "tel": "18636068442",
+        "tag": "猪肉",
+        "rectag": "中餐",
+        "opentime_week": "周一至周日 08:00-23:00"
+      },
+      "distance": "592",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;中餐厅;中餐厅",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/131074c7f807229cf16ac5226dc5846a"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/d9c9659b2e21a8fc8096a5ae4d93567d"
+        }
+      ],
+      "typecode": "050100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "干烂猪肉切疙瘩(书林家园店)",
+      "location": "112.155457,37.189528",
+      "id": "B0H24SMFE0"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "书林家园B9-102",
+      "business": {
+        "opentime_today": "09:00-21:30",
+        "cost": "42.00",
+        "keytag": "意大利菜",
+        "rating": "3.9",
+        "tel": "0354-5625291;18635496525",
+        "rectag": "意大利菜",
+        "opentime_week": "周一至周日 09:00-21:30"
+      },
+      "distance": "595",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;快餐厅;快餐厅",
+      "typecode": "050300",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "疯狂小兔(书林家园店)",
+      "location": "112.157949,37.189656",
+      "id": "B0FFMC184N"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "书林家园",
+      "business": {
+        "keytag": "生活服务,美容美发店,美容美发店",
+        "rating": "2.5"
+      },
+      "distance": "595",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "魔术减",
+      "location": "112.161925,37.188025",
+      "id": "B0LU2PSMSE"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "古陶镇兴平路书林家园商铺84号",
+      "business": {
+        "opentime_today": "07:30-22:30",
+        "cost": "17.00",
+        "keytag": "熟食",
+        "rating": "3.8",
+        "tel": "18003547955",
+        "rectag": "酒肉",
+        "opentime_week": "周一至周日 07:30-22:30"
+      },
+      "distance": "596",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "餐饮服务;餐饮相关场所;餐饮相关",
+      "photos": [
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/3a171c5899d102406c0371c420b4c6a4"
+        }
+      ],
+      "typecode": "050000",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "明明熟食店",
+      "location": "112.161549,37.188323",
+      "id": "B0KUMH7R0L"
+    },
+    {
+      "parent": "B0FFGA09DC",
+      "address": "书林家园",
+      "business": {
+        "keytag": "美甲/美睫",
+        "rating": "3.8",
+        "rectag": "美甲/美睫"
+      },
+      "distance": "597",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/4ea3304c90e6fe2d612ba18731c8c302"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/9f5c7b2cac86aea0c10d46840d76e3f5"
+        },
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/d5680b82b004a71d77afb1325c36fdaa"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "明天见美甲工作室(书林家园店)",
+      "location": "112.161526,37.188354",
+      "id": "B0J3ZUXIJB"
+    },
+    {
+      "parent": "",
+      "address": "古陶镇南外环东兴脑血管医院旁东面",
+      "business": {
+        "opentime_today": "08:00-21:30",
+        "keytag": "美发",
+        "rating": "3.7",
+        "rectag": "美发",
+        "opentime_week": "周一至周日 08:00-21:30"
+      },
+      "distance": "599",
+      "pcode": "140000",
+      "adcode": "140728",
+      "pname": "山西省",
+      "cityname": "晋中市",
+      "type": "生活服务;美容美发店;美容美发店",
+      "photos": [
+        {
+          "title": "",
+          "url": "https://store.is.autonavi.com/showpic/bef0ac896a60e8387dce69467ac39f83"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/8b7bc0fd431764f9635f46ef8370fbeb"
+        },
+        {
+          "title": "",
+          "url": "http://store.is.autonavi.com/showpic/b08daf50ec114d40bc6c96382bf4f7b0"
+        }
+      ],
+      "typecode": "071100",
+      "adname": "平遥县",
+      "citycode": "0354",
+      "name": "丛容造型",
+      "location": "112.163730,37.183626",
+      "id": "B0HB3Y6CHQ"
+    }
+  ]
+}

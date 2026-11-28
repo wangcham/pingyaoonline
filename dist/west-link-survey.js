@@ -1,3 +1,4 @@
+import {schoolSiteIntersects} from './school-sites-data.js';
 import {geographicToLocal,localToGeographic} from './landmarks/coordinates.js';
 import {pointInRing,segments,projectOnSegment,createRingQuery,makeGrid} from './geography.js';
 import {mapData} from './map-data.js';
@@ -182,7 +183,7 @@ export function createWestLinkLayout(){
     const parts=linkRoadPieces(p).flatMap(subtractQixiangBlock);if(!parts.length)omitted.push(p.id);
     for(const piece of parts){
     const p=piece,ring=linkRoofRing(p),samples=[...ring,[p.x,p.z]];
-    if(!samples.every(([x,z])=>isWestLinkStudy(x,z)&&x>mapData.bounds[0]+4)||westSiteIntersectsRing(ring)||isWestDistrictParcel(p.x,p.z)||
+    if(!samples.every(([x,z])=>isWestLinkStudy(x,z)&&x>mapData.bounds[0]+4)||schoolSiteIntersects(ring)||westSiteIntersectsRing(ring)||isWestDistrictParcel(p.x,p.z)||
       westLinkOpenGround.some(g=>westLinkRingsIntersect(ring,g.ring))||
       !samples.every(([x,z])=>westLinkRoadClear(x,z,.7))||westLinkRoadEdges.some(e=>westLinkRingsIntersect(ring,e.ring))){omitted.push(p.id);continue;}
     // Shared rows are separate from each other, even across frame boundaries.

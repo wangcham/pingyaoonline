@@ -6,7 +6,10 @@ import {createArchitecture} from './architecture.js';
 export function createPingyaoCityWall(materials) {
   const a=createArchitecture(materials),{wall,gates}=locateGates(mapData);
   const southPortal={center:[-1175,82.5],normal:[0,1],cutSize:[5.4,8]};
-  const cuts=[...gates.filter(g=>g.name!=='凤仪门'),southPortal];
+  // The mapped Kangning road meets the wall at this small south portal.
+  // It has a passage, without adding a seventh monumental gate tower.
+  const smallSouthPortal={center:[-599.3,847],normal:[0,1],cutSize:[9,12]};
+  const cuts=[...gates.filter(g=>g.name!=='凤仪门'),southPortal,smallSouthPortal];
   // Survey already traces the projecting bastions: do not add a second, invented spacing.
   for(const line of wall) {
     let from=0;
@@ -43,6 +46,13 @@ export function createPingyaoCityWall(materials) {
     a.hall({x,z,w:17,d:10,h:4.3,base:10.7,hip:true,bays:5,yaw:angle});
     a.hall({x,z,w:12,d:7,h:3.6,base:17.7,hip:true,bays:3,yaw:angle});
     if(gate.name==='凤仪门')arch(...southPortal.center,.126,.78);
+  }
+  arch(...smallSouthPortal.center,.09);
+  a.box('stone',-599.3,10.72,847,18,.22,8,.09);
+  for(const side of [-1,1]){
+    const z=847+side*3.65;
+    a.box('brick',-599.3,11.2,z,18,.85,.55,.09);
+    for(let u=-8;u<=8;u+=3.1)a.box('brick',-599.3+u*Math.cos(.09),12,z-u*Math.sin(.09),1.5,.8,.65,.09);
   }
   // Four corner positions follow surveyed changes of wall direction. Forms are approximate.
   for(const [x,z] of [[-1234,-480],[-1018,999],[476,604],[177,-833]]) {

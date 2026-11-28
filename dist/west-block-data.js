@@ -1,3 +1,4 @@
+import {jinglinContext,jinglinContextWorld} from './jinglin-context-data.js';
 // OSM road/campus envelopes + visual review of Amap satellite imagery, 2026-11-25.
 // Interior plot divisions and minor lane centerlines are inferred, not surveyed.
 export const westBlockZones=[
@@ -11,7 +12,7 @@ export const westBlockAlleys=[
   [[-1900,137.6],[-1911,40]],
   [[-1810,127.8],[-1827,-66]],
   [[-1690,114.8],[-1708,-118]],
-  [[-1930,142],[-1918,298],[-1907,471]],
+  [jinglinContextWorld(jinglinContext.lane.u,4),jinglinContextWorld(jinglinContext.lane.u,-53.5),[-1918,298],[-1907,471]],
   [[-1625,107.7],[-1609,276],[-1590,460]],
   [[-1925,355],[-1507,305]],
   [[-1910,59],[-1596,25]],

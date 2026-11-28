@@ -1,0 +1,45 @@
+{
+  "checked": "2026-11-28",
+  "peopleRemoved": 66,
+  "newPeople": 0,
+  "outlets": {
+    "brandCount": 15,
+    "brandSource": "https://outletscn.com/news/outlets-news/pingyaoshangteaolai9-30/",
+    "photoSource": "https://www.amap.com/place/B0K0TUX1YO",
+    "observed": "Entrance photo: Pizza Hut and MCM ground floor, Kirakira above; dark shop frames, bronze louvers, glazed retail bays and terraces.",
+    "placement": "Existing building outlines retained. Brand presence sourced; exact unit numbers and most placements estimated. No nearby independent restaurants relabeled as mall tenants.",
+    "changes": [
+      "15 named retail facades with category-specific shelves and goods",
+      "fascias below the slab, in front of rain canopies",
+      "planters beside doors",
+      "searchable retail street view"
+    ]
+  },
+  "mingqing": {
+    "route": "Mapped South Street / 南大街",
+    "photoPages": [
+      "https://you.ctrip.com/sight/pingyaocounty365/50732.html",
+      "https://touch.travel.qunar.com/comment/10156365549",
+      "https://www.sohu.com/a/909217823_122365627"
+    ],
+    "photoUrls": [
+      "https://youimg1.c-ctrip.com/target/100l0u000000jg9tr9CDC.jpg",
+      "https://q9.itc.cn/images01/20250630/944571854518478cac8a4a0f50700242.jpeg"
+    ],
+    "observed": "Gray-tiled timber shopfronts, red globe and wooden cage lanterns, short burgundy awnings, hanging signs, open display counters, fabrics/fans, vinegar jars and packaged local food.",
+    "shopfronts": 132,
+    "displayCounters": 264,
+    "hangingBoards": 132,
+    "shortAwningSections": 188,
+    "placement": "Goods and trade names are illustrative; all remain on the existing shop apron and leave mapped roads and central approaches clear.",
+    "people": 0
+  },
+  "validation": [
+    "no person meshes remain",
+    "15 brand storefronts have visible signs and clear approaches",
+    "Mingqing merchandise does not intersect mapped roads or door approaches",
+    "day/night and detail LOD",
+    "standalone search and full city boot"
+  ],
+  "photosEmbeddedInModel": false
+}

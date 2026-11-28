@@ -7,6 +7,7 @@
     "dev": "python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
     "build": "python3 scripts/build_standalone.py",
     "check": "node scripts/check.mjs",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "test:standalone": "npm run build && node --no-warnings --experimental-loader ./scripts/three-loader.mjs --experimental-loader ./tests/boot-loader.mjs tests/boot.mjs --standalone"
   }
 }

@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-28",
+  "scope": "建筑高度层级保护、普通沿街楼高与平遥古城站站房及周边细化",
+  "sources": [
+    {"url": "https://m.thepaper.cn/newsDetail_forward_33565391", "use": "中国铁路站房外观照片及两台四线布局"},
+    {"url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", "use": "公开卫星影像，人工判读停车区、绿地、站房与田地", "bbox3857": [12483250.73688793,4460450.2264241045,12484200.73688793,4461400.2264241045], "imageSize": [1200,1200], "imageryDate": "unknown"},
+    {"url": "https://www.amap.com/ssr/embed/view?lng=112.148933&lat=37.157199&zoom=17&maptype=satellite&platform=pc", "use": "既有站区地图定位"},
+    {"url": "https://bkso.baidu.com/item/平遥古城站/0?fromModule=lemma_inlink", "use": "站房和站台尺寸的二手资料，模型按近似值使用"},
+    {"url": "https://news.ifeng.com/c/8p9hyGZCCRA", "use": "高台、台阶及折返坡道形态参考"}
+  ],
+  "heightPolicy": {
+    "genericFallbackFloors": [1,2],
+    "preserveSurveyFloorClass": true,
+    "explicitHeightAndLevelsTakePriority": true,
+    "stationRoofHeightApproxMeters": 16.9,
+    "stationFloors": 2,
+    "limitation": "卫星判读楼层和未实测高度均为估算；站房为公共大厅，不用普通住宅层高换算。"
+  },
+  "stationDetails": {"trees":353,"parkingAreas":3,"parkingSpaces":137,"parkedCars":35,"rampRuns":10,"platforms":2,"tracks":4,"people":0,"drawCalls":94,"triangles":735104},
+  "accuracy": [
+    "停车区与绿地轮廓按卫星图人工描绘，影像日期未知，非地籍或测绘成果。",
+    "屋顶、立面和中国结按公开照片概括；台阶坡道、候车棚、标识、灯具、树种及单体设施位置近似。",
+    "几何衔接检查只验证模型，不代表实际设施或工程规范认证。",
+    "参考影像未打包为模型贴图；没有宣称全县逐栋精确还原。"
+  ],
+  "checks": {
+    "unitTests": "30 passed",
+    "syntax": "passed",
+    "standaloneBoot": "passed",
+    "stationGeometry": "坐标换算、树木及停车道路避让、48 级台阶与 30 个坡道采样、四条轨道净空、有限几何、昼夜与 LOD 均通过",
+    "regressions": ["west-sites","south-city","west-link"],
+    "browser": "站房日夜景、站区全景与楼高对比已查看，无控制台 error",
+    "gpuBenchmark": "not performed"
+  },
+  "screenshots": ["gucheng-station-front.jpg","gucheng-station-night.jpg","gucheng-station-overview.jpg","building-height-contrast.jpg"]
+}

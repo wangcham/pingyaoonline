@@ -1,0 +1,13 @@
+{
+ "checked": "2026-11-28",
+ "sources": [
+  {"url":"https://www.amap.com/place/B0LBYHSLTE", "observed":"Yaodu Ruifu exterior: light vertical frames, dark upper walls, blue-grey glazing, landscaped courtyard", "photoDate":null},
+  {"url":"https://www.amap.com/place/B0K0TUX1YO", "observed":"High-rise apartments behind the outlet entrance", "photoDate":null},
+  {"url":"https://xiaofei.tom.com/202610/4397107340.html", "observed":"Apartments visible in opening photographs; reported parking capacity does not establish surface-lot boundaries"}
+ ],
+ "satellite": {"provider":"Amap", "center":[112.157031,37.184356], "zoom":17, "captureDate":null, "note":"Imagery still shows construction. Not presented as a current completion survey."},
+ "modeledCounts": {"towers":8, "estimatedLevels":[15,16], "parkingSlots":685, "electricScooters":335},
+ "limitations": ["Counts are authored scene counts, not an on-site inventory.", "Tower footprints, heights and parking boundaries are approximate.", "Electric-bicycle parking use is user-confirmed; exact boundaries have not been established from clear public photographs.", "No claim that the reported 1200 parking spaces are all measured surface spaces."],
+ "validation": ["Full scene boot", "Building and vehicle overlap checks", "Public road and drive aisle clearance", "Regional duplicate exclusion", "Day/night and disposal", "Full-city browser screenshots"],
+ "uiButtonsAdded": 0
+}

@@ -1,0 +1,61 @@
+{
+  "subject": "景林江米油糕及门右侧街区",
+  "layoutConfirmedByUser": {
+    "interior": "进门左侧油锅；右侧油糕；右墙品类标签与下方托盘对应",
+    "street": "面对门店时向右：景林直接连接一格上玻璃、下实体墙门面，紧接小路、地税局；中间四个店面已删除，景林入口双门保留",
+    "flavourCorrection": "铁棍山药馅改为红豆馅，保持对应托盘位置"
+  },
+  "mapReferences": [
+    "B0FFFY2Y9H",
+    "B01620N94L",
+    "B0FFHUG8OE"
+  ],
+  "referenceFiles": [
+    "jinglin-reference-pois.json",
+    "jinglin-context-pois.json"
+  ],
+  "satelliteReference": "Esri World Imagery / tile 18/101849/212744; imagery date unknown",
+  "estimated": {
+    "shopDimensions": true,
+    "taxFootprintAndHeight": true,
+    "laneWidthMetres": 3.2,
+    "equipmentShape": true,
+    "neighbouringTenantNameVerified": false
+  },
+  "features": [
+    "棕底银白店名",
+    "蓝色卷帘与白瓷砖缝",
+    "向外打开的玻璃双门与把手",
+    "左侧油锅、灶台、油面、漏勺",
+    "右侧三组金属托盘及油糕颗粒纹理",
+    "右墙红色品类条与对应托盘",
+    "磨砂铝框隔断、风扇与椅子",
+    "紧接景林的单格玻璃窗与实体矮墙、窗台，其右侧紧接小路",
+    "通往内部街区的小路与排水沟",
+    "税务所四层立面、玻璃窗、窗台、空调、办税服务厅及照片中的旧屋顶字"
+  ],
+  "validation": {
+    "browser": "门面、右侧品类陈列、左侧油锅、税务所立面、昼夜实际预览；无控制台错误",
+    "completeScene": "景林搜索可达；店门中部及巷道中心和两侧射线通畅",
+    "geometry": [
+      "jinglin-shop",
+      "jinglin-context",
+      "local-commerce",
+      "west-frontages",
+      "west-blocks",
+      "west-experience"
+    ],
+    "build": "passed",
+    "syntax": "passed",
+    "standardTests": 29,
+    "standaloneRuntime": "Passed after fixing old-town data initialization order; full scene boot regression and actual browser entry verified without console errors"
+  },
+  "pendingSeparateTasks": [
+    "古城明清街、县衙、武庙细化仍暂停",
+    "全屏卡顿检查仍暂停"
+  ],
+  "userRequestedRemovals": [
+    "门口右侧白色塑料袋与收纳台",
+    "液化气罐"
+  ]
+}

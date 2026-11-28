@@ -1,0 +1,26 @@
+{
+  "checked": "2026-11-28",
+  "amap": "https://www.amap.com/place/B0K0TUX1YO",
+  "brandSource": "https://xiaofei.tom.com/202610/4682420493.html",
+  "floorEvidence": "Amap入口照片：首层必胜客、MCM，上层Kirakira；玻璃立面、铜色百叶、分层栏杆与楼梯。",
+  "limitations": [
+    "现有楼栋轮廓和层数仍为卫星/照片近似",
+    "完整商户名单和每家铺位未取得；未把周边餐馆冒充奥莱入驻店",
+    "仅照片可辨的3家店名附着于近似入口楼栋，其余已报道品牌列入导览牌",
+    "门面分格不是实际店铺数量；外廊、楼梯与外围家具的精确位置未实测"
+  ],
+  "changes": [
+    "上层独立门面、橱窗、百叶、门把手和陈列架",
+    "二三层外廊、分层楼梯、平台、栏杆开口和支柱",
+    "花池、灌木、导览牌、停车挡块、座椅和垃圾桶"
+  ],
+  "uiButtonsAdded": 0,
+  "validation": [
+    "civic-sites geometry/circulation checks",
+    "full scene boot",
+    "npm test",
+    "npm run check",
+    "npm run build",
+    "Chrome overview and near-view screenshots"
+  ]
+}

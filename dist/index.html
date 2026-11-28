@@ -5,7 +5,7 @@
 </head><body>
 <main>
 <div id="world" aria-label="平遥县城三维体验地图"></div>
-<header><div class="brand"><span class="seal">平<br>遥</span><span>平遥online<small>PINGYAO · STREET EXPERIENCE</small></span></div><nav><button id="night" aria-pressed="false">☾ 夜景</button><button id="overview">俯瞰县城</button><button id="street-open" disabled>搜索街景</button><button id="city-plan-open" disabled>全城分区</button><button id="sources">资料与模型</button><button id="capture-retry" hidden>重试锁定鼠标</button></nav></header>
+<header><div class="brand"><span class="seal">平<br>遥</span><span>平遥online<small>PINGYAO · STREET EXPERIENCE</small></span></div><nav><button id="fullscreen" type="button" aria-pressed="false" title="占满整个屏幕">全屏</button><button id="night" aria-pressed="false">☾ 夜景</button><button id="overview">俯瞰县城</button><button id="street-open" disabled>搜索街景</button><button id="city-plan-open" disabled>全城分区</button><button id="sources">资料与模型</button><button id="capture-retry" hidden>重试锁定鼠标</button></nav></header>
 <section id="intro">
 <p class="eyebrow">山西 · 晋中</p><h1>平遥online</h1>
 <p class="lead">从平遥二中门前出发，<br>沿街探索，自由切换高度与视角。</p>
@@ -29,6 +29,7 @@
 <dialog id="street-dialog">
 <form method="dialog"><button aria-label="关闭街景搜索">×</button></form>
 <h2>街景与校园</h2>
+<section class="detail-block-card" aria-label="学校与周边"><strong>校园与周边街坊</strong><p>校门、教学楼、操场与邻近住宅街景。</p><button id="school-vocational" type="button">平遥县职业中学</button> <button id="school-experimental" type="button">平遥实验中学</button> <button id="school-gutao" type="button">古陶一中</button></section>
 <section class="detail-block-card" aria-label="西城新增街景"><strong>西城 · 医院、奥莱与生活街区</strong><p>查看医院与政务片区、西城新区、柳根花园、兴平路和书林家园的沿街及内部街景。</p><button id="west-neighbourhood" type="button">西城完整街坊</button> <button id="civic-hospital" type="button">人民医院</button> <button id="civic-outlets" type="button">奥特莱斯</button> <button id="civic-government" type="button">政务大厅</button> <button id="civic-ziyuechen" type="button">紫悦宸</button></section>
 <section class="detail-block-card" aria-label="七号巷精细区块"><strong>七号巷北侧</strong><p>主房、附房、小院和内部巷道连成完整街坊。</p><button id="qixiang-entry" type="button">进入街坊</button> <button id="qixiang-overview" type="button">俯瞰整块</button></section>
 <form id="street-search"><label for="street-query">搜学校、路名或店铺</label><div class="search-row"><input id="street-query" type="search" placeholder="例如 平遥中学" autocomplete="off"><button type="submit">搜索</button></div></form>

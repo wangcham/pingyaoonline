@@ -6,7 +6,7 @@ import {westGroundHeight} from './west-terrain.js';
 import {siteToWorld,worldToSite} from './west-sites-data.js';
 
 // Shared rendering only; each site's footprint, massing and entrances are data-driven.
-export function createModernSite(scene,survey,{leafDensity=32,chunkSize=0}={}){
+export function createModernSite(scene,survey,{leafDensity=32,chunkSize=0,surfaceMaterialFactory=null,surfaceScale=()=>2.4,surfaceSegmentLength=0}={}){
   const root=new T.Group();root.name=survey.name;root.position.set(survey.origin[0],0,survey.origin[1]);root.rotation.y=survey.angle;
   scene.add(root);
   const batch=createUrbanBatch(root,{chunkSize}),glazing=createUrbanBatch(root,{chunkSize}),lights=[],litMaterials=[],textures=new Set();
@@ -19,6 +19,7 @@ export function createModernSite(scene,survey,{leafDensity=32,chunkSize=0}={}){
     box(color,u,ground(u,v)+y,v,Math.hypot(b[0]-a[0],b[1]-a[1]),height,width,-Math.atan2(b[1]-a[1],b[0]-a[0]));
   }
   function groundMaterial(color,kind='pavers'){
+    if(surfaceMaterialFactory){const mat=surfaceMaterialFactory(color,kind);if(mat.map)textures.add(mat.map);return mat;}
     const canvas=document.createElement('canvas');canvas.width=canvas.height=128;const ctx=canvas.getContext('2d');
     ctx.fillStyle=color;ctx.fillRect(0,0,128,128);
     // Authored texture: no satellite photographs are embedded or projected.
@@ -37,9 +38,21 @@ export function createModernSite(scene,survey,{leafDensity=32,chunkSize=0}={}){
   function surface(ring,color,y=.17,kind='pavers'){
     const key=color+kind;if(!surfaces.has(key))surfaces.set(key,groundMaterial(color,kind));
     const shape=new T.Shape(ring.map(([u,v])=>new T.Vector2(u,-v)));
-    const geo=new T.ShapeGeometry(shape);geo.rotateX(-Math.PI/2);
+    let geo=new T.ShapeGeometry(shape);geo.rotateX(-Math.PI/2);
+    if(surfaceSegmentLength>0){
+      const src=geo.toNonIndexed(),a=src.attributes.position.array,vertices=[];
+      // Subdivide long triangles before sampling curved terrain; a boundary-only
+      // campus slab can otherwise float over the running field and paths.
+      function split(p,q,r){
+        const points=[p,q,r],lengths=points.map((v,i)=>Math.hypot(v[0]-points[(i+1)%3][0],v[1]-points[(i+1)%3][1])),k=lengths.indexOf(Math.max(...lengths));
+        if(lengths[k]<=surfaceSegmentLength){for(const v of points)vertices.push(v[0],0,v[1]);return;}
+        const x=points[k],y=points[(k+1)%3],z=points[(k+2)%3],m=[(x[0]+y[0])/2,(x[1]+y[1])/2];split(x,m,z);split(m,y,z);
+      }
+      for(let i=0;i<a.length;i+=9)split([a[i],a[i+2]],[a[i+3],a[i+5]],[a[i+6],a[i+8]]);
+      src.dispose();geo.dispose();geo=new T.BufferGeometry();geo.setAttribute('position',new T.Float32BufferAttribute(vertices,3));geo.setAttribute('uv',new T.Float32BufferAttribute(new Float32Array(vertices.length/3*2),2));
+    }
     const p=geo.attributes.position,uv=geo.attributes.uv;
-    for(let i=0;i<p.count;i++){p.setY(i,ground(p.getX(i),p.getZ(i))+y);uv.setXY(i,p.getX(i)/2.4,p.getZ(i)/2.4);}
+    for(let i=0;i<p.count;i++){p.setY(i,ground(p.getX(i),p.getZ(i))+y);uv.setXY(i,p.getX(i)/surfaceScale(kind),p.getZ(i)/surfaceScale(kind));}
     geo.computeVertexNormals();const mesh=new T.Mesh(geo,surfaces.get(key));mesh.receiveShadow=true;root.add(mesh);return mesh;
   }
   function pad(u,v,w,d,color,y=.17,kind='pavers'){return surface([[u-w/2,v-d/2],[u+w/2,v-d/2],[u+w/2,v+d/2],[u-w/2,v+d/2]],color,y,kind);}
@@ -56,7 +69,7 @@ export function createModernSite(scene,survey,{leafDensity=32,chunkSize=0}={}){
     const rotate=(fn)=>(color,px,y,pz,ww,hh,dd,a=0)=>fn(color,u+(px-u)*rc+(pz-v)*rs,y,v-(px-u)*rs+(pz-v)*rc,ww,hh,dd,a+rotation);
     const box=rotate(batch.box),glass=rotate(glazing.box);
     const resolved=resolveBuildingHeight({x,z,w,d,angle:survey.angle+rotation,buildingType:type,
-      ...(photoLevels?{levels:p.levels,source:p.heightSource??'facade-photo-level-estimate',storeyHeight:p.storeyHeight}:{fallbackFloors:p.levels,preferRasterHeight:true})});
+      ...(photoLevels?{levels:p.levels,source:p.heightSource??'facade-photo-level-estimate',storeyHeight:p.storeyHeight}:{fallbackFloors:p.levels,preferRasterHeight:true,preserveFloorClass:true})});
     if(photoLevels)resolved.confidence=p.confidence??.5;
     const {height:h,floors}=resolved;
     const base=Math.max(...[[-w/2,-d/2],[w/2,-d/2],[w/2,d/2],[-w/2,d/2]].map(([a,b])=>ground(u+a*rc+b*rs,v-a*rs+b*rc)))+.18;
@@ -98,7 +111,7 @@ export function createModernSite(scene,survey,{leafDensity=32,chunkSize=0}={}){
     const light=new T.PointLight('#ffe2ac',0,19,2);light.position.set(u,base+height-.15,v);light.visible=false;root.add(light);lights.push(light);
   }
   function finish(){
-    batch.finish();const g=glazing.finish();for(const m of g.children){m.material.roughness=.35;m.material.metalness=.16;m.material.emissive.set('#e8d1a0');litMaterials.push(m.material);}
+    batch.finish();const g=glazing.finish();for(const m of g.children){m.material.roughness=.35;m.material.metalness=.16;m.material.emissive.set('#e8d1a0');m.material.emissiveIntensity=0;litMaterials.push(m.material);}
     trees.finish();root.updateMatrixWorld(true);let night=false,disposed=false;
     const controller={root,record:null,setNight(value){night=value;litMaterials.forEach(m=>m.emissiveIntensity=value?.35:0);lights.forEach(l=>{l.intensity=value?14:0;l.visible=value;});},
       update(camera){if(disposed)return;const near=Math.hypot(camera.position.x-survey.origin[0],camera.position.z-survey.origin[1])<220;lights.forEach(l=>l.visible=night&&near);},

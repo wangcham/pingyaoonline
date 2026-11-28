@@ -1,3 +1,4 @@
+import {isSchoolSite,schoolSiteIntersects} from './school-sites-data.js';
 import * as T from 'three';
 import {createUrbanBatch} from './urban-batch.js';
 import {createTreeBatch} from './vegetation.js';
@@ -11,7 +12,7 @@ import {createWestLinkLayout,westLinkSurvey,westLinkOpenGround,westLinkAlleys,is
 import {isQixiangBlock} from './qixiang-block-data.js';
 
 export function addWestLinkDistrict(scene){
-  return addSurveyDistrict(scene,{name:'平遥二中至三中街坊',layout:createWestLinkLayout,survey:westLinkSurvey,openGround:westLinkOpenGround,alleys:westLinkAlleys,contains:(x,z,pad=0)=>isWestLinkStudy(x,z,pad)&&!isQixiangBlock(x,z,3),roadClear:westLinkRoadClear,reserved:(x,z,pad=0)=>isWestSiteParcel(x,z,pad)||isQixiangBlock(x,z,pad+3)});
+  return addSurveyDistrict(scene,{name:'平遥二中至三中街坊',layout:createWestLinkLayout,survey:westLinkSurvey,openGround:westLinkOpenGround.filter(g=>!schoolSiteIntersects(g.ring)),alleys:westLinkAlleys,contains:(x,z,pad=0)=>isWestLinkStudy(x,z,pad)&&!isSchoolSite(x,z,pad)&&!isQixiangBlock(x,z,3),roadClear:westLinkRoadClear,reserved:(x,z,pad=0)=>isSchoolSite(x,z,pad)||isWestSiteParcel(x,z,pad)||isQixiangBlock(x,z,pad+3)});
 }
 export function addSurveyDistrict(scene,config){
   const steps=createSurveyDistrictSteps(scene,config);let result;
@@ -19,7 +20,7 @@ export function addSurveyDistrict(scene,config){
 }
 export function resolveSurveyBuildingRecord(p,useRaster){
   const {x,z,w,d,angle,kind}=p;
-  const r=resolveBuildingHeight({x,z,w,d,angle,buildingType:kind==='lowrise'?'residential':kind==='shed'?'industrial':kind,fallbackFloors:p.levels,knownHeight:p.knownHeight,osmHeight:p.osmHeight,osmLevels:p.osmLevels,source:p.heightSource,useRasterHeight:useRaster,preferRasterHeight:useRaster!==false&&p.levels<8});
+  const r=resolveBuildingHeight({x,z,w,d,angle,buildingType:kind==='lowrise'?'residential':kind==='shed'?'industrial':kind,fallbackFloors:p.levels,knownHeight:p.knownHeight,osmHeight:p.osmHeight,osmLevels:p.osmLevels,source:p.heightSource,useRasterHeight:useRaster,preserveFloorClass:true,preferRasterHeight:useRaster!==false&&p.levels<8});
   return {...p,...r,heightSource:r.heightSource==='existing-approximation'?'satellite-morphology-estimate':r.heightSource,levelsSource:'类型和建筑形态估计，非实测层数',heightClass:r.floors<=1?'single-storey':r.floors<=3?'low-rise':r.floors<=7?'multi-storey':'high-rise',name:kind==='residential'?'影像判读住宅楼':kind==='public'?'影像判读公共楼群':kind==='shed'?'影像判读蓝顶长屋':'影像判读低层连排楼房',confidence:r.estimated?Math.min(r.confidence,p.levels>=10?.25:.4):r.confidence,estimated:r.estimated,footprintEstimated:true};
 }
 // The same geometry path can be consumed synchronously by local districts or
@@ -77,7 +78,7 @@ export function* createSurveyDistrictSteps(scene,config){
       }
       if(r.floors>1)for(let f=1;f<r.floors;f++)local(box,'#aaa99d',(depth/2+.02)*sa,f*storey,-0+(depth/2+.02)*ca,span,.12,.14,a);
     }
-    if(config.courtyardWalls&&kind==='lowrise'&&r.floors<=2){
+    if(config.courtyardWalls&&kind==='lowrise'&&r.floors<=2&&!config.retailFrontages?.some(s=>s.buildingId===p.id&&Math.cos(s.angle-angle)>.9)){
       for(let u=-w/2+6;u<w/2-6;u+=12){
         const v=d/2+2.45,wx=x+u*c+v*s,wz=z-u*s+v*c;
         const corners=[[-5.5,-2.1],[5.5,-2.1],[5.5,2.1],[-5.5,2.1]].map(([du,dv])=>[wx+du*c+dv*s,wz-du*s+dv*c]);

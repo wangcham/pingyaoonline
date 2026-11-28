@@ -1,3 +1,4 @@
+import {jinglinContextRing} from './jinglin-context-data.js';
 import {westSiteProtectedRings} from './west-sites-data.js';
 import {westLinkBoundary} from './west-link-survey.js';
 import {mapData} from './map-data.js';
@@ -27,7 +28,7 @@ function blockSegmentHits(a,b,x,z,w,d){
 }
 function blockRect(x,z,w,d){return [[x-w/2,z-d/2],[x+w/2,z-d/2],[x+w/2,z+d/2],[x-w/2,z+d/2]];}
 export function westBlockProtectedRings(){
-  return [westLinkBoundary,...westSiteProtectedRings,mapData.campus,mapData.wall,yufengBlockBoundary,surveyedWestPark,...stationStreetRings,...mapData.areas.map(([,r])=>r),...mapData.buildings.map(([,,r])=>r),
+  return [jinglinContextRing,westLinkBoundary,...westSiteProtectedRings,mapData.campus,mapData.wall,yufengBlockBoundary,surveyedWestPark,...stationStreetRings,...mapData.areas.map(([,r])=>r),...mapData.buildings.map(([,,r])=>r),
     ...commercialPlots.map(p=>blockRect(p.x,p.z,p.w+5,p.d+6)),
     blockRect(-1452.5,93,110,46), // existing shopping-center forecourt
     blockRect(-1253,443.4,112,168),blockRect(-1253,545,110,56), // theater eaves/plaza

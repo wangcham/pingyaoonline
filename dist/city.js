@@ -1,3 +1,4 @@
+import {schoolSiteStops} from './school-sites-data.js';
 import {westNeighbourStops,isWestNeighbourhood} from './west-neighbourhood-data.js';
 import {citySurfaceRoads,cityExperienceBounds} from './city-extension.js';
 import {regionalStops,isRegionalBuilding} from './regional-survey.js';
@@ -21,6 +22,7 @@ import {stableDepthOptions} from './render-stability.js';
 import {collectBuildingRecords} from './building-heights.js';
 import {localToGeographic} from './landmarks/coordinates.js';
 import {createFlightPointer} from './flight-pointer.js';
+import {attachFullscreen} from './fullscreen.js';
 import {createLandmarkManager, attachLandmarkUI} from './landmarks/LandmarkManager.js';
 
 const get = id => document.getElementById(id);
@@ -48,7 +50,7 @@ sun.shadow.mapSize.set(2048,2048);
 Object.assign(sun.shadow.camera,{left:-1300,right:1300,top:1300,bottom:-1300,near:1,far:2500});
 sun.shadow.normalBias = .14;
 scene.add(sun,sun.target,sky,daySky);
-const {lantern,streetLighting,school,westSites,westLink,southCity,regionalCity,guchengStation,qixiangBlock} = await buildCity(scene,{onProgress:label=>{get('start').textContent=label;}});
+const {lantern,streetLighting,school,westSites,westLink,southCity,regionalCity,guchengStation,qixiangBlock,oldTownStreets,moatLandscape,ringCommerce,waterfront} = await buildCity(scene,{onProgress:label=>{get('start').textContent=label;}});
 const landmarkManager = createLandmarkManager(scene,{onChange:()=>{renderer.shadowMap.needsUpdate=true;}});
 landmarkManager.loadAll();
 landmarkManager.registerExternal(schoolLandmarkRecord,school.root,school.dispose);
@@ -79,6 +81,9 @@ function lighting() {
   southCity.setNight(isNight);
   regionalCity.setNight(isNight);guchengStation.setNight(isNight);
   qixiangBlock.setNight(isNight);
+  oldTownStreets.setNight(isNight);
+  moatLandscape.setNight(isNight);
+  ringCommerce.setNight(isNight);waterfront.setNight(isNight);
   renderer.shadowMap.needsUpdate = true;
 }
 lighting();
@@ -145,7 +150,8 @@ function turn(x,y) {
   pitch = T.MathUtils.clamp(pitch-y*.003,-1.54,1.54);
   look();
 }
-const flightPointer=createFlightPointer({canvas,isTouch:()=>touch.matches,onStart:()=>setFlying(true),onPause:()=>setFlying(false),onTurn:turn,
+const fullscreenControl=attachFullscreen({button:get('fullscreen'),onExit:pause,onResize:resize,onError:message=>{get('help').textContent=message;}});
+const flightPointer=createFlightPointer({canvas,isTouch:()=>touch.matches,onStart:()=>setFlying(true),onPause:()=>{setFlying(false);void fullscreenControl.exit();},onTurn:turn,
   onError(message){get('help').textContent=message;},
   onMode(mode){
     document.body.classList.toggle('mouse-look',mode==='locked');
@@ -191,7 +197,7 @@ const streetDialog = get('street-dialog');
 const query = get('street-query');
 const results = get('street-results');
 const normalizeStreet = value => value.toLowerCase().replace(/[\s·×（）()]/g,'');
-const allStreetStops=[...streetStops,...civicSiteStops,...westNeighbourStops,...regionalStops];
+const allStreetStops=[...schoolSiteStops,...streetStops,...civicSiteStops,...westNeighbourStops,...regionalStops];
 const searchableRoads = new Map();
 for (const [, , name, points] of citySurfaceRoads) {
   if (!name || allStreetStops.some(stop=>stop.name===name)) continue;
@@ -241,6 +247,7 @@ get('street-open').disabled=false;
 get('street-open').addEventListener('click',()=>openStreetSearch());
 get('qixiang-entry').addEventListener('click',()=>visitStreet(qixiangStops[0]));
 get('qixiang-overview').addEventListener('click',()=>visitStreet(qixiangStops[1]));
+for(const [i,id] of ['vocational','experimental','gutao'].entries())get(`school-${id}`).addEventListener('click',()=>visitStreet(schoolSiteStops[i*2]));
 get('west-neighbourhood').addEventListener('click',()=>visitStreet(westNeighbourStops[0]));
 for(const [i,id] of ['hospital','outlets','government','ziyuechen'].entries())get(`civic-${id}`).addEventListener('click',()=>visitStreet(civicSiteStops[i*2]));
 get('shuncheng-guide').addEventListener('click',()=>openStreetSearch('顺城路全线'));
@@ -249,9 +256,9 @@ get('street-search').addEventListener('submit',event=>{
   showStreetResults();
 });
 query.addEventListener('input',showStreetResults);
-attachCityPlanUI({pause,visitSmallSouth:()=>visitStreet(smallSouthGateStop),visitQixiang:()=>visitStreet(qixiangStops[1]),visitCivic:index=>visitStreet(civicSiteStops[index*2+1]),visitNeighbour:index=>visitStreet(westNeighbourStops[index])});
+attachCityPlanUI({pause,visitSchool:index=>visitStreet(schoolSiteStops[index*2+1]),visitSmallSouth:()=>visitStreet(smallSouthGateStop),visitQixiang:()=>visitStreet(qixiangStops[1]),visitCivic:index=>visitStreet(civicSiteStops[index*2+1]),visitNeighbour:index=>visitStreet(westNeighbourStops[index])});
 
-const landmarkUI = attachLandmarkUI({manager:landmarkManager,camera,canvas,world,pause,
+const landmarkUI = attachLandmarkUI({manager:landmarkManager,camera,canvas,world,pause,groundHeight:westGroundHeight,
   visit(record) {
     const [x,z]=record.position,[dx,dy,dz]=record.view;
     aimFromStreet([x+dx,dy,z+dz],[x,record.height*.4,z]);
@@ -366,6 +373,10 @@ function render(now) {
   if(regionalCity.update(camera,now))renderer.shadowMap.needsUpdate=true;
   updateRegionalStatus();
   if(qixiangBlock.update(camera))renderer.shadowMap.needsUpdate=true;
+  if(oldTownStreets.update(camera))renderer.shadowMap.needsUpdate=true;
+  if(moatLandscape.update(camera))renderer.shadowMap.needsUpdate=true;
+  if(ringCommerce.update(camera))renderer.shadowMap.needsUpdate=true;
+  if(guchengStation.update(camera))renderer.shadowMap.needsUpdate=true;
   updateStreetShadow();
   renderer.render(scene,camera);
 }

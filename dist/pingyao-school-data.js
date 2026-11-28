@@ -32,16 +32,17 @@ export const schoolLocalBoundary=schoolBoundary.map(p=>worldToSchool(...p));
 export const schoolEntrance={
   wall:[174,525],gate:[212,520],gateClearWidth:12,
   approach:[[212,580],[212,520],[212,509],[216,484],[220,458]],
-  // Two staggered rows in front of the western frontage, not a diagonal chain
-  // down the driveway. 1961 is nearest the left end of the school-name wall.
+  // Keep the staggered rows, with the dated lettering centered on the school
+  // name at u=174 (lettering is offset -1 m from each panel's origin).
+  // Every panel is parallel to the white school-name wall (local angle 0).
   // Unreadable dates in the supplied photograph are deliberately left blank.
   historyWalls:[
-    {u:165,v:565,year:'1924',row:'front',angle:Math.PI/2},
-    {u:153,v:558,year:null,row:'back',angle:Math.PI/2},
-    {u:153,v:544,year:null,row:'back',angle:Math.PI/2},
-    {u:165,v:549,year:'1956',row:'front',angle:Math.PI/2},
-    {u:153,v:531,year:null,row:'back',angle:Math.PI/2},
-    {u:165,v:535,year:'1961',row:'front',angle:Math.PI/2},
+    {u:175,v:565,year:'1924',row:'front',angle:0},
+    {u:163,v:558,year:null,row:'back',angle:0},
+    {u:163,v:544,year:null,row:'back',angle:0},
+    {u:175,v:549,year:'1956',row:'front',angle:0},
+    {u:163,v:531,year:null,row:'back',angle:0},
+    {u:175,v:535,year:'1961',row:'front',angle:0},
   ],
   // Only short entrance barriers are photo-supported. OSM land-use edges are
   // not evidence for a tall fence around the publicly accessible forecourt.

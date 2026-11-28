@@ -1,0 +1,98 @@
+{
+  "checked": "2026-11-27",
+  "uiButtonsAdded": 0,
+  "sources": {
+    "amapResponse": "current-four-site-amap.json",
+    "amapImageryCaptureDate": null,
+    "amapPhotosCaptureDates": null,
+    "recentSchoolPhoto": {
+      "url": "https://www.sxie.edu.cn/xny/info/1022/3635.htm",
+      "published": "2026-07-08",
+      "visitDate": "2026-07-07",
+      "visible": "校史馆外墙、红色楼翼、银色通风管；不能确认该建筑的地图位置"
+    },
+    "schoolLightingPhoto": {
+      "url": "https://www.sohu.com/a/799102701_121123761",
+      "published": "2024-08-07",
+      "completionDate": "2024-08-01",
+      "visible": "科技楼竖向深色立面、外楼梯、灯带、圆形雕塑台阶"
+    }
+  },
+  "sites": {
+    "又见平遥": {
+      "changes": [
+        "降低原先约25米的夸张屋脊",
+        "夯土水平层纹和墙脚石材",
+        "筒瓦、脊瓦、墙面叠瓦缝",
+        "红印竖排标识",
+        "入口门窗、把手、排队栏杆、排水沟",
+        "分区铺装、树池、座椅和墙脚灯"
+      ],
+      "estimatedRoofMaximumMetres": 10,
+      "limits": "建筑高度、入口分配和广场设施是照片与既有轮廓基础上的近似；不是实测复刻。"
+    },
+    "家家利": {
+      "removedDuplicateBuildings": [
+        "yufeng-rear-3",
+        "yufeng-rear-4",
+        "yufeng-rear-6",
+        "yufeng-rear-7"
+      ],
+      "changes": [
+        "完整建筑轮廓避让",
+        "支巷地面和院落同样避让",
+        "原始地图建筑叠加层排除重复轮廓"
+      ],
+      "limits": "已检查超市及附近登记建筑的轮廓相交；不代表全城建筑均已精确测绘。"
+    },
+    "田森汇": {
+      "changes": [
+        "两侧沿街电动车停车带",
+        "排除基础模型、内部街区和旧沿路商铺三套生成逻辑的假房屋",
+        "入口、树池及机动车道路避让",
+        "倾斜钢构雨棚",
+        "大屏包框、红色格栅",
+        "修复越出屋顶的窗片和默认日景玻璃自发光"
+      ],
+      "scooters": 202,
+      "parkingUseSource": "用户确认现场为电动车停放，结合高德影像复核开放空间。",
+      "limits": "电动车数量、款式、间距、车位线和部分材质属于表现性建模。"
+    },
+    "平遥中学": {
+      "changes": [
+        "科技楼竖向深色立面、楼层灯带",
+        "两侧室外楼梯",
+        "圆形台阶及镂空抽象雕塑",
+        "金属球体细节、独立字牌",
+        "深灰基座、银色外部管道"
+      ],
+      "limits": "近期可核实照片为2026年7月；科技楼灯光照片为2024年，不冒充2026年11月现状。校史馆位置未核实，未新增命名馆舍。"
+    }
+  },
+  "validation": {
+    "tests": [
+      "npm run check",
+      "npm test",
+      "tests/boot.mjs",
+      "tests/west-sites.mjs",
+      "tests/pingyao-school.mjs",
+      "tests/theater.mjs"
+    ],
+    "browser": "Chrome headless, full city, 1440x1000; reference screenshots in four-site-*.png",
+    "thirdPartyPhotosBundled": false,
+    "sceneBudgets": {
+      "theater": {
+        "draws": 76,
+        "triangles": 60160
+      },
+      "tiansenAndThirdSchool": {
+        "draws": 73,
+        "triangles": 381640
+      },
+      "pingyaoSchool": {
+        "draws": 97,
+        "triangles": 780648
+      }
+    }
+  }
+}

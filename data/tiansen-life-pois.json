@@ -1,0 +1,598 @@
+{
+  "checked": "2026-11-28",
+  "crs": "GCJ-02",
+  "provider": "Amap v5/place",
+  "results": {
+    "bookstore": [
+      {
+        "id": "B0FFG4GRCV",
+        "name": "新华书店(平遥店)",
+        "location": "112.171400,37.196576",
+        "address": "上西关街60号",
+        "type": "购物服务;专卖店;书店",
+        "parent": "",
+        "navi": {
+          "navi_poiid": "J49F034034_2814;6259",
+          "entr_location": "112.171774,37.196706",
+          "gridcode": "5512613312"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://img.alicdn.com/imgextra/i3/O1CN01XY9ByX1hcXP1yuLsn_!!6000000004298-0-tps-500-500.jpg"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/ff31a90bee48435dca843c9fcc176d44"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/6ab3b2cada90e7770000002988056638?type=pic"
+          }
+        ]
+      },
+      {
+        "id": "B0L2B5JWV7",
+        "name": "新华书店小区",
+        "location": "112.164625,37.196325",
+        "address": "上西关街西5号",
+        "type": "商务住宅;住宅区;住宅小区",
+        "parent": "",
+        "navi": {
+          "entr_location": "112.164641,37.196248",
+          "gridcode": "5512613310"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://img.alicdn.com/imgextra/i3/O1CN01XY9ByX1hcXP1yuLsn_!!6000000004298-0-tps-500-500.jpg"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/d4664df9d17a7d5fa7c5098021f7873f"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/4d5d65af44d76491b109c52f888b22f6"
+          }
+        ]
+      }
+    ],
+    "street": [
+      {
+        "id": "B0KAROB1S0",
+        "name": "星巴克(平遥漫乐城店)",
+        "location": "112.171192,37.197879",
+        "address": "城西街道顺城北路227号平遥漫乐城",
+        "type": "餐饮服务;咖啡厅;星巴克咖啡",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "entr_location": "112.171294,37.198010",
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://aos-comment.amap.com/B0KAROB1S0/comment/20260320-1826eef1a60de7b219f10b0a-816oDgU4J8R5mdiKfNRtsH.jpg"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/977afeb92d3d366fe3d99a11ffa5c066"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/81fddad4a075aeda3f35971c23e94629"
+          }
+        ]
+      },
+      {
+        "id": "BV10865408",
+        "name": "田森超市(公交站)",
+        "location": "112.171638,37.197693",
+        "address": "(停运)平遥207路;平遥-普洞;平遥-梁坡底;平遥-石城;平遥17路支线;平遥1路;平遥202路;平遥204路/4路;平遥209路;平遥22路",
+        "type": "交通设施服务;公交车站;公交车站相关",
+        "parent": "",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": null
+      },
+      {
+        "id": "B0FFH27558",
+        "name": "莱绅通灵(平遥漫乐城店)",
+        "location": "112.171175,37.198071",
+        "address": "城西街道顺城路田森汇1层",
+        "type": "购物服务;专卖店;珠宝首饰工艺品",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "navi_poiid": "J49F034034_33827",
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/717c6133013488c50d156c07bd370fa2"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/141cc5b06aab281650f56f141ff823ed"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/d90b667c190f4699eb45774f4d24f5cd"
+          }
+        ]
+      },
+      {
+        "id": "B0HRVR07LP",
+        "name": "中国黄金(平遥漫乐城店)",
+        "location": "112.171165,37.198083",
+        "address": "顺城北路与益民街交叉口西南80米",
+        "type": "购物服务;专卖店;珠宝首饰工艺品",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://img.alicdn.com/imgextra/i3/O1CN019hfNaZ1k6QUEY22jC_!!6000000004634-0-tps-632-632.jpg"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/69ba62434e9089827adcb9064dd8375e"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/6bf8fd2a825c8cd8bdc2f1781c045cb8"
+          }
+        ]
+      },
+      {
+        "id": "B0FFHM6L1M",
+        "name": "爱亲母婴专卖店(顺城北路店)",
+        "location": "112.171121,37.197785",
+        "address": "顺城路田森汇北广场三层3027",
+        "type": "购物服务;专卖店;儿童用品店",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/3ed589031b229eb441a350c2bf253151"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/ca378cdefa2fb8715b114c13adf7c348"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/62083e66419f40b2b523bfec769dc4d4"
+          }
+        ]
+      },
+      {
+        "id": "B0L0F98C6C",
+        "name": "果机优选二手店",
+        "location": "112.171785,37.197660",
+        "address": "凯瑞宾馆西门旁",
+        "type": "购物服务;综合市场;综合市场",
+        "parent": "",
+        "navi": {
+          "entr_location": "112.17172973620731,37.197655477306334",
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/c614a31e29e838df335c92e17b8a005d"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/c74bfdff736700893430f5a89a5483f8"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/d73062761c9cdc44484a8856c1ed9438"
+          }
+        ]
+      },
+      {
+        "id": "B016200PBP",
+        "name": "元平装潢总汇",
+        "location": "112.171896,37.197738",
+        "address": "顺城北路170号",
+        "type": "购物服务;家居建材市场;建材五金市场",
+        "parent": "",
+        "navi": {
+          "navi_poiid": "J49F034034_380",
+          "entr_location": "112.17172094020947,37.1977236734377",
+          "gridcode": "5512613322"
+        },
+        "photos": null
+      },
+      {
+        "id": "B0FFHF0QY6",
+        "name": "麦当劳(平遥顺城路餐厅)",
+        "location": "112.171286,37.197570",
+        "address": "顺城路田森汇一层",
+        "type": "餐饮服务;快餐厅;麦当劳",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/2a03bed7d57ffbc9599006a2b134e503"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/1d8b44861cafb1106e75c02727ae31bd"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/01b5f8806902fc754bfd0b26eae6db72"
+          }
+        ]
+      },
+      {
+        "id": "B0FFJ04M5Z",
+        "name": "故宫文创研发交流中心",
+        "location": "112.171945,37.198205",
+        "address": "古陶镇顺城路154号",
+        "type": "购物服务;专卖店;专营店",
+        "parent": "B016200MKK",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/ba1cc89376a04d187860288b4fa61bc3"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/2f6a9dc6f87740769132249d509069aa"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/30938a6a6bbd367e402cd6ffe92ca576"
+          }
+        ]
+      },
+      {
+        "id": "B0MDUZZOOG",
+        "name": "海康威视(平遥奇翔电子专营店)",
+        "location": "112.171817,37.197489",
+        "address": "顺城北路64号",
+        "type": "购物服务;家电电子卖场;数码电子",
+        "parent": "",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/732c7cf62b31a2560000002462708025"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/c8924b51b13540010000002462704142"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/457af23d650e74680000002462668700"
+          }
+        ]
+      },
+      {
+        "id": "B0HKYC0HI7",
+        "name": "三顺紫菜包饭(平遥形象店)",
+        "location": "112.171007,37.198320",
+        "address": "城西街道顺城北路599号田森汇二层半PY2106",
+        "type": "餐饮服务;餐饮相关场所;餐饮相关",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "entr_location": "112.171236,37.1986",
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://aos-comment.amap.com/B0HKYC0HI7/comment/51d70ef7e9fd497e6dc0068e76e4ebb2_2048_2048_80.jpg"
+          },
+          {
+            "title": "",
+            "url": "http://aos-cdn-image.amap.com/sns/ugccomment/69ed1b50-515c-4f24-acd3-556879f4d0da.jpg"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/9ced4bb06a12ae44d378b047e9438ae7"
+          }
+        ]
+      },
+      {
+        "id": "B0FFJOYLXL",
+        "name": "花时间花店(田森汇·城市生活公园店)",
+        "location": "112.171192,37.197460",
+        "address": "顺城北路与益民街交叉口南140米",
+        "type": "购物服务;花鸟鱼虫市场;花卉市场",
+        "parent": "",
+        "navi": {
+          "entr_location": "112.171547,37.197406",
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/987d9cd6e114c1b84ce78c1f75f749d4"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/66903b5066e7ce1d41bebcba623e001b"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/d678e2df6a1de86f859f353da86fa7d7"
+          }
+        ]
+      },
+      {
+        "id": "B0FFHFKHNM",
+        "name": "绿洁管道",
+        "location": "112.171906,37.197497",
+        "address": "凯瑞宾馆西门旁",
+        "type": "购物服务;家居建材市场;建材五金市场",
+        "parent": "",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/1c32f02f128a8be66fc5c3341ef2e806"
+          }
+        ]
+      },
+      {
+        "id": "BV11237029",
+        "name": "上西关街(公交站)",
+        "location": "112.171753,37.197422",
+        "address": "军寨-平遥;平遥-军寨",
+        "type": "交通设施服务;公交车站;公交车站相关",
+        "parent": "",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": null
+      },
+      {
+        "id": "B0LK7Z2RLI",
+        "name": "两颗星星饰品集合店",
+        "location": "112.170825,37.197725",
+        "address": "顺城北路与益民街交叉口西南120米",
+        "type": "购物服务;专卖店;专营店",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "entr_location": "112.171318,37.197755",
+          "gridcode": "5512613321"
+        },
+        "photos": null
+      },
+      {
+        "id": "B0MR0SH7C6",
+        "name": "半天妖烤鱼(平遥田森店)",
+        "location": "112.170823,37.197696",
+        "address": "城西街道田森·玺悦汇(平遥店)",
+        "type": "餐饮服务;中餐厅;中餐厅",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "gridcode": "5512613321"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/5c0e757bfa1ba2828a2558d345eb30bb"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/8d52c2dc8cb8927d58dd1dd670076a43"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/754c1016036d1dfe8fd7292620fe0edf"
+          }
+        ]
+      },
+      {
+        "id": "B0IGH7FB0F",
+        "name": "Apple授权专营店(平遥田森汇店)",
+        "location": "112.170902,37.197587",
+        "address": "顺城路田森汇南区一层PY2070-PY2073",
+        "type": "购物服务;家电电子卖场;数码电子",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/query_pic?id=std2948c81-1a94-4607-acc8-8bcaedb4c690&user=search&operate=original"
+          },
+          {
+            "title": "",
+            "url": "https://aos-comment.amap.com/B0IGH7FB0F/comment/6fcf5556e1d543a19f6547012fe0214e_2048_2048_80.jpg"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/e3bcfd21578694d00000008977526183?type=pic"
+          }
+        ]
+      },
+      {
+        "id": "B0LDS7346X",
+        "name": "小司挞记",
+        "location": "112.170794,37.197740",
+        "address": "平遥田森4层4019",
+        "type": "餐饮服务;餐饮相关场所;餐饮相关",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "entr_location": "112.171316,37.197771",
+          "gridcode": "5512613321"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/893c1fba715ae12d9c7da3e44f0f5835"
+          }
+        ]
+      },
+      {
+        "id": "B0MAMA5IFQ",
+        "name": "华为合作店(田森汇)",
+        "location": "112.171975,37.197475",
+        "address": "顺城路漫乐城2F华为",
+        "type": "购物服务;家电电子卖场;家电电子卖场",
+        "parent": "",
+        "navi": {
+          "entr_location": "112.171745,37.197518",
+          "gridcode": "5512613322"
+        },
+        "photos": null
+      },
+      {
+        "id": "B0FFGA5I8Y",
+        "name": "田森·玺悦汇(平遥店)",
+        "location": "112.170796,37.197710",
+        "address": "顺城路",
+        "type": "购物服务;商场;普通商场",
+        "parent": "",
+        "navi": {
+          "entr_location": "112.171646,37.197539",
+          "gridcode": "5512613321"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://aos-comment.amap.com/B0FFGA5I8Y/comment/content_media_external_images_media_1000009936_ss__1767066779325_07732347.jpg"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/1d12fa83a7c5de6d0000009079940448?type=pic"
+          },
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/6aec7a2c70e883080000000730538826?type=pic"
+          }
+        ]
+      },
+      {
+        "id": "B0FFL5DBSY",
+        "name": "谷仓创意轻食(田森汇·城市生活公园店)",
+        "location": "112.171070,37.198456",
+        "address": "古陶镇顺城路田森汇负一层",
+        "type": "餐饮服务;中餐厅;中餐厅",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/785fa2f53a59f08f9b20fb04095da02a"
+          }
+        ]
+      },
+      {
+        "id": "B0FFKO8KDE",
+        "name": "海尔专卖店(田森店)",
+        "location": "112.171026,37.198444",
+        "address": "古陶镇顺城北路599号田森汇一层",
+        "type": "购物服务;家电电子卖场;家电电子卖场",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/query_pic?id=st093f9313-4f26-4491-bde2-bc8ebb3802c2&user=search&operate=original"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/684658f8b098ecadf5bc39d47d67cfe3"
+          },
+          {
+            "title": "",
+            "url": "https://aos-comment.amap.com/B0FFKO8KDE/comment/content_media_external_file_8307_1766391881033_27834298.jpg"
+          }
+        ]
+      },
+      {
+        "id": "B0IUPCRO0P",
+        "name": "仟味一鼎自助小火锅(平遥漫乐城店)",
+        "location": "112.171022,37.198478",
+        "address": "田森四层最东北角",
+        "type": "餐饮服务;中餐厅;火锅店",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/d90ea603d36e2acb75d2a8f574cd0c02"
+          },
+          {
+            "title": "",
+            "url": "https://aos-comment.amap.com/B0IUPCRO0P/comment/d9f4b7b312014f5ae698814478cc50f5_2048_2048_80.jpg"
+          },
+          {
+            "title": "",
+            "url": "http://store.is.autonavi.com/showpic/fc78bae7f35c287e05097730db996690"
+          }
+        ]
+      },
+      {
+        "id": "B0J0VNMYK2",
+        "name": "七日肉店(平遥漫乐城店)",
+        "location": "112.170674,37.198000",
+        "address": "益民街与顺城北路交叉口西南100米",
+        "type": "购物服务;综合市场;农副产品市场",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "gridcode": "5512613321"
+        },
+        "photos": null
+      },
+      {
+        "id": "B0JKF71SWL",
+        "name": "联想体验店(平遥田森汇店)",
+        "location": "112.171095,37.197357",
+        "address": "顺城路田森汇城市公园2层2061",
+        "type": "购物服务;家电电子卖场;数码电子",
+        "parent": "B0FFGA5I8Y",
+        "navi": {
+          "gridcode": "5512613322"
+        },
+        "photos": [
+          {
+            "title": "",
+            "url": "https://store.is.autonavi.com/showpic/1091d8f15e1ad9f40000009079744216?type=pic"
+          },
+          {
+            "title": "",
+            "url": "https://aos-comment.amap.com/B0JKF71SWL/comment/bd776e0a7e0d9db58b3348c4e5fda519_2048_2048_80.jpg"
+          },
+          {
+            "title": "",
+            "url": "https://aos-comment.amap.com/B0JKF71SWL/comment/3456488cca05504490b2c9c10b7fcaa2_2048_2048_80.jpg"
+          }
+        ]
+      }
+    ]
+  }
+}

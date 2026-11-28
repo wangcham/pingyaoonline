@@ -1,10 +1,12 @@
 import * as T from 'three';
+import {addCommerceMallSkin,createCommerceMaterials} from './local-commerce-materials.js';
 import {resolveBuildingHeight} from './building-heights.js';
 import {addYufengBlock,isYufengBlock,yufengStops} from './yufeng-block.js';
 import {mapData} from './map-data.js';
 import {createRingQuery,pointInRing, projectOnSegment, segments} from './geography.js';
 import {westGroundHeight} from './west-terrain.js';
 import {createTreeBatch} from './vegetation.js';
+import {isMoatCorridor} from './moat-data.js';
 import {surveyedWestPark} from './west-green-survey.js';
 import {addJunctionJewelry,jewelryStops} from './junction-jewelry.js';
 import {addRoadAdjustedCommercial} from './road-adjusted-commercial.js';
@@ -85,6 +87,19 @@ export function addWestDistrict(scene,box,namedBoard) {
     const front=depth/2;
     box(group,'#a8a195',0,-.55,0,width+1,1.1,depth+1);
     box(group,facade,0,height/2,0,width,height,depth);
+    if(['陶源丰新天地','宇峰购物广场','万人商厦'].includes(name)){
+      addCommerceMallSkin(group,[{u:0,v:0,w:width,d:depth,h:height,color:facade,roofOffset:.61}]);
+      const paving=createCommerceMaterials(group);
+      paving.quad('paving','#c4bfb1',[[-width/2,.246,front+.2],[width/2,.246,front+.2],[width/2,.246,front+4.6],[-width/2,.246,front+4.6]]);
+      for(const side of [-1,1]){
+        paving.quad('stone','#797c75',[[side*width*.42-2,.254,front+.5],[side*width*.42+2,.254,front+.5],[side*width*.42+2,.254,front+4.4],[side*width*.42-2,.254,front+4.4]]);
+        // Short entry guard rails remain on the existing platform, away from its centre.
+        const px=side*(Math.min(12,width*.22)/2+1.2);
+        for(const dz of [1.4,2.4]){box(group,'#6f7c78',px,.77,front+dz,.06,1.05,.06);box(group,'#a1aaa2',px,1.3,front+dz,.11,.08,.11);}
+        box(group,'#9fa7a1',px,1.25,front+1.9,.07,.07,1.1);
+      }
+      paving.finish();group.userData.commerceDetail={materials:['stone','paving','roof'],source:'existing footprint; authored surface and entrance detail',estimated:true};
+    }
     box(group,trim,0,height+.25,0,width+.6,.7,depth+.65);
     box(group,facade,width*.22,height+1.45,-depth*.2,width*.25,2.6,depth*.32);
     box(group,'#b4ada0',0,.12,front+2.3,width+.4,.24,4.8);
@@ -228,6 +243,7 @@ export function addWestDistrict(scene,box,namedBoard) {
     const minX=Math.min(...xs),maxX=Math.max(...xs),minZ=Math.min(...zs),maxZ=Math.max(...zs);
     for(let i=0;i<145;i++) {
       const x=minX+rand()*(maxX-minX), z=minZ+rand()*(maxZ-minZ);
+      if(isMoatCorridor(x,z,3))continue;
       if(!pointInRing(x,z,ring)||pointInRing(x,z,parkWater))continue;
       if(edges.some(line=>projectOnSegment([x,z],line).distance<4.0))continue;
       if(lawnTrees.some(tree=>Math.hypot(x-tree.x,z-tree.z)<7.8))continue;

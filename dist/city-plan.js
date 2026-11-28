@@ -1,3 +1,4 @@
+import {schoolDetailBlocks} from './school-sites-data.js';
 import {westNeighbourDetailBlocks} from './west-neighbourhood-data.js';
 import {citySurveyProgress} from './city-survey-progress.js';
 import {citySurfaceRoads,cityExperienceBounds} from './city-extension.js';
@@ -28,6 +29,7 @@ export function drawCityPlan(canvas,selected='all'){
   path(mapData.wall,'#ffe2a5',3);
   if(selected==='all'||selected==='C03')path([...qixiangBoundary,qixiangBoundary[0]],'#fff4c4',3);
   if(selected==='all'||selected==='C04')for(const block of [...civicDetailBlocks,...westNeighbourDetailBlocks])path([...block.boundary,block.boundary[0]],'#b5e8ee',2);
+  if(selected==='all')for(const block of schoolDetailBlocks)for(const ring of [block.boundary,...block.context])path([...ring,ring[0]],'#e8cfa0',2);
   const [l,t,r,b]=cityExperienceBounds;path([[l,t],[r,t],[r,b],[l,b],[l,t]],'#e4e7dc',1,[7,5]);
   ctx.font='600 13px "PingFang SC",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
   for(const region of cityPlanRegions){
@@ -42,7 +44,7 @@ export function drawCityPlan(canvas,selected='all'){
   ctx.fillStyle='#b9c6bd';ctx.fillText('虚线：当前三维地图边界',20,22);
   return {xy,scale,pad};
 }
-export function attachCityPlanUI({pause,visitSmallSouth,visitQixiang,visitCivic,visitNeighbour}){
+export function attachCityPlanUI({pause,visitSmallSouth,visitQixiang,visitCivic,visitNeighbour,visitSchool}){
   const get=id=>document.getElementById(id),dialog=get('city-plan-dialog'),canvas=get('city-plan-map'),list=get('city-plan-list'),detail=get('city-plan-detail');
   let selected='all';
   function refresh(){
@@ -57,6 +59,7 @@ export function attachCityPlanUI({pause,visitSmallSouth,visitQixiang,visitCivic,
     const region=cityPlanRegions.find(r=>r.id===selected),intro=document.createElement('p');
     intro.textContent=region?`${region.id} ${region.scope}。验收：待实景与用户检查。`:`共 25 个片区、${cityPlanTiles.length} 个固定核对格。覆盖数量不代表细节完成，当前按完整子区块逐一完善房屋、院落、通路和生活设施。`;
     detail.append(intro);
+    if(selected==='all')for(const [i,block] of schoolDetailBlocks.entries()){const note=document.createElement('p'),visit=document.createElement('button');note.textContent=`${block.name}：${block.buildings} 处校园及周边楼体，含运动场、绿化和街边设施；细节含估算，待验收。`;visit.type='button';visit.textContent=`查看${block.name}与周边`;visit.addEventListener('click',()=>{dialog.close();visitSchool?.(i);});detail.append(note,visit);}
     if(selected==='all'||selected==='C04')for(const [i,block] of civicDetailBlocks.entries()){
       const note=document.createElement('p'),visit=document.createElement('button');note.textContent=`${block.id} ${block.name}：${block.buildings} 处楼体与院内道路、绿化、设施已单独细化；高度及细节含估算，待用户验收。`;
       visit.type='button';visit.textContent=`查看${block.name}`;visit.addEventListener('click',()=>{dialog.close();visitCivic?.(i);});detail.append(note,visit);
@@ -79,7 +82,7 @@ export function attachCityPlanUI({pause,visitSmallSouth,visitQixiang,visitCivic,
   get('city-plan-all').addEventListener('click',()=>{selected='all';refresh();});
   get('city-plan-visit').addEventListener('click',()=>{dialog.close();visitSmallSouth();});
   get('city-plan-export').addEventListener('click',()=>{
-    const blob=new Blob([JSON.stringify({scope:cityPlanScope,regions:cityPlanRegions,tiles:cityPlanTiles,anchors:cityPlanAnchors,detailedBlocks:[{...qixiangSurvey,boundary:qixiangBoundary,courts:qixiangCourts.length,buildings:qixiangSolids.length},...civicDetailBlocks,...westNeighbourDetailBlocks]},null,2)],{type:'application/json'});
+    const blob=new Blob([JSON.stringify({scope:cityPlanScope,regions:cityPlanRegions,tiles:cityPlanTiles,anchors:cityPlanAnchors,detailedBlocks:[{...qixiangSurvey,boundary:qixiangBoundary,courts:qixiangCourts.length,buildings:qixiangSolids.length},...civicDetailBlocks,...westNeighbourDetailBlocks,...schoolDetailBlocks]},null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='平遥全城分区清单.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   });
   return {refresh};

@@ -1,6 +1,7 @@
 import {geographicToLocal,localToGeographic} from './landmarks/coordinates.js';
 import {pointInRing,segments,projectOnSegment,createRingQuery} from './geography.js';
 import {civicSiteSurveys} from './civic-sites-data.js';
+import {xinhuaBookstoreSurvey,tiansenLifeStops} from './tiansen-life-data.js';
 
 // Visual traces, NOT cadastral footprints. Amap imagery viewed 2026-11-26.
 // Tiansen is registered to the OSM roundabout, not the indoor-parking POI.
@@ -31,7 +32,13 @@ export const thirdSchoolSurvey={
 };
 thirdSchoolSurvey.contextBoundary=thirdSchoolSurvey.boundary;
 export const westSiteSurveys=[tiansenSurvey,thirdSchoolSurvey,...civicSiteSurveys];
-export const westSiteProtectedRings=westSiteSurveys.map(s=>s.contextBoundary);
+// Open roadside strips checked against Amap satellite on 2026-11-27. They are
+// pedestrian/two-wheeler space, not parcels for generated isolated houses.
+export const tiansenStreetAprons=[
+ [[-1483,699],[-1468,697],[-1446,850],[-1472,859]],
+ [[-1444,670],[-1425,668],[-1399,836],[-1420,840]],
+];
+export const westSiteProtectedRings=[...westSiteSurveys.map(s=>s.contextBoundary),...tiansenStreetAprons,xinhuaBookstoreSurvey.contextBoundary];
 const westSiteEdges=westSiteProtectedRings.map(r=>segments([...r,r[0]]));
 const westSiteQueries=westSiteProtectedRings.map(createRingQuery);
 export function isWestSiteParcel(x,z,radius=0){return westSiteQueries.some(q=>q.contains(x,z,radius+1,true));}
@@ -80,12 +87,13 @@ const thirdSchoolGateWorld=geographicToLocal(thirdSchoolSurvey.gateCoordinate,'G
 export const thirdSchoolGate=worldToSite(thirdSchoolSurvey,...thirdSchoolGateWorld);
 function siteStop(name,keywords,address,eye,target){return {name,keywords,address,eye,target};}
 export const westSiteStops=[
-  siteStop('田森汇 · 顺城路立面','田森 玺悦汇 漫乐城 商场 城市生活公园','顺城路西侧、上西关街转盘西北侧',[-1433,7,792],[-1493,9,779]),
+  siteStop('田森汇 · 顺城路立面','田森 玺悦汇 漫乐城 商场 城市生活公园 快乐购 快乐购超市 B1 负一层','顺城路西侧、上西关街转盘西北侧',[-1433,7,792],[-1493,9,779]),
   siteStop('田森汇 · 街区全景','田森 周边 鹿泉花园 永安小区 南门 停车场','商场及西侧相邻住宅，按卫星图近似描绘',[-1388,195,1010],[-1585,0,778]),
   siteStop('平遥三中 · 东南门','平遥县第三中学校 三中 校门 学校 曙光西街177号','曙光西街177号 · 东南门',
     [thirdSchoolGateWorld[0]+4,2.7,thirdSchoolGateWorld[1]+23],[thirdSchoolGateWorld[0],4.2,thirdSchoolGateWorld[1]]),
   siteStop('平遥三中 · 校园全景','三中 校园 操场 运动场 教学楼','北部运动场、南部楼群，内部布局与高度近似',
     [thirdSchoolPoi[0]+125,190,thirdSchoolPoi[1]+225],[thirdSchoolPoi[0],0,thirdSchoolPoi[1]-15]),
+  ...tiansenLifeStops,
 ];
 export const westSiteRecords=[tiansenSurvey,thirdSchoolSurvey].map((s,i)=>{
   const position=i?thirdSchoolGateWorld:s.origin,eye=westSiteStops[i*2].eye;

@@ -4,10 +4,10 @@ import {addWestFrontages,planWestFrontages} from '../dist/west-corridor.js';
 import {addWestStreetExperience,planWestStreetFurniture} from '../dist/west-experience.js';
 import {collectBuildingRecords} from '../dist/building-heights.js';
 import {westRoadSurfaceHeight} from '../dist/west-terrain.js';
-const context={fillRect(){},strokeRect(){},createImageData(w,h){return {data:new Uint8ClampedArray(w*h*4)};},putImageData(){}};
+const noop=()=>{},context=new Proxy({createImageData:(w,h)=>({data:new Uint8ClampedArray(w*h*4)}),createLinearGradient:()=>({addColorStop:noop})},{get:(o,k)=>o[k]??noop});
 globalThis.document={createElement:()=>({width:0,height:0,getContext:()=>context})};
 const scene=new T.Scene();addWestFrontages(scene,()=>{});
-const records=collectBuildingRecords(scene);assert.equal(records.length,planWestFrontages().units.length);
+const records=collectBuildingRecords(scene);assert.equal(records.filter(r=>r.id?.startsWith('west-shop-')).length,planWestFrontages().units.length);
 for(const r of records){
   for(const key of ['height','levels','buildingType','heightSource','confidence','estimated'])assert.ok(key in r,key);
   assert.ok(r.height>0&&r.confidence>=0&&r.confidence<=1);assert.equal(r.buildingType,'commercial');

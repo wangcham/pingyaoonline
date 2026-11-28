@@ -1,4 +1,7 @@
 import * as T from 'three';
+import {addOutletsDetail} from './outlets-detail.js';
+import {addOutletsContext} from './outlets-context.js';
+import {schoolGroundMaterial,schoolSurfaceScale} from './school-appearance.js';
 import {createModernSite} from './modern-site.js';
 import {createSurveySurfaces} from './survey-surfaces.js';
 import {civicSiteSurveys,civicSiteRecords,civicLocal,civicWorld,civicPublicRoads} from './civic-sites-data.js';
@@ -9,7 +12,7 @@ import {clearanceRect,clearancePolygonsOverlap,createRoadClearance} from './road
 // measured in the site's local metre frame; no second GCJ transform at render.
 const civicPublicClearance=createRoadClearance(civicPublicRoads);
 export function addCivicSite(scene,survey){
- const s=createModernSite(scene,survey),{box,glass,part,line,pad,sign,trees}=s;
+ const s=createModernSite(scene,survey,survey.kind==='outlets'?{surfaceMaterialFactory:(color,kind)=>schoolGroundMaterial(color,kind==='pavers'?'paving':kind),surfaceScale:schoolSurfaceScale}:{}),{box,glass,part,line,pad,sign,trees}=s;
  const image=p=>civicLocal(survey,p),polygon=p=>p.map(image),masses=[],detailRecords={trees:[],parking:[],furniture:[],lanes:[],green:[]};
  const greenSurfaces=createSurveySurfaces(s.root,{ground:s.ground});
  const boundary=survey.boundary.map(s.local),localLanes=survey.lanes.map(l=>({...l,points:polygon(l.points)}));
@@ -166,8 +169,11 @@ export function addCivicSite(scene,survey){
    for(let j=-1;j<=1;j++)frameBox(box,'#727e73',u+j*.65*cs,.88,v-j*.65*sn,.045,.86,.045);
   }
  }
+ const outletsDetail=survey.kind==='outlets'?addOutletsDetail(s,masses,safeRing,detailRecords):null;
  s.root.userData.siteDetails=detailRecords;
  const planting=greenSurfaces.finish(),controller=s.finish(),release=controller.dispose;let disposed=false;
- controller.dispose=()=>{if(disposed)return;disposed=true;planting.dispose();release();};controller.record=civicSiteRecords.find(r=>r.id===survey.id);return controller;
+ const context=survey.kind==='outlets'?addOutletsContext(scene):null;
+ if(context){const night=controller.setNight,update=controller.update;controller.context=context;controller.setNight=v=>{night(v);context.setNight(v);};controller.update=c=>{update(c);context.update(c);};}
+ controller.dispose=()=>{if(disposed)return;disposed=true;context?.dispose();outletsDetail?.dispose();planting.dispose();release();};controller.record=civicSiteRecords.find(r=>r.id===survey.id);return controller;
 }
 export function addCivicSites(scene){return civicSiteSurveys.map(s=>addCivicSite(scene,s));}

@@ -2,6 +2,9 @@ import * as T from 'three';
 import {schoolBuildings,schoolLocalBoundary,schoolToWorld,schoolAngle,pingyaoSchoolSurvey,schoolEntrance} from './pingyao-school-data.js';
 import {createTreeBatch} from './vegetation.js';
 import {resolveBuildingHeight} from './building-heights.js';
+import {createCommerceMaterials} from './local-commerce-materials.js';
+import {schoolTexture} from './school-appearance.js';
+import {addPingyaoCampusDetails} from './pingyao-school-details.js';
 
 // A self-contained, metre-scale campus. Repeated façade parts share instanced
 // meshes. No satellite tiles or third-party photographs are bundled as textures.
@@ -10,6 +13,7 @@ export function addPingyaoSchool(scene){
   const [ox,oz]=schoolToWorld(0,0);root.position.set(ox,0,oz);root.rotation.y=schoolAngle;
   root.userData.survey=pingyaoSchoolSurvey;scene.add(root);
   const materials={},textures=[],geometries=new Set(),parts=new Map(),lightParts=[];
+  const skin=createCommerceMaterials(root,{chunkSize:1000});
   let seed=47281;
   const random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);
   function texture(kind){
@@ -44,12 +48,13 @@ export function addPingyaoSchool(scene){
   materials.stone=new T.MeshStandardMaterial({map:texture('stone'),roughness:.95});
   materials.glow=new T.MeshStandardMaterial({color:'#e3dbc7',emissive:'#ffcd85',emissiveIntensity:0,roughness:.6});
   materials.silver=new T.MeshStandardMaterial({color:'#c1c4c0',metalness:.72,roughness:.33});
+  for(const kind of ['paving','road','grass']){materials[kind].bumpMap=materials[kind].map;materials[kind].bumpScale=kind==='road'?.025:.018;}
   function mesh(geometry,material,name=''){
     geometries.add(geometry);const m=new T.Mesh(geometry,typeof material==='string'?materials[material]:material);
     m.name=name;m.receiveShadow=true;m.castShadow=true;root.add(m);return m;
   }
   function part(kind,color,u,y,v,w,h,d,angle=0){
-    const key=kind==='stem'?'stem':'box';const mat=kind==='stem'?'solid':kind;
+    const key=['stem','crown'].includes(kind)?kind:'box';const mat=['stem','crown'].includes(kind)?'solid':kind;
     const id=key+':'+mat;if(!parts.has(id))parts.set(id,{key,mat,items:[]});
     parts.get(id).items.push({color,u,y,v,w,h,d,angle});
   }
@@ -85,10 +90,10 @@ export function addPingyaoSchool(scene){
   }
   function textBoard(text,u,y,v,w,h,{background='#d5d5cf',ink='#524342',angle=0,font='STKaiti, KaiTi, serif',lit=false}={}){
     const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=192;
-    const ctx=canvas.getContext('2d');ctx.fillStyle=background;ctx.fillRect(0,0,1024,192);
+    const ctx=canvas.getContext('2d');if(background){ctx.fillStyle=background;ctx.fillRect(0,0,1024,192);}
     ctx.fillStyle=ink;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`bold 112px ${font}`;ctx.fillText(text,512,101,976);
     const map=new T.CanvasTexture(canvas);map.colorSpace=T.SRGBColorSpace;map.anisotropy=4;textures.push(map);
-    const mat=new T.MeshStandardMaterial({map,roughness:.75,emissive:'#ffce8a',emissiveMap:map,emissiveIntensity:0});
+    const mat=new T.MeshStandardMaterial({map,transparent:!background,alphaTest:background?0:.12,roughness:.75,emissive:'#ffce8a',emissiveMap:map,emissiveIntensity:0});
     materials['sign-'+Object.keys(materials).length]=mat;if(lit)lightParts.push(mat);
     const m=mesh(new T.PlaneGeometry(w,h),mat,text);m.position.set(u,y,v);m.rotation.y=angle;m.castShadow=false;return m;
   }
@@ -134,6 +139,7 @@ export function addPingyaoSchool(scene){
   }
   materials.track=new T.MeshStandardMaterial({color:'#a36558',roughness:.97});
   materials.turf=new T.MeshStandardMaterial({color:'#567e63',roughness:1});
+  for(const [key,kind] of [['track','rubber'],['turf','turf']]){const map=schoolTexture(kind);textures.push(map);materials[key].map=map;materials[key].bumpMap=map;materials[key].bumpScale=.015;}
   polygon(stadium(48),'track',.20,'西北侧田径跑道');
   polygon(stadium(38),'turf',.24,'足球场与弧形内场');
   for(let lane=0;lane<=8;lane++)strip([...stadium(38+lane*1.18),stadium(38+lane*1.18)[0]],.085,'paving',.27);
@@ -176,6 +182,8 @@ export function addPingyaoSchool(scene){
     heightRecords.push({...heightInfo,id:b.id,name:`平遥中学 · ${b.name}`,x,z,w:b.w,d:b.d,angle:schoolAngle+b.angle,footprintSource:b.footprintSource,levelsSource:b.levelsSource});
     block('#898783',0,.25,0,b.w+.4,.5,b.d+.4);
     block(b.color,0,h/2+.4,0,b.w,h,b.d);
+    skin.box('brick',b.color,b.u,base+h/2+.4,b.v,b.w+.025,h,b.d+.025,b.angle);
+    skin.box('stone','#63686a',b.u,base+.53,b.v,b.w+.43,1.05,b.d+.43,b.angle);
     block('#e5e4dc',0,h+.6,0,b.w+.5,.8,b.d+.5);
     block(b.roof==='blue'?'#5e829f':'#7e8280',0,h+1.05,0,b.w-.7,.11,b.d-.7);
     // White coping, floor bands, repeated piers, recessed blue-grey glazing.
@@ -191,6 +199,8 @@ export function addPingyaoSchool(scene){
           block('#ffffff',du,y,facade+side*.10,ww,1.78,.10,'glass');
           for(const off of [-ww/6,ww/6])block('#e7e9e4',du+off,y,facade+side*.17,.07,1.83,.06);
           block('#dde1dc',du,y+.28,facade+side*.18,ww,.065,.06);
+          block('#e0dfd5',du,y-1.08,facade+side*.24,ww+.36,.15,.48);
+          if((col+floor)%5===1)block('#d4ccb7',du-ww*.32,y,facade+side*.16,ww*.22,1.66,.025);
         }
       }
       for(let du=-b.w/2;du<=b.w/2+.1;du+=b.w/Math.max(2,Math.round(b.w/9)))block('#d6d6ce',du,h/2+.5,facade+.14*side,.30,h,.28);
@@ -198,19 +208,63 @@ export function addPingyaoSchool(scene){
       block('#424f54',0,1.65,facade+side*.2,3.5,2.7,.15);
       block('#e1ded3',0,3.2,facade+side*1.1,5.2,.27,2.5);
       for(let i=0;i<3;i++)block('#b8b8b1',0,.08+i*.08,facade+side*(1.8-i*.32),4.3,.16,1.4-i*.32);
+      block('#d5dedb',0,1.65,facade+side*.31,.065,2.65,.06);
+      for(const off of [-.22,.22])block('#b7c0bc',off,1.45,facade+side*.38,.05,.48,.07);
+      for(const du of [-b.w/2+1,b.w/2-1]){
+        block('#b2b4aa',du,h/2+.5,facade+side*.36,.12,h,.12);
+        for(let y=1;y<h;y+=3.55)block('#787e75',du,y,facade+side*.36,.23,.07,.2);
+      }
     }
     for(const side of [-1,1])for(let floor=0;floor<b.levels;floor++){
-      const [u,v]=p(side*(b.w/2+.09),0);
-      part('solid','#e3e4dc',u,base+2.3+floor*3.55,v,.14,2,3.8,b.angle);
-      const [gu,gv]=p(side*(b.w/2+.18),0);part('glass','#ffffff',gu,base+2.3+floor*3.55,gv,.12,1.8,3.55,b.angle);
+      const face=side*(b.w/2+.09),y=2.25+floor*3.55;
+      // A long connecting wing exposes its side to the courtyard. Repeating a
+      // single end-wall window here used to leave a 100 m blank brick facade.
+      const count=Math.max(1,Math.floor((b.d-2)/4.6)),step=(b.d-2)/count,ww=step*.76;
+      block('#d9d9d3',face,y-1.37,0,.18,.22,b.d);
+      for(let col=0;col<count;col++){
+        const dv=-b.d/2+1+step*(col+.5);
+        block('#ecece5',face,y,dv,.14,2,ww+.2);
+        block('#ffffff',face+side*.1,y,dv,.1,1.78,ww,'glass');
+        for(const off of [-ww/6,ww/6])block('#e7e9e4',face+side*.17,y,dv+off,.06,1.83,.07);
+        block('#dde1dc',face+side*.18,y+.28,dv,.06,.065,ww);
+        block('#e0dfd5',face+side*.24,y-1.08,dv,.48,.15,ww+.36);
+      }
     }
     if(b.roof==='metal'||b.roof==='blue')for(let u=-b.w/2+.5;u<b.w/2;u+=1.4)block(b.roof==='blue'?'#6d91af':'#d5d8d3',u,h+1.13,0,.14,.10,b.d-.8);
+    if(b.roof==='flat'){
+      skin.box('roof','#747b78',b.u,base+h+1.065,b.v,b.w-.8,.12,b.d-.8,b.angle);
+      for(let du=-b.w/2+5;du<b.w/2-3;du+=13){block('#a8aaa0',du,h+1.4,-b.d*.22,.7,.6,.7);block('#d3d2c7',du,h+1.75,-b.d*.22,1,.12,1);}
+    }
     if(b.id.startsWith('front-')){
       for(const side of [-1,1])block('#fff1ce',side*(b.w/2-.4),h/2+.5,b.d/2+.37,.075,h,.075,'glow');
       block('#fff1ce',0,h+.74,b.d/2+.37,b.w,.08,.08,'glow');
+      // 2024 completed lighting scheme: horizontal cornices and tall vertical
+      // bays, with much darker glass between them, not uniformly bright walls.
+      for(let floor=1;floor<=b.levels;floor++)block('#ffdf9a',0,floor*3.55-.14,b.d/2+.45,b.w-.45,.07,.08,'glow');
+      for(let u=-b.w/2+1;u<b.w/2;u+=8.5)block('#ffe6b2',u,h/2+.5,b.d/2+.43,.065,h,.08,'glow');
+      if(b.id==='front-center')for(const side of [-1,1]){
+       block('#66655d',side*12,h/2+1.0,b.d/2+.50,2.1,h+1.2,.58);
+       for(const dx of [-1.12,1.12])block('#e4e1d2',side*12+dx,h/2+1,b.d/2+.82,.12,h+1.3,.12);
+       block('#ffe4a4',side*12-1.20,h/2+1,b.d/2+.91,.075,h+1.3,.075,'glow');
+       block('#d5d0bc',side*12,h+1.7,b.d/2+.5,3,.45,1.2);
+      }
+
     }
   }
   root.userData.heightRecords=heightRecords;
+
+  // The 2026-07 campus photo shows ashlar wall panels, a dark plinth and exposed
+  // silver ventilation ducts. Apply this construction language to service ends;
+  // the photo does not establish the museum's map footprint, so no new named building.
+  for(const id of ['central-hall','east-service-2']){
+   const b=schoolBuildings.find(p=>p.id===id),u=b.u+b.w/2+.52,v=b.v-b.d*.26;
+   skin.box('metal','#a9afad',u,5.3,v,.55,9.4,.58);
+   for(let y=1;y<10;y+=.6)box('#6e7776',u+.30,y,v,.05,.04,.62);
+   skin.box('metal','#bdc2bb',u-.65,9.8,v,1.8,.65,.65);
+   for(let z=b.v-5;z<b.v+5;z+=1.1)skin.box('stone','#bab9b3',u-.25,.7,z,.18,1.1,1.05);
+  }
+  root.userData.photoReview={checked:'2026-11-27',recentPhotoDate:'2026-07-07',recentSource:'https://www.sxie.edu.cn/xny/info/1022/3635.htm',lightingSource:'https://www.sohu.com/a/799102701_121123761',lightingDate:'2024-08-01',features:['dark stone plinth','silver exterior ducts','science-building piers and cornice lighting','paired outside stairs','concentric sculpture platform','faceted metal sphere'],estimated:true,museumLocationVerified:false};
+
 
   // Photo-referenced curved white name wall and the red-and-white entrance façade.
   const wallShape=new T.Shape();wallShape.moveTo(-16,0);wallShape.lineTo(12,0);wallShape.quadraticCurveTo(16,.2,16,4.5);wallShape.lineTo(16,5.8);wallShape.lineTo(-16,5.8);wallShape.closePath();
@@ -221,28 +275,36 @@ export function addPingyaoSchool(scene){
   box('#a3a8a3',wallU,.28,wallV+.6,33,.36,2.6);
   box('#ebece5',wallU,6.26,wallV+.35,32.4,.18,1.2);
   textBoard('山西省平遥中学',wallU,3.5,wallV+.98,27.5,2.45,{lit:true});
-  textBoard('平 遥 中 学',178,14.0,443.22,21,1.0,{background:'#e2e2da',ink:'#4f5552'});
-  textBoard('中 国 百 强',144,17.35,444.5,24,1.6,{background:'#ad6668',ink:'#bd3d3d'});
+  textBoard('科 技 楼',178,14.1,444.0,16,1.0,{background:'#a67463',ink:'#c43732',lit:true});
+  textBoard('平 遥 中 学',213,17.35,445.0,25,1.6,{background:null,ink:'#bd3d3d',lit:true});
+  textBoard('中 国 百 强',144,17.35,444.5,24,1.6,{background:null,ink:'#bd3d3d',lit:true});
   for(let u=134;u<=155;u+=7)box('#acaaa3',u,16.2,444.4,.09,1.5,.09);
+  for(let u=202;u<=224;u+=7)box('#acaaa3',u,16.2,444.9,.09,1.5,.09);
+  for(const [u,v,w]of [[144,444.4,24],[213,444.9,25]])box('#878d89',u,16.98,v,w,.065,.09);
   // Long open portico alongside the west block, visible to the left in the photo.
   for(let v=403;v<482;v+=9){box('#e0ded5',58,2.25,v,.34,4,.34);box('#a66660',58,4.3,v,5.8,.24,.22);}
   box('#a3655e',58,4.47,442,5.7,.18,79);
-  // Red, rising ribbon sculpture in front of the central flight of steps.
-  const red=new T.MeshStandardMaterial({color:'#b93940',metalness:.22,roughness:.43});materials.sculpture=red;
-  function ribbon(points,width){
-    const curve=new T.CatmullRomCurve3(points.map(p=>new T.Vector3(...p))),verts=[],idx=[];
-    for(let i=0;i<=32;i++){
-      const p=curve.getPoint(i/32);verts.push(p.x-width*.5,p.y,p.z,p.x+width*.5,p.y,p.z);
-      if(i){const a=(i-1)*2;idx.push(a,a+2,a+1,a+1,a+2,a+3);}
-    }
-    const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(verts,3));g.setIndex(idx);g.computeVertexNormals();
-    red.side=T.DoubleSide;return mesh(g,red,'红色抽象雕塑（照片近似）');
-  }
-  box('#a4aaa5',183,.55,451,6,1.1,4);
-  ribbon([[184,1,451],[182,4,451],[185,7,450],[181,10,450],[179,11,450]],1.3);
-  ribbon([[184,1,451],[187,4,451],[183,8,450],[187,11,450]],1.0);
+  // The dated lighting photo shows a split metal silhouette on concentric
+  // stone platforms. Place it in the existing oval court; the exact form is approximate.
+  const red=new T.MeshStandardMaterial({color:'#8e3338',metalness:.38,roughness:.48});materials.sculpture=red;
+  for(const [r,y,h]of [[8.8,.35,.20],[5.4,.57,.22]]){const plinth=mesh(new T.CylinderGeometry(r,r,h,64),'paving','科技楼前圆形石材台阶');plinth.position.set(175,y,484);}
+  skin.box('stone','#555d5a',175,1.15,484,4.6,.95,3.2);
+  const left=new T.Shape();left.moveTo(-.7,0);left.bezierCurveTo(-2.5,2,-.6,3.2,-2.2,4.7);left.lineTo(-3.25,6);left.quadraticCurveTo(-1.85,5.9,-2.3,6.6);left.lineTo(-3.4,7.2);left.quadraticCurveTo(-1.9,7.1,-2.6,7.9);left.lineTo(-3.2,9.6);left.bezierCurveTo(-1.3,8.2,-1.9,6.5,-.7,5.5);left.bezierCurveTo(1.6,4.1,.6,2.4,.2,0);left.closePath();
+  for(const [x,y,rx,ry]of [[-.45,4.1,.62,.55],[-1.55,6.1,.26,.17],[-1.85,7.2,.26,.17],[-2.25,8.2,.23,.16]]){const hole=new T.Path();hole.absellipse(x,y,rx,ry,0,Math.PI*2,true);left.holes.push(hole);}
+  const right=new T.Shape();right.moveTo(.25,0);right.bezierCurveTo(2.2,1.5,.2,3,1.4,4.2);right.bezierCurveTo(3.4,5.1,3.4,7.4,3.1,9.6);right.bezierCurveTo(5.2,7.4,3.9,5.3,2.7,3.8);right.bezierCurveTo(1.4,2.1,2.5,.9,1.25,0);right.closePath();
+  for(const shape of [left,right]){const sculpture=mesh(new T.ExtrudeGeometry(shape,{depth:.22,bevelEnabled:true,bevelSize:.06,bevelThickness:.05,bevelSegments:1,steps:1}),red,'科技楼前抽象雕塑（照片近似）');sculpture.position.set(175,1.63,484);}
   for(let i=0;i<7;i++)box('#c6c8c1',178,.34+i*.19,445.9-i*.45,19,.25,1.4);
-  const globe=mesh(new T.SphereGeometry(4.3,28,18),'silver','主楼屋顶银色球体');globe.position.set(178,20.3,431);
+  // Paired external stairs ascend to the science building's first upper floor.
+  for(const u of [154,202]){
+   for(let i=0;i<14;i++){const y=.27+(i+1)*.255;skin.box('stone','#b0b4b1',u,y/2,453-i*.48,3.1,y,.5);}
+   for(const side of [-1,1])for(let i=0;i<14;i++){
+    const v=453-i*.48,y=.27+(i+1)*.255;
+    box('#e1e2d9',u+side*1.68,y+.56,v,.17,1.1,.5);glow(u+side*1.79,y+1.12,v,.07,.07,.52);
+   }
+   skin.box('stone','#b8bbb1',u,3.87,445.9,3.55,.25,1.1);
+  }
+  materials.dome=new T.MeshStandardMaterial({color:'#b2ad92',metalness:.75,roughness:.3,flatShading:true});
+  const globe=mesh(new T.IcosahedronGeometry(4.3,2),materials.dome,'主楼屋顶金属球体');globe.position.set(178,20.3,431);
   for(let i=0;i<8;i++){
     const ring=mesh(new T.TorusGeometry(4.32,.025,4,40),'solid');ring.rotation.y=i*Math.PI/8;ring.position.copy(globe.position);
   }
@@ -308,7 +370,8 @@ export function addPingyaoSchool(scene){
       if(v>=518)continue;
       if(openings.some(([x,z,r])=>Math.hypot(u-x,v-z)<r))continue;
       const yaw=-Math.atan2(b[1]-a[1],b[0]-a[0]);
-      box('#918e86',u,.5,v,len/n,.65,.38,yaw);box('#c0c2b8',u,1.7,v,.22,2,.45,yaw);
+      skin.box('stone','#918e86',u,.5,v,len/n,.65,.38,yaw);box('#c0c2b8',u,1.7,v,.22,2,.45,yaw);
+      box('#d3d2c5',u,.87,v,len/n,.12,.5,yaw);
       for(const y of [1,2.35])box('#52615c',u,y,v,len/n,.06,.06,yaw);
       for(const off of [-.9,-.45,0,.45,.9])box('#52615c',u+off*Math.cos(yaw),1.65,v-off*Math.sin(yaw),.045,1.35,.045,yaw);
     }
@@ -318,6 +381,10 @@ export function addPingyaoSchool(scene){
   function tree(u,v,h=7.2,crown=4.2){
     if(schoolBuildings.some(b=>{const du=u-b.u,dv=v-b.v,c=Math.cos(b.angle),s=Math.sin(b.angle);return Math.abs(du*c-dv*s)<b.w/2+crown*.45&&Math.abs(du*s+dv*c)<b.d/2+crown*.45;}))return;
     trees.tree({x:u,z:v,height:h,crown,base:.14});treeCount++;
+    for(let k=0;k<5;k++){
+      const a=k*2.4+u*.13,spread=k===4?0:crown*.18;
+      part('crown',['#657b4f','#738556','#5d754c'][k%3],u+Math.cos(a)*spread,.14+h*(k===4?.87:.74),v+Math.sin(a)*spread,crown*.56,crown*.48,crown*.54,a);
+    }
   }
   for(let v=100;v<250;v+=14)tree(170,v);
   for(let v=285;v<405;v+=15){tree(55,v);tree(123,v);tree(236,v);}
@@ -331,6 +398,7 @@ export function addPingyaoSchool(scene){
     box('#687957',u,.42,v,w,.62,d);
     for(let i=0;i<Math.max(w,d);i+=4)trees.shrub(u+(w>d?i-w/2:0),v+(d>=w?i-d/2:0),1.5,.6,.15);
   }
+  addPingyaoCampusDetails({root,skin,box,part,line,trees,tree});
   trees.finish();root.userData.treeCount=treeCount;
   const lamps=[];
   for(const [u,v] of [[181,476],[204,466],[129,465],[112,486],[198,509],[204,534],[218,558],[237,325],[237,395],[123,324],[123,392],[163,264],[175,209],[175,138],[302,56],[302,255]]){
@@ -344,18 +412,20 @@ export function addPingyaoSchool(scene){
   }
   for(let u=129;u<231;u+=17){box('#666d68',u,.245,408,1.6,.025,.28);for(let i=0;i<7;i++)box('#91958c',u-.67+i*.2,.265,408,.045,.025,.25);}
 
-  const boxGeometry=new T.BoxGeometry(1,1,1),stemGeometry=new T.CylinderGeometry(.42,.5,1,8);
-  geometries.add(boxGeometry);geometries.add(stemGeometry);const transform=new T.Object3D(),color=new T.Color();
+  const boxGeometry=new T.BoxGeometry(1,1,1),stemGeometry=new T.CylinderGeometry(.42,.5,1,8),crownGeometry=new T.IcosahedronGeometry(.5,1);
+  geometries.add(boxGeometry);geometries.add(stemGeometry);geometries.add(crownGeometry);const transform=new T.Object3D(),color=new T.Color();
   for(const {key,mat,items} of parts.values()){
-    const m=new T.InstancedMesh(key==='stem'?stemGeometry:boxGeometry,materials[mat],items.length);
+    const m=new T.InstancedMesh(key==='stem'?stemGeometry:key==='crown'?crownGeometry:boxGeometry,materials[mat],items.length);
     m.name='平遥中学实例化构件 · '+mat;
     items.forEach((p,i)=>{transform.position.set(p.u,p.y,p.v);transform.rotation.set(0,p.angle,0);transform.scale.set(p.w,p.h,p.d);transform.updateMatrix();m.setMatrixAt(i,transform.matrix);m.setColorAt(i,color.set(p.color));});
     m.castShadow=mat!=='glow';m.receiveShadow=true;m.computeBoundingSphere();root.add(m);
   }
+  const detailSkin=skin.finish();
+  detailSkin.meshes.forEach(m=>m.name=m.name.replace('生活街区材质','平遥中学校园材质'));
   const points=Array.from({length:3},()=>{const p=new T.PointLight('#ffda9d',0,24,2);p.castShadow=false;p.visible=false;root.add(p);return p;});
   let night=false,lastUpdate=-Infinity,disposed=false;
   return {root,setNight(value){
-    night=value;materials.glow.emissiveIntensity=value?2.2:0;lightParts.forEach(m=>m.emissiveIntensity=value?.8:0);
+    night=value;detailSkin.setNight(value);materials.glow.emissiveIntensity=value?2.2:0;lightParts.forEach(m=>m.emissiveIntensity=value?.8:0);
     if(!value)points.forEach(p=>{p.visible=false;p.intensity=0;});lastUpdate=-Infinity;
   },update(camera,now){
     if(disposed||now-lastUpdate<250)return;lastUpdate=now;
@@ -363,7 +433,7 @@ export function addPingyaoSchool(scene){
     const nearest=night&&local.y<75?lamps.map(p=>({p,d:Math.hypot(p[0]-local.x,p[2]-local.z)})).filter(p=>p.d<50).sort((a,b)=>a.d-b.d).slice(0,3):[];
     points.forEach((light,i)=>{light.visible=!!nearest[i];light.intensity=nearest[i]?24:0;if(nearest[i])light.position.fromArray(nearest[i].p);});
   },dispose(){
-    if(disposed)return;disposed=true;root.removeFromParent();
+    if(disposed)return;disposed=true;root.removeFromParent();detailSkin.dispose();
     root.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)for(const mat of Array.isArray(o.material)?o.material:[o.material])materials[mat.uuid]=mat;});
     geometries.forEach(g=>g.dispose());new Set(Object.values(materials)).forEach(m=>m.dispose());textures.forEach(t=>t.dispose());root.clear();
   }};

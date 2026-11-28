@@ -44,7 +44,11 @@ export function resolveBuildingHeight(options){
   samples.sort((a,b)=>a-b);
   const estimate=samples.length>=Math.max(4,nx*nz*.25)?samples[Math.floor((samples.length-1)*.85)]:null;
   // GBA is an old image-derived estimate, NOT reliable DSM/LiDAR. Never flatten newer massing.
-  const useRaster=estimate!==null&&(options.preferRasterHeight||estimate>fallback);
+  // A coarse old raster must not turn a surveyed single-storey roof into a
+  // tower, or replace a visibly tall block with its lower neighbouring roof.
+  const compatible=estimate!==null&&(!options.preserveFloorClass||
+    (fallbackLevels<=1?estimate<=5.2:fallbackLevels<=3?estimate<12:fallbackLevels<=7?estimate>=10&&estimate<27:estimate>=25));
+  const useRaster=compatible&&(fallbackLevels<8||estimate>=fallback*.85)&&(options.preferRasterHeight||estimate>fallback);
   return record(useRaster?estimate:fallback,useRaster?null:fallbackLevels,useRaster?'GBA.Height-2019':'existing-approximation',useRaster?.4:.3,true,
     {rasterHeight:estimate,dataYear:useRaster?2019:null});
 }

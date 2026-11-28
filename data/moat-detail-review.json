@@ -1,0 +1,116 @@
+{
+  "checked": "2026-11-28",
+  "imagery": [
+    {
+      "side": "north",
+      "source": "Esri World Imagery",
+      "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=112.16661250405481%2C37.20777290693496%2C112.18499630586592%2C37.21262378727992&bboxSR=4326&imageSR=4326&size=1600%2C530&format=jpg&f=image&adjustAspectRatio=false",
+      "actualExtent": {
+        "xmin": 112.16661250405481,
+        "ymin": 37.20715352993246,
+        "xmax": 112.18499630586592,
+        "ymax": 37.213243164282396,
+        "spatialReference": {
+          "wkid": 4326,
+          "latestWkid": 4326
+        }
+      },
+      "imageryCaptureDate": null
+    },
+    {
+      "side": "east",
+      "source": "Esri World Imagery",
+      "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=112.1839812493242%2C37.197711821775066%2C112.18815425955125%2C37.21226446280992&bboxSR=4326&imageSR=4326&size=365%2C1600&format=jpg&f=image&adjustAspectRatio=false",
+      "actualExtent": {
+        "xmin": 112.18398124932416,
+        "ymin": 37.19584181850718,
+        "xmax": 112.18815425955121,
+        "ymax": 37.21413446607781,
+        "spatialReference": {
+          "wkid": 4326,
+          "latestWkid": 4326
+        }
+      },
+      "imageryCaptureDate": null
+    },
+    {
+      "side": "west",
+      "source": "Esri World Imagery",
+      "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=112.16571023157329%2C37.19474739489759%2C112.17078551428187%2C37.20992885375494&bboxSR=4326&imageSR=4326&size=426%2C1600&format=jpg&f=image&adjustAspectRatio=false",
+      "actualExtent": {
+        "xmin": 112.16571023157329,
+        "ymin": 37.192807076986185,
+        "xmax": 112.17078551428187,
+        "ymax": 37.21186917166633,
+        "spatialReference": {
+          "wkid": 4326,
+          "latestWkid": 4326
+        }
+      },
+      "imageryCaptureDate": null
+    },
+    {
+      "side": "south",
+      "source": "Esri World Imagery",
+      "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=112.16875540119844%2C37.1942084081926%2C112.18815425955125%2C37.19887962630255&bboxSR=4326&imageSR=4326&size=1600%2C484&format=jpg&f=image&adjustAspectRatio=false",
+      "actualExtent": {
+        "xmin": 112.16875540119841,
+        "ymin": 37.19360993992171,
+        "xmax": 112.18815425955123,
+        "ymax": 37.199478094573436,
+        "spatialReference": {
+          "wkid": 4326,
+          "latestWkid": 4326
+        }
+      },
+      "imageryCaptureDate": null
+    }
+  ],
+  "photos": [
+    "https://www.sohu.com/a/454312350_208685",
+    "https://www.sohu.com/a/681908732_142447"
+  ],
+  "theater": {
+    "heightSource": "https://www.ju-cheng.com/hycase/dmtj/2018/0227/238.html",
+    "aboveGroundReferenceMetres": 9,
+    "undergroundReferenceMetres": 6,
+    "mainFootprintApproxMetres": [
+      86,
+      135
+    ],
+    "southAnnexApproxMetres": [
+      47.7,
+      38.1
+    ],
+    "footprintSource": "existing OSM building polygons in map-data.js",
+    "corrections": [
+      "roof peaks lowered to approximately 9 m including ridge tiles",
+      "south annex enlarged and moved back to its mapped central position",
+      "removed unsupported floating roof lettering; retained photo-referenced vertical red-seal sign"
+    ]
+  },
+  "landscape": {
+    "trees": 583,
+    "shrubs": 576,
+    "benches": 81,
+    "openBridges": 7,
+    "coveredRoadCrossings": 10,
+    "scope": "north/south and both gates on east/west sides",
+    "accuracy": "Mapped south and middle east water lines retained. Missing connectors are approximate visual interpretation, checked against the existing wall. Widths, bridge rails, furniture, bank elevations, individual trees and species are not surveyed. No claim of current water level or imagery capture date."
+  },
+  "validation": {
+    "fixedCameraWebGLViews": [
+      "south",
+      "north",
+      "east",
+      "west",
+      "riverbank",
+      "theater",
+      "theater entrance"
+    ],
+    "browserConsoleErrors": 0,
+    "geometryTriangles": 1818760,
+    "geometryDrawBatches": 238,
+    "note": "Isolated wall/moat/theater views; these counts are not an FPS measurement of the full city."
+  }
+}

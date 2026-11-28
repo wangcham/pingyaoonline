@@ -38,3 +38,14 @@ test('DSM absolute elevation is never mistaken for building height',()=>{
   assert.equal(record.height,30);assert.equal(record.heightSource,'DSM-minus-ground');
   assert.ok(resolveBuildingHeight({...site,osmHeight:'not measured',osmLevels:'unknown'}).estimated);
 });
+
+test('coarse imagery cannot overwrite a surveyed single-storey or high-rise class',()=>{
+ let sample;
+ for(let row=0;row<grid.rows&&!sample;row++)for(let col=0;col<grid.cols;col++)if(grid.values[row][col]>90){sample={x:grid.x+col*grid.step,z:grid.z+row*grid.step,w:.5,d:.5};break;}
+ assert.ok(sample);
+ const small=resolveBuildingHeight({...sample,fallbackFloors:1,preserveFloorClass:true,preferRasterHeight:true});
+ assert.equal(small.floors,1);assert.ok(small.height<5.2);assert.ok(small.rasterHeight>9);
+ const tall=resolveBuildingHeight({...sample,fallbackFloors:14,preserveFloorClass:true,preferRasterHeight:true});
+ assert.equal(tall.floors,14);assert.ok(tall.height>40);
+ const measured=resolveBuildingHeight({...sample,fallbackFloors:1,preserveFloorClass:true,knownHeight:31.5});assert.equal(measured.height,31.5);
+});

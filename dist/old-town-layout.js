@@ -1,6 +1,7 @@
 import {mapData} from './map-data.js';
 import {landmarkRecords} from './landmarks/data.js';
 import {makeGrid,pointInRing,segments} from './geography.js';
+import {oldTownFrontages,wuTemple} from './old-town-streets-data.js';
 
 const townAngle=.19,tc=Math.cos(townAngle),ts=Math.sin(townAngle);
 export function townWorld(x,z){return [x*tc+z*ts,-x*ts+z*tc];}
@@ -26,6 +27,7 @@ export function createOldTownLayout(){
     const a=townLocal(...line.start),b=townLocal(...line.end);index({a,b,pad},[a,b],pad);
   }
   const exclusions=[...mapData.areas.map(([,ring])=>ring),...mapData.buildings.map(([,,ring])=>ring),...landmarkRecords.filter(r=>r.ring).map(r=>r.ring),...mapData.gates.map(([,,[x,z]])=>[[x-27,z-27],[x+27,z-27],[x+27,z+27],[x-27,z+27]])];
+  exclusions.push(wuTemple.ring,...oldTownFrontages.map(p=>p.ring));
   for(const ring of exclusions){const polygon=ring.map(p=>townLocal(...p));index({polygon},polygon);}
   const xs=boundary.map(p=>p[0]),zs=boundary.map(p=>p[1]);const plots=[];
   for(const [sx,sz,width,depth] of [[25,34,22,30],[17,25,14,21]]) {

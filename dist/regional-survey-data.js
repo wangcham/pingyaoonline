@@ -292,7 +292,8 @@ regionalLane('station-link',3.5,[[307,20],[320,158]]);
 regionalLane('station-link',3.5,[[368,20],[383,151]]);
 
 regionalFrame('gucheng-station',112.148933,37.157199);
-regionalRoofs('gucheng-station',2,'public','#989d94',[[814,368,25,13],[1043,565,22,19],[1218,611,38,23]]);
+regionalRoofs('gucheng-station',1,'public','#989d94',[[814,368,25,13],[1043,565,22,19]]);
+regionalRoofs('gucheng-station',2,'public','#989d94',[[1218,611,38,23]]);
 regionalGround('gucheng-station','field',[[20,76],[278,15],[392,192],[369,272],[195,351],[21,389]]);
 regionalGround('gucheng-station','field',[[33,412],[239,363],[268,485],[33,542]]);
 regionalGround('gucheng-station','field',[[59,572],[242,526],[293,679],[73,703]]);

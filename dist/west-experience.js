@@ -71,9 +71,12 @@ export function addWestStreetExperience(scene){
   }
   const frontages=planWestFrontages().units;
   for(const [i,p] of frontages.entries()){
+    // Jinglin owns its open glass doors and interior lighting. A generic opaque
+    // window panel here would cover the entrance and hide the tray rack.
+    if(p.shop?.food)continue;
     const front=p.depth/2+.27,base=p.base??westGroundHeight(p.x,p.z),c=Math.cos(p.yaw),s=Math.sin(p.yaw);
-    if(p.variant===4)continue;
-    if(i%3!==0||p.shop?.food)windows.push({x:p.x-p.width*.09*c+front*s,y:base+1.45,z:p.z+p.width*.09*s+front*c,w:p.width*.48,h:1.85,d:.025,angle:p.yaw});
+    if(p.variant===4&&!p.shop)continue;
+    if(i%3!==0)windows.push({x:p.x-p.width*.09*c+front*s,y:base+1.45,z:p.z+p.width*.09*s+front*c,w:p.width*.48,h:1.85,d:.025,angle:p.yaw});
   }
   function luminous(items,name){
     const material=new T.MeshStandardMaterial({color:'#b4beb8',emissive:'#ffcf83',emissiveIntensity:0,roughness:.45});

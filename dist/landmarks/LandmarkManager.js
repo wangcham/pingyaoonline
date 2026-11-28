@@ -67,8 +67,8 @@ export function createLandmarkManager(scene,{onChange=()=>{}}={}) {
   return {entries,load,unload,update,pick,dispose,registerExternal,loadAll(){landmarkRecords.forEach(r=>load(r.id));}};
 }
 
-export function attachLandmarkUI({manager,camera,canvas,world,pause,visit}) {
-  const layer=document.createElement('div');layer.id='landmark-labels';world.append(layer);
+export function attachLandmarkUI({manager,camera,canvas,world,pause,visit,groundHeight=()=>0}) {
+  const layer=document.createElement('div');layer.id='landmark-labels';layer.hidden=true;world.append(layer);
   const dialog=document.getElementById('landmark-dialog'),list=document.getElementById('landmark-list');
   const card=document.getElementById('landmark-card'),title=document.getElementById('landmark-title');
   let selected=null,down=null,lastUpdate=-Infinity;
@@ -96,7 +96,14 @@ export function attachLandmarkUI({manager,camera,canvas,world,pause,visit}) {
   }
   document.getElementById('landmark-visit').addEventListener('click',()=>{if(selected){dialog.close();visit(selected);}});
   const toggle=document.getElementById('landmark-label-toggle');
-  toggle.addEventListener('change',()=>{layer.hidden=!toggle.checked;});
+  let aboveStreet=false;
+  function updateLabelVisibility(){
+    const altitude=camera.position.y-groundHeight(camera.position.x,camera.position.z);
+    // Separate thresholds keep the signs from flickering during small height changes.
+    aboveStreet=aboveStreet?altitude>=8:altitude>=12;
+    layer.hidden=!toggle.checked||!aboveStreet;
+  }
+  toggle.addEventListener('change',updateLabelVisibility);
   canvas.addEventListener('pointerdown',event=>{if(event.isPrimary && event.button===0)down={id:event.pointerId,x:event.clientX,y:event.clientY,moved:0};});
   canvas.addEventListener('pointermove',event=>{if(down&&down.id===event.pointerId)down.moved+=Math.abs(event.movementX)+Math.abs(event.movementY);});
   canvas.addEventListener('pointercancel',()=>{down=null;});
@@ -108,7 +115,8 @@ export function attachLandmarkUI({manager,camera,canvas,world,pause,visit}) {
     const record=manager.pick(camera,ndc);if(record)show(record);
   });
   return {update(now){
-    manager.update(camera);if(now-lastUpdate<100)return;lastUpdate=now;
+    manager.update(camera);updateLabelVisibility();
+    if(layer.hidden||now-lastUpdate<100)return;lastUpdate=now;
     camera.updateMatrixWorld(true);
     const placed=[];
     for(const {record,label} of [...labels].sort((a,b)=>camera.position.distanceTo(new T.Vector3(a.record.position[0],0,a.record.position[1]))-camera.position.distanceTo(new T.Vector3(b.record.position[0],0,b.record.position[1])))) {

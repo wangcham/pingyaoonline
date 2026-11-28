@@ -3,7 +3,7 @@ import {westGroundHeight} from './west-terrain.js';
 
 // One draw per surface family, world-space UVs and opaque textures. Thousands
 // of small polygons do not become thousands of meshes or transparent layers.
-export function createSurveySurfaces(root,{ground=westGroundHeight}={}){
+export function createSurveySurfaces(root,{ground=westGroundHeight,tileScale:customTileScale=null,textureFactory=null}={}){
   const buffers=new Map(),materials=[],surfaceColor=new T.Color();
   function polygon(ring,color,y=.02,kind='ground',holes=[]){
     if(ring.length<3)return;
@@ -24,7 +24,7 @@ export function createSurveySurfaces(root,{ground=westGroundHeight}={}){
     const b=buffers.get(kind),base=b.positions.length/3,c=surfaceColor.set(color);
     for(const [x,z] of vertices){
       b.positions.push(x,ground(x,z)+y,z);
-      const tileScale=kind==='courtyard'?1.2:kind==='paving'?2.4:5;
+      const tileScale=customTileScale?customTileScale(kind):kind==='courtyard'?1.2:kind==='paving'?2.4:5;
       b.colors.push(c.r,c.g,c.b);b.uv.push(x/tileScale,z/tileScale);
     }
     for(const i of indices)b.indices.push(i+base);
@@ -46,7 +46,7 @@ export function createSurveySurfaces(root,{ground=westGroundHeight}={}){
     const meshes=[];
     for(const [kind,b] of buffers){
       const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(b.positions,3));g.setAttribute('color',new T.Float32BufferAttribute(b.colors,3));g.setAttribute('uv',new T.Float32BufferAttribute(b.uv,2));g.setIndex(b.indices);g.computeVertexNormals();
-      const map=texture(kind),mat=new T.MeshStandardMaterial({vertexColors:true,map,bumpMap:map,bumpScale:['paving','courtyard'].includes(kind)?.012:.006,roughness:.94,side:T.DoubleSide});materials.push(mat);
+      const map=textureFactory?textureFactory(kind):texture(kind),mat=new T.MeshStandardMaterial({vertexColors:true,map,bumpMap:map,bumpScale:['paving','courtyard'].includes(kind)?.012:.006,roughness:.94,side:T.DoubleSide});materials.push(mat);
       const mesh=new T.Mesh(g,mat);mesh.receiveShadow=true;mesh.name=`卫星判读地表-${kind}`;root.add(mesh);meshes.push(mesh);
     }
     return {meshes,dispose(){meshes.forEach(m=>{m.removeFromParent();m.geometry.dispose();});materials.forEach(m=>{m.map.dispose();m.dispose();});}};

@@ -6,6 +6,7 @@ import {pointInRing} from '../dist/geography.js';
 import {localToGeographic,geographicToLocal} from '../dist/landmarks/coordinates.js';
 import {collectBuildingRecords} from '../dist/building-heights.js';
 import {createLandmarkManager} from '../dist/landmarks/LandmarkManager.js';
+import {clearanceRect,clearancePolygonsOverlap} from '../dist/road-clearance.js';
 const noop=()=>{},ctx=new Proxy({createImageData:(w,h)=>({data:new Uint8ClampedArray(w*h*4)}),measureText:()=>({width:100})},{get:(o,k)=>o[k]??noop});
 globalThis.document={createElement:()=>({width:0,height:0,getContext:()=>ctx})};
 // Ensure no accidental placement at the western No. 2 school or GCJ/WGS mix-up.
@@ -30,6 +31,35 @@ assert.ok(southRows.every(b=>b.u+b.w/2<150),'southern rows must stay west of the
 assert.ok(Math.min(...southRows.map(b=>b.v-b.d/2))>schoolEntrance.gate[1]+7);
 const scene=new T.Scene(),campus=addPingyaoSchool(scene);scene.updateMatrixWorld(true);
 const records=collectBuildingRecords(scene);assert.equal(records.length,schoolBuildings.length);
+const detail=campus.root.userData.campusDetails;
+assert.ok(detail.approximate&&detail.paths.length>30&&detail.gardens.length>15);
+for(const kind of ['bench','pergola','table-tennis','cycle-shelter','garden-lamp','bin'])assert.ok(detail.facilities.some(p=>p.kind===kind),`missing ${kind}`);
+const footprints=schoolBuildings.map(b=>clearanceRect(b.u,b.v,b.w,b.d,b.angle));
+const playingAreas=[clearanceRect(65,139,97,185),clearanceRect(139,165,38,106),clearanceRect(177,411,92,13)];
+const paths=detail.paths.flatMap(p=>p.rings),props=[...detail.gardens,...detail.facilities,...detail.sportsFences];
+const roadRings=[];
+for(const m of campus.root.children.filter(o=>o.userData.schoolSurface==='road')){
+ const p=m.geometry.attributes.position;
+ for(let i=0;i<p.count-2;i+=2)roadRings.push([i,i+1,i+3,i+2].map(j=>[p.getX(j),p.getZ(j)]));
+}
+for(const ring of [...paths,...props.map(p=>p.ring)]){
+ assert.ok(ring.every(p=>pointInRing(...p,schoolLocalBoundary)),'new detail leaves campus');
+ assert.ok(![...footprints,...playingAreas].some(p=>clearancePolygonsOverlap(ring,p)),'new detail crosses building or playing field');
+}
+for(let i=0;i<props.length;i++){
+ const item=props[i];
+ assert.ok(![...roadRings,...paths,...props.slice(i+1).map(p=>p.ring)].some(p=>clearancePolygonsOverlap(item.ring,p)),`${item.kind} blocks a lane, entrance path or another facility`);
+}
+// Courtyard-facing connector windows must be actual visible glazing, rather
+// than the former single window on an otherwise blank 106 m side wall.
+for(const col of [6,10,14,18]){
+ const v=341-53+1+104/22*(col+.5),a=schoolToWorld(130,v),b=schoolToWorld(119,v);
+ const origin=new T.Vector3(a[0],2.52,a[1]),end=new T.Vector3(b[0],2.52,b[1]);
+ const ray=new T.Raycaster(origin,end.clone().sub(origin).normalize(),0,origin.distanceTo(end));
+ assert.equal(ray.intersectObject(campus.root,true)[0]?.object.name,'平遥中学实例化构件 · glass','connector side window is missing or obscured');
+}
+const ownedMaps=new Set();campus.root.traverse(o=>{for(const m of o.material?Array.isArray(o.material)?o.material:[o.material]:[])for(const k of ['map','bumpMap','emissiveMap'])if(m[k])ownedMaps.add(m[k]);});
+const releasedMaps=new Set();for(const map of ownedMaps)map.addEventListener('dispose',()=>releasedMaps.add(map));
 for(const r of records){for(const k of ['height','levels','buildingType','heightSource','confidence','estimated','footprintSource'])assert.ok(k in r);assert.ok(r.estimated&&r.height>3&&r.height<25);}
 let draws=0,triangles=0,instances=0;const matrix=new T.Matrix4();
 campus.root.traverse(o=>{
@@ -69,8 +99,13 @@ for(const u of [209,212,215])for(const y of [1,2,4]){
 }
 // View the legible year plaques from the road: their text must face the road,
 // not face away or be hidden by the stone seats / the other staggered row.
+for(const plaque of schoolEntrance.historyWalls)assert.equal(plaque.angle,sign.rotation.y,'history walls must be parallel to the white school-name wall');
 for(const plaque of schoolEntrance.historyWalls.filter(p=>p.year)){
- const a=schoolToWorld(198,plaque.v+1),b=schoolToWorld(plaque.u,plaque.v+1);
+ const plaqueMesh=campus.root.getObjectByName(plaque.year);
+ const wallNormal=new T.Vector3(0,0,1).applyQuaternion(sign.getWorldQuaternion(new T.Quaternion()));
+ const plaqueNormal=new T.Vector3(0,0,1).applyQuaternion(plaqueMesh.getWorldQuaternion(new T.Quaternion()));
+ assert.ok(wallNormal.dot(plaqueNormal)>.99999,'year lettering must face the same direction as the school name');
+ const a=schoolToWorld(plaque.u-1,plaque.v+7),b=schoolToWorld(plaque.u-1,plaque.v+.17);
  const origin=new T.Vector3(a[0],1.68,a[1]),end=new T.Vector3(b[0],1.68,b[1]);
  const ray=new T.Raycaster(origin,end.clone().sub(origin).normalize(),0,origin.distanceTo(end)+1);
  assert.equal(ray.intersectObject(campus.root,true)[0]?.object.name,plaque.year,`${plaque.year} must be readable from the road`);
@@ -81,4 +116,5 @@ const origin=new T.Vector3(outer[0],1.2,outer[1]),end=new T.Vector3(inner[0],1.2
 const apronRay=new T.Raycaster(origin,end.clone().sub(origin).normalize(),0,origin.distanceTo(end));
 assert.equal(apronRay.intersectObject(campus.root,true)[0],undefined,'public frontage remains enclosed by a generated fence');
 manager.unload(schoolLandmarkRecord.id);assert.equal(campus.root.parent,null);assert.equal(campus.root.children.length,0);campus.dispose();manager.dispose();
-console.log(JSON.stringify({buildings:records.length,drawCalls:draws,triangles,instances,boundary:'passed',clickIdentification:'passed',nightLights:'passed',unload:'passed'}));
+assert.equal(releasedMaps.size,ownedMaps.size,'campus material textures leak on unload');
+console.log(JSON.stringify({buildings:records.length,paths:detail.paths.length,gardens:detail.gardens.length,facilities:detail.facilities.length,sportsFencePanels:detail.sportsFences.length,drawCalls:draws,triangles,instances,boundary:'passed',circulation:'passed',sideWindows:'passed',clickIdentification:'passed',nightLights:'passed',unload:'passed'}));

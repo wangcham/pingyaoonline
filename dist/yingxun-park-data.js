@@ -1,4 +1,5 @@
 import {mapData} from './map-data.js';
+import {isMoatCorridor} from './moat-data.js';
 import {pointInRing,segments,projectOnSegment,createRingQuery} from './geography.js';
 import {westLinkImagePoint} from './west-link-survey.js';
 
@@ -31,6 +32,7 @@ export const yingxunParkPaths=[...mapData.roads.map(([type,width,,points])=>({ty
   .flatMap(({type,width,points})=>segments(points).map(line=>({line,width,type})))
   .filter(({line:{start:a,end:b},width})=>Math.max(a[0],b[0])+width>=yingxunBounds[0]&&Math.min(a[0],b[0])-width<=yingxunBounds[2]&&Math.max(a[1],b[1])+width>=yingxunBounds[1]&&Math.min(a[1],b[1])-width<=yingxunBounds[3]);
 export function canPlantYingxun(x,z,clearance=3){
+  if(isMoatCorridor(x,z,clearance))return false;
   if(!yingxunBoundaryQuery.contains(x,z)||yingxunWallQuery.contains(x,z))return false;
   if(yingxunClearingQueries.some(q=>q.contains(x,z,clearance)))return false;
   if(yingxunPondQueries.some(q=>q.contains(x,z,clearance)))return false;

@@ -1,0 +1,86 @@
+{
+  "checked": "2026-11-28",
+  "scope": "田森沿街商业活动、上西关街对面的新华书店",
+  "coordinateSystem": "Amap GCJ-02 converted once into existing WGS84 local scene coordinates",
+  "referencePois": [
+    "B0FFGA5I8Y",
+    "B0FFG4GRCV",
+    "B0KAROB1S0",
+    "B0FFHF0QY6",
+    "B0FFJOYLXL"
+  ],
+  "rawEvidence": "tiansen-life-pois.json",
+  "satellite": {
+    "provider": "Amap existing north-up tile mosaic",
+    "centerGCJ02": [
+      112.17105,
+      37.19772
+    ],
+    "zoom": 18,
+    "tileOrigin": [
+      212750,
+      101851
+    ],
+    "size": [
+      1280,
+      1280
+    ],
+    "imageryDate": null,
+    "bookstoreRoofPixels": [
+      [
+        574,
+        954
+      ],
+      [
+        643,
+        946
+      ],
+      [
+        681,
+        956
+      ],
+      [
+        705,
+        978
+      ],
+      [
+        709,
+        1017
+      ],
+      [
+        595,
+        1030
+      ]
+    ],
+    "interpretation": "South across Shangxiguan from the mall; southwest of the roundabout. The curved corner is refined from place photographs. Existing mall trace has approximately 10–20 m registration uncertainty."
+  },
+  "observedPhotoDetails": {
+    "bookstore": "Maroon/red curved fascia, white 新华书店/XINHUA BOOKSTORE/SWLC lettering, pale tiled upper walls and dark windows, small AC, roof flags, silver folding gates, planters, bollards and trees.",
+    "coffee": "Gray-green fascia with white Chinese and English lettering, glass frontage and timber slat soffit.",
+    "food": "Black fascia, white 麦当劳 lettering, red vertical M panel, glazing, timber soffit and red lanterns.",
+    "flowers": "Green fascia, white 花·时间 lettering, buckets/bouquets and small exterior table with chairs."
+  },
+  "estimatedDetails": [
+    "Storefront bay widths and exact shop-door locations",
+    "Bookstore outline, three-storey massing and opening divisions",
+    "Seating, books and small displays",
+    "Contemporary shop occupancy and photo dates are not guaranteed"
+  ],
+  "activity": {
+    "mallPeople": 0,
+    "bookstorePeople": 0,
+    "removedPeople": 66,
+    "animation": false,
+    "personMeshesPerSite": 0,
+    "reason": "User requested removal; code and meshes deleted, street furniture retained."
+  },
+  "verification": [
+    "Component day/night WebGL views",
+    "Carriageway, doorway, tree and scooter clearance",
+    "Mall B1 and bookstore entrance rays",
+    "Complete-city building overlap checks",
+    "Standalone search, boot, day/night and lifecycle checks"
+  ],
+  "newSatelliteExport": "An additional Esri export returned no image and was not used.",
+  "embeddedReferencePhotos": false
+}
